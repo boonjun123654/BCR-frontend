@@ -3,52 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Room</title>
+  <title>Baccarat Room</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-[#0b0f14] text-white">
 
+<!-- Header -->
 <header class="p-4 flex justify-between items-center border-b border-[#1f2933]">
   <a href="lobby.html" class="text-sm text-[#d4af37]">← Lobby</a>
-  <div>Wallet: <span class="wallet-balance text-[#d4af37]"></span></div>
+  <div class="text-sm">
+    Wallet:
+    <span class="wallet-balance text-[#d4af37] font-semibold"></span>
+  </div>
 </header>
 
-<main class="p-4 space-y-4">
+<main class="p-4 space-y-4 max-w-md mx-auto">
 
-<div class="bg-[#121821] p-4 rounded-xl">
-  <div class="flex justify-between">
-    <span>第 6 / 10 局</span>
-    <span class="text-green-400">下注中 12s</span>
-  </div>
-</div>
-
-<div class="bg-[#121821] p-4 rounded-xl">
-  <div class="font-semibold">庄家池</div>
-  <div class="text-[#d4af37] text-xl">RM 28,900</div>
-</div>
-
-<div class="bg-[#121821] p-4 rounded-xl">
-  <div class="grid grid-cols-2 gap-3">
-    <button onclick="bet(50)" class="bg-red-600 py-3 rounded-lg">庄 1:1</button>
-    <button onclick="bet(50)" class="bg-blue-600 py-3 rounded-lg">闲 1:1</button>
+  <!-- Round Info -->
+  <div class="bg-[#121821] p-4 rounded-xl border border-[#1f2933]">
+    <div class="flex justify-between items-center">
+      <span class="text-sm opacity-70">第 6 / 10 局</span>
+      <span id="roundStatus" class="text-green-400 font-semibold">
+        下注中 · <span id="countdown">15</span>s
+      </span>
+    </div>
   </div>
 
-  <div class="grid grid-cols-2 gap-3 mt-3">
-    <button onclick="bet(50)" class="bg-green-600 py-3 rounded-lg">和 1:8</button>
-    <button onclick="bet(50)" class="bg-purple-600 py-3 rounded-lg">对子 1:11</button>
+  <!-- History / Road -->
+  <div class="bg-[#121821] p-4 rounded-xl border border-[#1f2933]">
+    <div class="text-sm opacity-70 mb-2">最近结果</div>
+    <div class="flex gap-2 flex-wrap">
+      <span class="w-6 h-6 flex items-center justify-center rounded-full bg-red-600 text-xs">庄</span>
+      <span class="w-6 h-6 flex items-center justify-center rounded-full bg-blue-600 text-xs">闲</span>
+      <span class="w-6 h-6 flex items-center justify-center rounded-full bg-red-600 text-xs">庄</span>
+      <span class="w-6 h-6 flex items-center justify-center rounded-full bg-green-600 text-xs">和</span>
+      <span class="w-6 h-6 flex items-center justify-center rounded-full bg-blue-600 text-xs">闲</span>
+    </div>
   </div>
-</div>
+
+  <!-- Banker Pool -->
+  <div class="bg-[#121821] p-4 rounded-xl border border-[#1f2933]">
+    <div class="font-semibold">庄家池</div>
+    <div class="text-[#d4af37] text-xl mt-1">RM 28,900</div>
+
+    <div class="mt-3 text-sm opacity-80 space-y-1">
+      <div>玩家A · 50%</div>
+      <div>玩家B · 30%</div>
+      <div>玩家C · 20%</div>
+    </div>
+  </div>
+
+  <!-- Bet Heat -->
+  <div class="bg-[#121821] p-4 rounded-xl border border-[#1f2933]">
+    <div class="text-sm opacity-70 mb-3">下注热度</div>
+
+    <div class="mb-3">
+      <div class="flex justify-between text-xs mb-1">
+        <span class="text-red-400">庄</span>
+        <span>60%</span>
+      </div>
+      <div class="w-full h-2 bg-[#1f2933] rounded">
+        <div class="h-2 bg-red-600 rounded" style="width:60%"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex justify-between text-xs mb-1">
+        <span class="text-blue-400">闲</span>
+        <span>40%</span>
+      </div>
+      <div class="w-full h-2 bg-[#1f2933] rounded">
+        <div class="h-2 bg-blue-600 rounded" style="width:40%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Betting Area (with login mask) -->
+  <div class="relative">
+    <div class="bg-[#121821] p-4 rounded-xl border border-[#1f2933] space-y-3">
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="bet(50)" class="bg-red-600 py-3 rounded-lg font-bold">
+          庄 <span class="text-sm font-normal">1:1</span>
+        </button>
+        <button onclick="bet(50)" class="bg-blue-600 py-3 rounded-lg font-bold">
+          闲 <span class="text-sm font-normal">1:1</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="bet(50)" class="bg-green-600 py-3 rounded-lg font-bold">
+          和 <span class="text-sm font-normal">1:8</span>
+        </button>
+        <button onclick="bet(50)" class="bg-purple-600 py-3 rounded-lg font-bold">
+          对子 <span class="text-sm font-normal">1:11</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Login Mask -->
+    <div id="loginMask"
+      class="absolute inset-0 bg-black/70 flex items-center justify-center rounded-xl">
+      <div class="text-center">
+        <div class="mb-3 text-sm opacity-80">登录后即可下注</div>
+        <a href="login.html"
+          class="bg-[#d4af37] text-black px-4 py-2 rounded-lg font-semibold">
+          登录
+        </a>
+      </div>
+    </div>
+  </div>
 
 </main>
 
 <script src="js/app.js"></script>
 <script>
+/* ========== Bet Logic (Mock) ========== */
 function bet(amount) {
-  if (!APP.loggedIn) {
-    alert('请先登录');
-    return;
-  }
+  if (!APP.loggedIn) return;
   if (APP.wallet < amount) {
     alert('余额不足');
     return;
@@ -56,6 +128,28 @@ function bet(amount) {
   APP.wallet -= amount;
   renderWallet();
   alert('下注成功（模拟）');
+}
+
+/* ========== Countdown ========== */
+let time = 15;
+const countdownEl = document.getElementById('countdown');
+const statusEl = document.getElementById('roundStatus');
+
+setInterval(() => {
+  if (time <= 0) return;
+  time--;
+  countdownEl.innerText = time;
+
+  if (time <= 5) {
+    statusEl.className = 'text-red-400 font-semibold';
+  } else if (time <= 10) {
+    statusEl.className = 'text-yellow-400 font-semibold';
+  }
+}, 1000);
+
+/* ========== Login Mask ========== */
+if (window.APP && APP.loggedIn) {
+  document.getElementById('loginMask').style.display = 'none';
 }
 </script>
 
