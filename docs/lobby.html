@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lobby</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0b0f14] text-white">
+
+<header class="p-4 flex justify-between items-center border-b border-[#1f2933]">
+  <div class="text-[#d4af37] font-bold">Lobby</div>
+  <div class="text-sm">
+    Wallet: <span class="wallet-balance text-[#d4af37]"></span>
+  </div>
+</header>
+
+<main class="p-4 space-y-4">
+
+<div class="bg-[#121821] p-4 rounded-xl">
+  <h2 class="text-[#d4af37] font-bold">百家乐 · 黄金</h2>
+  <div class="text-sm mt-2 space-y-1 opacity-80">
+    <div>最低下注：RM 50</div>
+    <div>最低上庄：RM 5,000</div>
+    <div>当前局：6 / 10</div>
+    <div>庄家池：RM 28,900</div>
+  </div>
+
+  <button onclick="enterRoom()"
+    class="mt-4 w-full bg-[#d4af37] text-black py-2 rounded-lg font-semibold">
+    进入房间
+  </button>
+</div>
+
+</main>
+
+<script src="js/app.js"></script>
+<script>
+function enterRoom() {
+  if (!APP.loggedIn) {
+    alert('请先登录');
+    location.href = 'login.html';
+  } else {
+    location.href = 'room.html';
+  }
+}
+</script>
+
+</body>
+</html>

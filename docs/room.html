@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Room</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0b0f14] text-white">
+
+<header class="p-4 flex justify-between items-center border-b border-[#1f2933]">
+  <a href="lobby.html" class="text-sm text-[#d4af37]">← Lobby</a>
+  <div>Wallet: <span class="wallet-balance text-[#d4af37]"></span></div>
+</header>
+
+<main class="p-4 space-y-4">
+
+<div class="bg-[#121821] p-4 rounded-xl">
+  <div class="flex justify-between">
+    <span>第 6 / 10 局</span>
+    <span class="text-green-400">下注中 12s</span>
+  </div>
+</div>
+
+<div class="bg-[#121821] p-4 rounded-xl">
+  <div class="font-semibold">庄家池</div>
+  <div class="text-[#d4af37] text-xl">RM 28,900</div>
+</div>
+
+<div class="bg-[#121821] p-4 rounded-xl">
+  <div class="grid grid-cols-2 gap-3">
+    <button onclick="bet(50)" class="bg-red-600 py-3 rounded-lg">庄 1:1</button>
+    <button onclick="bet(50)" class="bg-blue-600 py-3 rounded-lg">闲 1:1</button>
+  </div>
+
+  <div class="grid grid-cols-2 gap-3 mt-3">
+    <button onclick="bet(50)" class="bg-green-600 py-3 rounded-lg">和 1:8</button>
+    <button onclick="bet(50)" class="bg-purple-600 py-3 rounded-lg">对子 1:11</button>
+  </div>
+</div>
+
+</main>
+
+<script src="js/app.js"></script>
+<script>
+function bet(amount) {
+  if (!APP.loggedIn) {
+    alert('请先登录');
+    return;
+  }
+  if (APP.wallet < amount) {
+    alert('余额不足');
+    return;
+  }
+  APP.wallet -= amount;
+  renderWallet();
+  alert('下注成功（模拟）');
+}
+</script>
+
+</body>
+</html>

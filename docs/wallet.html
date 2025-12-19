@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wallet</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0b0f14] text-white">
+
+<!-- Header -->
+<header class="p-4 flex justify-between items-center border-b border-[#1f2933]">
+  <a href="lobby.html" class="text-sm text-[#d4af37]">← Lobby</a>
+  <div class="text-sm">
+    Wallet：
+    <span class="wallet-balance text-[#d4af37] font-semibold"></span>
+  </div>
+</header>
+
+<main class="p-4 space-y-4 max-w-md mx-auto">
+
+  <!-- Balance Card -->
+  <div class="bg-[#121821] rounded-xl p-5 border border-[#1f2933]">
+    <div class="text-sm opacity-70">当前余额</div>
+    <div class="text-3xl font-bold text-[#d4af37] mt-1 wallet-balance">
+      RM 0.00
+    </div>
+  </div>
+
+  <!-- Deposit -->
+  <div class="bg-[#121821] rounded-xl p-5 border border-[#1f2933]">
+    <div class="font-semibold mb-3">提交存款</div>
+
+    <label class="block text-sm opacity-70 mb-1">金额 (RM)</label>
+    <input
+      type="number"
+      placeholder="例如 500"
+      class="w-full mb-3 p-2 rounded bg-[#0b0f14] border border-[#1f2933]"
+    />
+
+    <label class="block text-sm opacity-70 mb-1">上传转账截图</label>
+    <input
+      type="file"
+      class="w-full mb-4 text-sm"
+    />
+
+    <button
+      onclick="submitDeposit()"
+      class="w-full bg-[#d4af37] text-black py-2 rounded-lg font-semibold"
+    >
+      提交存款
+    </button>
+  </div>
+
+  <!-- Recent Records -->
+  <div class="bg-[#121821] rounded-xl p-5 border border-[#1f2933]">
+    <div class="font-semibold mb-3">最近记录（示例）</div>
+
+    <div class="text-sm space-y-2 opacity-80">
+      <div class="flex justify-between">
+        <span>存款</span>
+        <span class="text-green-400">+500</span>
+      </div>
+      <div class="flex justify-between">
+        <span>下注</span>
+        <span class="text-red-400">-100</span>
+      </div>
+      <div class="flex justify-between">
+        <span>结算</span>
+        <span class="text-green-400">+95.5</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="js/app.js"></script>
+<script>
+function submitDeposit() {
+  if (!APP.loggedIn) {
+    alert('请先登录');
+    location.href = 'login.html';
+    return;
+  }
+  alert('存款已提交（模拟）');
+}
+</script>
+
+</body>
+</html>
