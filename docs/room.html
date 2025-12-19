@@ -9,7 +9,6 @@
 
 <body class="bg-[#0b0f14] text-white">
 
-<!-- Header -->
 <header class="p-4 flex justify-between items-center border-b border-[#1f2933]">
   <a href="lobby.html" class="text-sm text-[#d4af37]">← Lobby</a>
   <div class="text-sm">
@@ -30,7 +29,7 @@
     </div>
   </div>
 
-  <!-- History / Road -->
+  <!-- History -->
   <div class="bg-[#121821] p-4 rounded-xl border border-[#1f2933]">
     <div class="text-sm opacity-70 mb-2">最近结果</div>
     <div class="flex gap-2 flex-wrap">
@@ -44,8 +43,15 @@
 
   <!-- Banker Pool -->
   <div class="bg-[#121821] p-4 rounded-xl border border-[#1f2933]">
-    <div class="font-semibold">庄家池</div>
-    <div class="text-[#d4af37] text-xl mt-1">RM 28,900</div>
+    <div class="flex justify-between items-center mb-2">
+      <div class="font-semibold">庄家池</div>
+      <button onclick="openBankerModal()"
+        class="text-xs bg-[#d4af37]/20 text-[#d4af37] px-3 py-1 rounded-full">
+        合庄 / 上庄
+      </button>
+    </div>
+
+    <div class="text-[#d4af37] text-xl">RM 28,900</div>
 
     <div class="mt-3 text-sm opacity-80 space-y-1">
       <div>玩家A · 50%</div>
@@ -60,8 +66,7 @@
 
     <div class="mb-3">
       <div class="flex justify-between text-xs mb-1">
-        <span class="text-red-400">庄</span>
-        <span>60%</span>
+        <span class="text-red-400">庄</span><span>60%</span>
       </div>
       <div class="w-full h-2 bg-[#1f2933] rounded">
         <div class="h-2 bg-red-600 rounded" style="width:60%"></div>
@@ -70,8 +75,7 @@
 
     <div>
       <div class="flex justify-between text-xs mb-1">
-        <span class="text-blue-400">闲</span>
-        <span>40%</span>
+        <span class="text-blue-400">闲</span><span>40%</span>
       </div>
       <div class="w-full h-2 bg-[#1f2933] rounded">
         <div class="h-2 bg-blue-600 rounded" style="width:40%"></div>
@@ -79,78 +83,78 @@
     </div>
   </div>
 
-  <!-- Betting Area (with login mask) -->
+  <!-- Betting Area -->
   <div class="relative">
     <div class="bg-[#121821] p-4 rounded-xl border border-[#1f2933] space-y-3">
       <div class="grid grid-cols-2 gap-3">
-        <button onclick="bet(50)" class="bg-red-600 py-3 rounded-lg font-bold">
-          庄 <span class="text-sm font-normal">1:1</span>
-        </button>
-        <button onclick="bet(50)" class="bg-blue-600 py-3 rounded-lg font-bold">
-          闲 <span class="text-sm font-normal">1:1</span>
-        </button>
+        <button onclick="bet(50)" class="bg-red-600 py-3 rounded-lg font-bold">庄 1:1</button>
+        <button onclick="bet(50)" class="bg-blue-600 py-3 rounded-lg font-bold">闲 1:1</button>
       </div>
-
       <div class="grid grid-cols-2 gap-3">
-        <button onclick="bet(50)" class="bg-green-600 py-3 rounded-lg font-bold">
-          和 <span class="text-sm font-normal">1:8</span>
-        </button>
-        <button onclick="bet(50)" class="bg-purple-600 py-3 rounded-lg font-bold">
-          对子 <span class="text-sm font-normal">1:11</span>
-        </button>
+        <button onclick="bet(50)" class="bg-green-600 py-3 rounded-lg font-bold">和 1:8</button>
+        <button onclick="bet(50)" class="bg-purple-600 py-3 rounded-lg font-bold">对子 1:11</button>
       </div>
     </div>
 
-    <!-- Login Mask -->
     <div id="loginMask"
       class="absolute inset-0 bg-black/70 flex items-center justify-center rounded-xl">
       <div class="text-center">
         <div class="mb-3 text-sm opacity-80">登录后即可下注</div>
         <a href="login.html"
-          class="bg-[#d4af37] text-black px-4 py-2 rounded-lg font-semibold">
-          登录
-        </a>
+          class="bg-[#d4af37] text-black px-4 py-2 rounded-lg font-semibold">登录</a>
       </div>
     </div>
   </div>
-
 </main>
+
+<!-- 合庄弹窗 -->
+<div id="bankerModal"
+  class="fixed inset-0 bg-black/70 flex items-end justify-center z-50 hidden">
+  <div class="bg-[#121821] w-full max-w-md rounded-t-2xl p-5 border-t border-[#1f2933]">
+    <div class="flex justify-between items-center mb-4">
+      <div class="text-lg font-bold text-[#d4af37]">合庄 · 上庄</div>
+      <button onclick="closeBankerModal()">✕</button>
+    </div>
+
+    <div class="text-sm opacity-80 mb-4">
+      最低上庄：RM 5,000<br>
+      当前庄家：2 / 3
+    </div>
+
+    <input id="bankerAmount" type="number" placeholder="输入金额"
+      oninput="updatePreview()"
+      class="w-full p-2 mb-3 rounded bg-[#0b0f14] border border-[#1f2933]">
+
+    <div class="text-sm mb-4">
+      预计占比：
+      <span id="bankerPreview" class="text-[#d4af37]">0%</span>
+    </div>
+
+    <button onclick="confirmBanker()"
+      class="w-full bg-[#d4af37] text-black py-3 rounded-lg font-bold">
+      确认上庄
+    </button>
+  </div>
+</div>
 
 <script src="js/app.js"></script>
 <script>
-/* ========== Bet Logic (Mock) ========== */
-function bet(amount) {
-  if (!APP.loggedIn) return;
-  if (APP.wallet < amount) {
-    alert('余额不足');
-    return;
-  }
-  APP.wallet -= amount;
-  renderWallet();
-  alert('下注成功（模拟）');
+function openBankerModal() {
+  if (!APP.loggedIn) return location.href = 'login.html';
+  document.getElementById('bankerModal').classList.remove('hidden');
 }
-
-/* ========== Countdown ========== */
-let time = 15;
-const countdownEl = document.getElementById('countdown');
-const statusEl = document.getElementById('roundStatus');
-
-setInterval(() => {
-  if (time <= 0) return;
-  time--;
-  countdownEl.innerText = time;
-
-  if (time <= 5) {
-    statusEl.className = 'text-red-400 font-semibold';
-  } else if (time <= 10) {
-    statusEl.className = 'text-yellow-400 font-semibold';
-  }
-}, 1000);
-
-/* ========== Login Mask ========== */
-if (window.APP && APP.loggedIn) {
-  document.getElementById('loginMask').style.display = 'none';
+function closeBankerModal() {
+  document.getElementById('bankerModal').classList.add('hidden');
 }
+function updatePreview() {
+  const v = Number(bankerAmount.value || 0);
+  bankerPreview.innerText = ((v / (28900 + v)) * 100).toFixed(1) + '%';
+}
+function confirmBanker() {
+  alert('上庄成功（模拟）');
+  closeBankerModal();
+}
+if (APP.loggedIn) loginMask.style.display = 'none';
 </script>
 
 </body>
