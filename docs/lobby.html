@@ -9,43 +9,59 @@
 
 <body class="bg-[#0b0f14] text-white">
 
-<header class="p-4 flex justify-between items-center border-b border-[#1f2933]">
-  <div class="text-[#d4af37] font-bold">Lobby</div>
-  <div class="text-sm">
-    Wallet: <span class="wallet-balance text-[#d4af37]"></span>
-  </div>
+<header class="p-4 border-b border-[#1f2933] text-[#d4af37] font-bold">
+  Lobby
 </header>
 
-<main class="p-4 space-y-4">
+<main class="p-4 max-w-md mx-auto space-y-4">
 
-<div class="bg-[#121821] p-4 rounded-xl">
-  <h2 class="text-[#d4af37] font-bold">百家乐 · 黄金</h2>
-  <div class="text-sm mt-2 space-y-1 opacity-80">
-    <div>最低下注：RM 50</div>
-    <div>最低上庄：RM 5,000</div>
-    <div>当前局：6 / 10</div>
-    <div>庄家池：RM 28,900</div>
+  <div class="bg-gradient-to-br from-[#151c26] to-[#0f141b]
+              rounded-2xl p-5 border border-[#1f2933] shadow-xl">
+
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <div class="text-[#d4af37] font-bold text-lg">百家乐 · 黄金</div>
+        <div class="text-xs opacity-60">Baccarat Gold</div>
+      </div>
+      <div class="text-xs bg-green-500/20 text-green-400 px-3 py-1 rounded-full">
+        LIVE
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+      <div class="bg-[#0b0f14] p-3 rounded-lg">
+        <div class="opacity-60">最低下注</div>
+        <div class="font-semibold">RM 50</div>
+      </div>
+      <div class="bg-[#0b0f14] p-3 rounded-lg">
+        <div class="opacity-60">最低上庄</div>
+        <div class="font-semibold">RM 5,000</div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="flex justify-between text-xs mb-1 opacity-70">
+        <span>合庄进度</span>
+        <span>6 / 10</span>
+      </div>
+      <div class="w-full h-2 bg-[#1f2933] rounded">
+        <div class="h-2 bg-[#d4af37] rounded" style="width:60%"></div>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <div class="text-xs opacity-60">庄家池</div>
+      <div class="text-[#d4af37] text-xl font-bold">RM 28,900</div>
+    </div>
+
+    <a href="room.html"
+      class="block text-center bg-[#d4af37] text-black py-3 rounded-xl font-bold">
+      进入房间
+    </a>
+
   </div>
 
-  <button onclick="enterRoom()"
-    class="mt-4 w-full bg-[#d4af37] text-black py-2 rounded-lg font-semibold">
-    进入房间
-  </button>
-</div>
-
 </main>
-
-<script src="js/app.js"></script>
-<script>
-function enterRoom() {
-  if (!APP.loggedIn) {
-    alert('请先登录');
-    location.href = 'login.html';
-  } else {
-    location.href = 'room.html';
-  }
-}
-</script>
 
 </body>
 </html>
