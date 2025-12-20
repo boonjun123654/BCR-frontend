@@ -1,88 +1,211 @@
-<!DOCTYPE html>
-<html lang="zh">
+<!doctype html>
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wallet</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0d1117;
+      color: #ffffff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.12), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.1), transparent 50%),
+        linear-gradient(135deg, #0d1117, #161b22 40%, #0d1117);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      max-width: 420px;
+      margin: auto;
+      padding-bottom: 90px;
+    }
+
+    /* ===== Top Bar ===== */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(13,17,23,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(139,92,246,0.25);
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar a {
+      color: #a78bfa;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .wallet-mini {
+      font-size: 14px;
+      color: #c4b5fd;
+      font-weight: 700;
+    }
+
+    /* ===== Card Base ===== */
+    .card {
+      background: linear-gradient(145deg, rgba(22,27,34,0.96), rgba(13,17,23,0.96));
+      border-radius: 18px;
+      padding: 18px;
+      border: 1px solid rgba(139,92,246,0.35);
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.55),
+        0 0 0 1px rgba(139,92,246,0.1) inset;
+    }
+
+    /* ===== Balance ===== */
+    .balance-amount {
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #c4b5fd, #a78bfa, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ===== Button ===== */
+    .primary-btn {
+      background: linear-gradient(135deg, #fbbf24, #facc15);
+      color: #000;
+      font-weight: 900;
+      padding: 14px;
+      border-radius: 14px;
+      letter-spacing: 1px;
+    }
+
+    /* ===== Input ===== */
+    .input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      background: #0b0f14;
+      border: 1px solid #1f2933;
+      color: #fff;
+    }
+
+    /* ===== Record ===== */
+    .record {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 8px 0;
+    }
+
+    .pos { color: #22c55e; font-weight: 700; }
+    .neg { color: #ef4444; font-weight: 700; }
+
+    /* ===== Bottom Nav ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(13,17,23,0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(139,92,246,0.25);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+    }
+
+    .nav-item {
+      font-size: 12px;
+      color: #8892b0;
+      text-align: center;
+    }
+
+    .nav-item.active {
+      color: #a78bfa;
+      font-weight: 700;
+    }
+  </style>
 </head>
 
-<body class="bg-[#0b0f14] text-white">
+<body>
+<div class="app">
 
-<!-- Header -->
-<header class="p-4 flex justify-between items-center border-b border-[#1f2933]">
-  <a href="lobby.html" class="text-sm text-[#d4af37]">← Lobby</a>
-  <div class="text-sm">
-    Wallet：
-    <span class="wallet-balance text-[#d4af37] font-semibold"></span>
-  </div>
-</header>
-
-<main class="p-4 space-y-4 max-w-md mx-auto">
-
-  <!-- Balance Card -->
-  <div class="bg-[#121821] rounded-xl p-5 border border-[#1f2933]">
-    <div class="text-sm opacity-70">当前余额</div>
-    <div class="text-3xl font-bold text-[#d4af37] mt-1 wallet-balance">
-      RM 0.00
+  <!-- Top -->
+  <div class="top-bar">
+    <a href="lobby.html">← Lobby</a>
+    <div class="wallet-mini">
+      RM <span class="wallet-balance">12,500</span>
     </div>
   </div>
 
+  <!-- Balance -->
+  <div class="card mt-5">
+    <div class="text-sm opacity-70">当前余额</div>
+    <div class="balance-amount mt-1 wallet-balance">RM 12,500</div>
+  </div>
+
   <!-- Deposit -->
-  <div class="bg-[#121821] rounded-xl p-5 border border-[#1f2933]">
-    <div class="font-semibold mb-3">提交存款</div>
+  <div class="card mt-4">
+    <div class="font-semibold mb-4">提交存款</div>
 
     <label class="block text-sm opacity-70 mb-1">金额 (RM)</label>
-    <input
-      type="number"
-      placeholder="例如 500"
-      class="w-full mb-3 p-2 rounded bg-[#0b0f14] border border-[#1f2933]"
-    />
+    <input type="number" placeholder="例如 500" class="input mb-4" />
 
     <label class="block text-sm opacity-70 mb-1">上传转账截图</label>
-    <input
-      type="file"
-      class="w-full mb-4 text-sm"
-    />
+    <input type="file" class="w-full text-sm mb-5" />
 
-    <button
-      onclick="submitDeposit()"
-      class="w-full bg-[#d4af37] text-black py-2 rounded-lg font-semibold"
-    >
+    <button onclick="submitDeposit()" class="primary-btn w-full">
       提交存款
     </button>
   </div>
 
-  <!-- Recent Records -->
-  <div class="bg-[#121821] rounded-xl p-5 border border-[#1f2933]">
+  <!-- Records -->
+  <div class="card mt-4">
     <div class="font-semibold mb-3">最近记录（示例）</div>
 
-    <div class="text-sm space-y-2 opacity-80">
-      <div class="flex justify-between">
-        <span>存款</span>
-        <span class="text-green-400">+500</span>
-      </div>
-      <div class="flex justify-between">
-        <span>下注</span>
-        <span class="text-red-400">-100</span>
-      </div>
-      <div class="flex justify-between">
-        <span>结算</span>
-        <span class="text-green-400">+95.5</span>
-      </div>
+    <div class="record">
+      <span>存款</span>
+      <span class="pos">+500</span>
+    </div>
+    <div class="record">
+      <span>下注</span>
+      <span class="neg">-100</span>
+    </div>
+    <div class="record">
+      <span>结算</span>
+      <span class="pos">+95.5</span>
     </div>
   </div>
 
-</main>
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="location.href='lobby.html'">🎰<br>大厅</div>
+    <div class="nav-item" onclick="location.href='stats.html'">📊<br>战绩</div>
+    <div class="nav-item active">💰<br>钱包</div>
+  </div>
 
-<script src="js/app.js"></script>
+</div>
+
 <script>
 function submitDeposit() {
-  if (!APP.loggedIn) {
-    alert('请先登录');
-    location.href = 'login.html';
-    return;
-  }
   alert('存款已提交（模拟）');
 }
 </script>
