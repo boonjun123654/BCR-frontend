@@ -94,11 +94,11 @@
       font-size: 14px;
     }
 
-    /* ===== 旧版房间卡片（你喜欢的） ===== */
+    /* ===== 房间列表 ===== */
     .room-list {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 26px;
       padding: 20px;
     }
 
@@ -137,7 +137,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .info-box {
@@ -157,11 +157,46 @@
       color: #c4b5fd;
     }
 
-    .room-status {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 12px;
+    /* ===== 新增：房间图片区 ===== */
+    .room-image {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 12px 0 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.65);
+    }
+
+    .room-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .room-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.15),
+        rgba(0,0,0,0.55)
+      );
+    }
+
+    .image-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2;
+      background: rgba(0,0,0,0.65);
       color: #22c55e;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 1px;
     }
 
     .pool {
@@ -226,19 +261,16 @@
 <body>
 <div class="app">
 
-  <!-- 顶栏 -->
   <div class="top-bar">
     <div class="brand">BACCARAT</div>
     <a href="login.html" class="login-btn">Login</a>
   </div>
 
-  <!-- Lobby Header -->
   <div class="lobby-header">
     <div class="lobby-title">LOBBY</div>
     <div class="lobby-subtitle">选择您的赌桌</div>
   </div>
 
-  <!-- 房间列表（旧版卡片设计） -->
   <div class="room-list">
 
     <!-- 黄金房 -->
@@ -257,6 +289,11 @@
           <div class="info-label">最低上庄</div>
           <div class="info-value">RM 5,000</div>
         </div>
+      </div>
+
+      <div class="room-image">
+        <img src="assets/baccarat-gold.jpg" alt="Baccarat Gold Room">
+        <div class="image-badge">LIVE</div>
       </div>
 
       <div class="pool">
@@ -287,6 +324,11 @@
         </div>
       </div>
 
+      <div class="room-image">
+        <img src="assets/baccarat-diamond.jpg" alt="Baccarat Diamond Room">
+        <div class="image-badge" style="color:#facc15">BANKER</div>
+      </div>
+
       <div class="pool">
         <div class="pool-label">庄家池金额</div>
         <div class="pool-amount">RM 120,000</div>
@@ -299,7 +341,6 @@
 
   </div>
 
-  <!-- 底部导航 -->
   <div class="bottom-nav">
     <div class="nav-item active">🎰<br/>大厅</div>
     <div class="nav-item" onclick="location.href='stats.html'">📊<br/>战绩</div>
