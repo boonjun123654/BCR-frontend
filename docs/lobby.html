@@ -94,27 +94,15 @@
       font-size: 14px;
     }
 
-    /* ===== 房间列表 ===== */
+    /* ===== 旧版房间卡片（你喜欢的） ===== */
     .room-list {
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 24px;
       padding: 20px;
     }
 
-    /* 外层：控制宽度 & 居中（关键） */
-    .room-wrapper {
-      max-width: 420px;   /* 手机视觉宽度 */
-      margin: 0 auto;
-    }
-
-    /* ===== 旧版房间卡片（强制 4:3） ===== */
     .room-card {
-      aspect-ratio: 4 / 3;              /* 核心 */
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
       background: linear-gradient(145deg, rgba(20,25,35,0.96), rgba(10,13,20,0.96));
       border-radius: 22px;
       padding: 22px;
@@ -128,6 +116,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 14px;
     }
 
     .room-name {
@@ -148,6 +137,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
+      margin-bottom: 12px;
     }
 
     .info-box {
@@ -167,8 +157,16 @@
       color: #c4b5fd;
     }
 
+    .room-status {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #22c55e;
+    }
+
     .pool {
       text-align: center;
+      margin-bottom: 16px;
     }
 
     .pool-label {
@@ -240,65 +238,63 @@
     <div class="lobby-subtitle">选择您的赌桌</div>
   </div>
 
-  <!-- 房间列表 -->
+  <!-- 房间列表（旧版卡片设计） -->
   <div class="room-list">
 
-    <div class="room-wrapper">
-      <div class="room-card">
-        <div class="room-header">
-          <div class="room-name">百家乐 · 黄金</div>
-          <div class="live-badge">下注中</div>
-        </div>
-
-        <div class="info-grid">
-          <div class="info-box">
-            <div class="info-label">最低下注</div>
-            <div class="info-value">RM 50</div>
-          </div>
-          <div class="info-box">
-            <div class="info-label">最低上庄</div>
-            <div class="info-value">RM 5,000</div>
-          </div>
-        </div>
-
-        <div class="pool">
-          <div class="pool-label">庄家池金额</div>
-          <div class="pool-amount">RM 28,900</div>
-        </div>
-
-        <button class="enter-btn" onclick="location.href='room.html'">
-          进入房间
-        </button>
+    <!-- 黄金房 -->
+    <div class="room-card">
+      <div class="room-header">
+        <div class="room-name">百家乐 · 黄金</div>
+        <div class="live-badge">下注中</div>
       </div>
+
+      <div class="info-grid">
+        <div class="info-box">
+          <div class="info-label">最低下注</div>
+          <div class="info-value">RM 50</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">最低上庄</div>
+          <div class="info-value">RM 5,000</div>
+        </div>
+      </div>
+
+      <div class="pool">
+        <div class="pool-label">庄家池金额</div>
+        <div class="pool-amount">RM 28,900</div>
+      </div>
+
+      <button class="enter-btn" onclick="location.href='room.html'">
+        进入房间
+      </button>
     </div>
 
-    <div class="room-wrapper">
-      <div class="room-card">
-        <div class="room-header">
-          <div class="room-name">百家乐 · 钻石</div>
-          <div class="live-badge" style="background:#facc15;color:#000">合庄中</div>
-        </div>
-
-        <div class="info-grid">
-          <div class="info-box">
-            <div class="info-label">最低下注</div>
-            <div class="info-value">RM 500</div>
-          </div>
-          <div class="info-box">
-            <div class="info-label">最低上庄</div>
-            <div class="info-value">RM 20,000</div>
-          </div>
-        </div>
-
-        <div class="pool">
-          <div class="pool-label">庄家池金额</div>
-          <div class="pool-amount">RM 120,000</div>
-        </div>
-
-        <button class="enter-btn" onclick="location.href='room.html'">
-          进入房间
-        </button>
+    <!-- 钻石房 -->
+    <div class="room-card">
+      <div class="room-header">
+        <div class="room-name">百家乐 · 钻石</div>
+        <div class="live-badge" style="background:#facc15;color:#000">合庄中</div>
       </div>
+
+      <div class="info-grid">
+        <div class="info-box">
+          <div class="info-label">最低下注</div>
+          <div class="info-value">RM 500</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">最低上庄</div>
+          <div class="info-value">RM 20,000</div>
+        </div>
+      </div>
+
+      <div class="pool">
+        <div class="pool-label">庄家池金额</div>
+        <div class="pool-amount">RM 120,000</div>
+      </div>
+
+      <button class="enter-btn" onclick="location.href='room.html'">
+        进入房间
+      </button>
     </div>
 
   </div>
