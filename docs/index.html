@@ -1,28 +1,273 @@
-<!DOCTYPE html>
-<html lang="zh">
+<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Baccarat</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Baccarat Lobby</title>
+
+  <!-- Tailwind（用于少量辅助，不影响主设计） -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* =========================
+       全局背景（Canva 风格）
+    ========================= */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0d1117;
+      color: #ffffff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.12), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.1), transparent 50%),
+        linear-gradient(135deg, #0d1117, #161b22 40%, #0d1117);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 90px;
+    }
+
+    /* =========================
+       顶栏
+    ========================= */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #c4b5fd, #ec4899, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .login-btn {
+      color: #a78bfa;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* =========================
+       Lobby Header
+    ========================= */
+    .lobby-header {
+      text-align: center;
+      padding: 32px 20px 20px;
+    }
+
+    .lobby-title {
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(
+        135deg,
+        #c4b5fd 0%,
+        #ec4899 30%,
+        #38bdf8 60%,
+        #fbbf24 100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+
+    .lobby-subtitle {
+      color: #8892b0;
+      font-size: 14px;
+    }
+
+    /* =========================
+       赌桌卡片
+    ========================= */
+    .table-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .table-card {
+      background: linear-gradient(145deg, rgba(22, 27, 34, 0.95), rgba(13, 17, 23, 0.95));
+      border-radius: 20px;
+      padding: 24px;
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(139, 92, 246, 0.1) inset;
+      position: relative;
+    }
+
+    .table-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+      border-radius: 20px 20px 0 0;
+    }
+
+    .table-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .table-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #8892b0;
+      margin-bottom: 16px;
+    }
+
+    .pool {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .pool-label {
+      font-size: 11px;
+      color: #9d92c4;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .pool-amount {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #c4b5fd, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .enter-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa, #8b5cf6);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    /* =========================
+       底部导航
+    ========================= */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(139, 92, 246, 0.2);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+    }
+
+    .nav-item {
+      color: #8892b0;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .nav-item.active {
+      color: #a78bfa;
+      font-weight: 700;
+    }
+  </style>
 </head>
 
-<body class="bg-[#0b0f14] text-white">
+<body>
+<div class="app">
 
-<header class="p-4 flex justify-between items-center border-b border-[#1f2933]">
-  <div class="text-[#d4af37] font-bold text-lg">BACCARAT</div>
-  <a href="login.html" class="text-sm text-[#d4af37]">Login</a>
-</header>
+  <!-- 顶栏 -->
+  <div class="top-bar">
+    <div class="brand">BACCARAT</div>
+    <a href="login.html" class="login-btn">Login</a>
+  </div>
 
-<section class="p-6 text-center">
-  <h1 class="text-2xl font-bold mt-6">REAL BACCARAT</h1>
-  <p class="opacity-70 mt-2">公平 · 实时 · 透明结算</p>
+  <!-- Lobby Header -->
+  <div class="lobby-header">
+    <div class="lobby-title">LOBBY</div>
+    <div class="lobby-subtitle">选择您的赌桌</div>
+  </div>
 
-  <a href="lobby.html"
-     class="mt-6 inline-block bg-[#d4af37] text-black px-6 py-3 rounded-lg font-semibold">
-    查看大厅
-  </a>
-</section>
+  <!-- 赌桌列表 -->
+  <div class="table-grid">
 
+    <div class="table-card">
+      <div class="table-name">百家乐 · 黄金</div>
+      <div class="table-info">
+        <span>最低下注 $100</span>
+        <span>合庄 6 / 10</span>
+      </div>
+      <div class="pool">
+        <div class="pool-label">庄家池金额</div>
+        <div class="pool-amount">$50,000</div>
+      </div>
+      <button class="enter-btn" onclick="location.href='room.html'">
+        进入房间
+      </button>
+    </div>
+
+    <div class="table-card">
+      <div class="table-name">百家乐 · 钻石</div>
+      <div class="table-info">
+        <span>最低下注 $500</span>
+        <span>合庄 8 / 10</span>
+      </div>
+      <div class="pool">
+        <div class="pool-label">庄家池金额</div>
+        <div class="pool-amount">$120,000</div>
+      </div>
+      <button class="enter-btn" onclick="location.href='room.html'">
+        进入房间
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 底部导航 -->
+  <div class="bottom-nav">
+    <div class="nav-item active">🎰<br/>大厅</div>
+    <div class="nav-item" onclick="location.href='stats.html'">📊<br/>战绩</div>
+    <div class="nav-item" onclick="location.href='wallet.html'">💰<br/>钱包</div>
+  </div>
+
+</div>
 </body>
 </html>
