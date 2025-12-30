@@ -39,7 +39,7 @@
       padding-bottom: 90px;
     }
 
-    /* ===== 顶栏 ===== */
+    /* ===== 顶栏（layout 之后会迁移） ===== */
     .top-bar {
       position: sticky;
       top: 0;
@@ -69,20 +69,59 @@
     /* ===== Lobby Header ===== */
     .lobby-header {
       text-align: center;
-      padding: 32px 20px 20px;
+      padding: 26px 20px 12px;
     }
 
     .lobby-title {
-      font-size: 36px;
+      font-size: 34px;
       font-weight: 900;
       color: #d4af37;
-      margin-bottom: 6px;
       letter-spacing: 2px;
     }
 
     .lobby-subtitle {
       color: #9ca3af;
       font-size: 14px;
+      margin-top: 4px;
+    }
+
+    /* ===== 三按钮功能区 ===== */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      padding: 18px 20px 6px;
+    }
+
+    .qa-item {
+      background: linear-gradient(180deg, #141816, #0e1110);
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 16px;
+      padding: 12px 10px;
+      box-shadow:
+        0 0 0 1px rgba(212,175,55,0.12) inset,
+        0 10px 28px rgba(0,0,0,0.55);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .qa-item:active { transform: scale(.97); }
+
+    .qa-icon {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .qa-title {
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .qa-sub {
+      font-size: 11px;
+      color: #9ca3af;
     }
 
     /* ===== 房间列表 ===== */
@@ -90,7 +129,7 @@
       display: flex;
       flex-direction: column;
       gap: 26px;
-      padding: 20px;
+      padding: 14px 20px 20px;
     }
 
     .room-card {
@@ -222,37 +261,13 @@
       cursor: pointer;
       box-shadow: 0 6px 20px rgba(212,175,55,0.45);
     }
-
-    /* ===== 底部导航 ===== */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(11, 15, 13, 0.95);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(212,175,55,0.35);
-      display: flex;
-      justify-content: space-around;
-      padding: 12px 0;
-    }
-
-    .nav-item {
-      color: #9ca3af;
-      text-align: center;
-      font-size: 12px;
-    }
-
-    .nav-item.active {
-      color: #d4af37;
-      font-weight: 800;
-    }
   </style>
 </head>
 
 <body>
 <div class="app">
 
+  <!-- 顶栏（后续会被 layout.html 接管） -->
   <div class="top-bar">
     <div class="brand">BACCARAT</div>
     <a href="login.html" class="login-btn">Login</a>
@@ -263,9 +278,32 @@
     <div class="lobby-subtitle">选择您的赌桌</div>
   </div>
 
+  <!-- ===== 三按钮功能区 ===== -->
+  <div class="quick-actions">
+
+    <div class="qa-item" onclick="location.href='wallet.html'">
+      <div class="qa-icon">💰</div>
+      <div class="qa-title">Deposit</div>
+      <div class="qa-sub">充值入款</div>
+    </div>
+
+    <div class="qa-item" onclick="location.href='withdraw.html'">
+      <div class="qa-icon">🏦</div>
+      <div class="qa-title">Withdraw</div>
+      <div class="qa-sub">申请提款</div>
+    </div>
+
+    <div class="qa-item" onclick="location.href='history.html'">
+      <div class="qa-icon">📜</div>
+      <div class="qa-title">History</div>
+      <div class="qa-sub">交易记录</div>
+    </div>
+
+  </div>
+
+  <!-- ===== 房间列表 ===== -->
   <div class="room-list">
 
-    <!-- 黄金房 -->
     <div class="room-card">
       <div class="room-header">
         <div class="room-name">百家乐 · 黄金</div>
@@ -298,7 +336,7 @@
       </button>
     </div>
 
-    <!-- 钻石房 -->
+
     <div class="room-card">
       <div class="room-header">
         <div class="room-name">百家乐 · 钻石</div>
@@ -331,12 +369,6 @@
       </button>
     </div>
 
-  </div>
-
-  <div class="bottom-nav">
-    <div class="nav-item active">🎰<br/>大厅</div>
-    <div class="nav-item" onclick="location.href='stats.html'">📊<br/>战绩</div>
-    <div class="nav-item" onclick="location.href='wallet.html'">💰<br/>钱包</div>
   </div>
 
 </div>
