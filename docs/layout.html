@@ -135,16 +135,16 @@
 <!-- ===== Sidebar ===== -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
-    <div class="sidebar-item" onclick="location.href='lobby.html'">大厅</div>
-    <div class="sidebar-item" onclick="location.href='wallet.html'">钱包</div>
-    <div class="sidebar-item" onclick="location.href='stats.html'">战绩</div>
+    <div class="sidebar-item" onclick="loadPage('lobby.html')">大厅</div>
+    <div class="sidebar-item" onclick="loadPage('wallet.html')">钱包</div>
+    <div class="sidebar-item" onclick="loadPage('stats.html')">战绩</div>
     <div class="sidebar-item">客服</div>
     <div class="sidebar-item">Profile</div>
   </div>
 </div>
 
 <!-- ===== Page Content ===== -->
-<div class="content">
+<div id="content" class="content"></div>
   <!-- 这里由 lobby.html / wallet.html 注入 -->
 </div>
 
@@ -174,6 +174,17 @@
       document.getElementById('sidebar').classList.remove('open');
     }
   }
+  function loadPage(page) {
+    fetch(page)
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("content").innerHTML = html;
+      });
+  }
+
+  // 默认进入大厅
+  loadPage("lobby.html");
+  
 </script>
 
 </body>
