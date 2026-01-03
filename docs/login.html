@@ -5,104 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login · Baccarat</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
-    body {
-      margin: 0;
-      background: #121212;
-      color: #ffffff;
+    body{
+      margin:0;
+      background:#121212;
+      color:#ffffff;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
     }
-  </style>
-</head>
 
-<body>
+    .login-wrap{
+      width:100%;
+      max-width:420px;
+      padding:18px;
+    }
 
-<!-- ===== Top Bar（保持一致风格） ===== -->
-<div style="
-  height:60px;
-  background:#1a1a1a;
-  border-bottom:1px solid #2a2a2a;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 16px;
-">
-  <div style="font-weight:800;">Baccarat</div>
+    .login-card{
+      background:rgba(30,30,30,.65);
+      border:1px solid #2c2c2c;
+      border-radius:18px;
+      padding:18px 16px 16px;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      position:relative;
+    }
 
-  <div onclick="location.href='index.html'"
-       style="font-size:13px;color:#bfbfbf;cursor:pointer;">
-    返回大厅
-  </div>
-</div>
+    /* 关闭按钮 */
+    .close-btn{
+      position:absolute;
+      right:14px;
+      top:12px;
+      font-size:16px;
+      color:#bfbfbf;
+      cursor:pointer;
+    }
 
+    .close-btn:hover{ color:#ffffff; }
 
-<!-- ===== 页面容器 ===== -->
-<div style="
-  padding: 22px 18px 40px;
-  max-width:520px;
-  margin:0 auto;
-">
+    input{
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      border:1px solid #3a3a3a;
+      background:#111;
+      color:#fff;
+      font-size:14px;
+      outline:none;
+    }
 
-
-  <!-- 页面标题 -->
-  <div style="text-align:center; margin-bottom:18px;">
-    <div style="font-size:26px; font-weight:900;">
-      LOGIN
-    </div>
-    <div style="color:#b3b3b3; font-size:13px; margin-top:4px;">
-      登录以继续游戏
-    </div>
-  </div>
-
-
-  <!-- 半透明登录卡片 -->
-  <div style="
-    background: rgba(30,30,30,.65);
-    border: 1px solid #2c2c2c;
-    border-radius: 18px;
-    padding: 18px 16px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  ">
-
-    <!-- 用户名 -->
-    <div style="margin-bottom:14px;">
-      <div style="font-size:13px; color:#bfbfbf; margin-bottom:6px;">
-        用户名
-      </div>
-      <input type="text" placeholder="请输入用户名" style="
-        width:100%;
-        padding:12px;
-        border-radius:10px;
-        border:1px solid #3a3a3a;
-        background:#111;
-        color:#fff;
-        font-size:14px;
-        outline:none;
-      ">
-    </div>
-
-    <!-- 密码 -->
-    <div style="margin-bottom:16px;">
-      <div style="font-size:13px; color:#bfbfbf; margin-bottom:6px;">
-        密码
-      </div>
-      <input type="password" placeholder="请输入密码" style="
-        width:100%;
-        padding:12px;
-        border-radius:10px;
-        border:1px solid #3a3a3a;
-        background:#111;
-        color:#fff;
-        font-size:14px;
-        outline:none;
-      ">
-    </div>
-
-    <!-- 登录按钮 -->
-    <button style="
+    .login-btn{
       width:100%;
       padding:12px;
       border-radius:12px;
@@ -112,14 +66,55 @@
       color:#000;
       letter-spacing:1px;
       font-size:15px;
-      margin-top:4px;
-    ">
+      margin-top:6px;
+      cursor:pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="login-wrap">
+
+  <div class="login-card">
+
+    <!-- 关闭按钮（返回 Lobby） -->
+    <div class="close-btn" onclick="goBack()">✕</div>
+
+    <!-- 标题 -->
+    <div style="text-align:center; margin-bottom:14px;">
+      <div style="font-size:24px; font-weight:900;">
+        LOGIN
+      </div>
+      <div style="color:#b3b3b3; font-size:13px; margin-top:4px;">
+        登录以继续游戏
+      </div>
+    </div>
+
+    <!-- 用户名 -->
+    <div style="margin-bottom:12px;">
+      <div style="font-size:13px; color:#bfbfbf; margin-bottom:6px;">
+        用户名
+      </div>
+      <input type="text" placeholder="请输入用户名">
+    </div>
+
+    <!-- 密码 -->
+    <div style="margin-bottom:14px;">
+      <div style="font-size:13px; color:#bfbfbf; margin-bottom:6px;">
+        密码
+      </div>
+      <input type="password" placeholder="请输入密码">
+    </div>
+
+    <!-- 登录按钮 -->
+    <button class="login-btn">
       登录账户
     </button>
 
     <div style="
       text-align:center;
-      margin-top:14px;
+      margin-top:12px;
       font-size:12px;
       color:#9a9a9a;
     ">
@@ -127,8 +122,13 @@
     </div>
 
   </div>
-
 </div>
+
+<script>
+  function goBack(){
+    window.location.href = "index.html";
+  }
+</script>
 
 </body>
 </html>
