@@ -20,27 +20,28 @@
       overflow-x: hidden;
     }
 
-    /* ===== Top Bar ===== */
+    /* ===== Top Bar（放大版） ===== */
     .top-bar {
       position: sticky;
       top: 0;
       z-index: 100;
-      height: 56px;
+      height: 68px;              /* ← 原本 56px，提高视觉权重 */
       background: #1a1a1a;
       border-bottom: 1px solid #2a2a2a;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 14px;
+      padding: 0 18px;           /* ← 两侧间距更宽 */
     }
 
+    /* 左侧按钮 */
     .icon-btn {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
     }
 
@@ -48,24 +49,26 @@
       background: #2a2a2a;
     }
 
-    /* ===== LOGO 优化（更大 & 自适应比例） ===== */
+    /* LOGO 放大 & 保持比例 */
     .logo {
-      max-height: 46px;
+      max-height: 64px;          /* ← 原本 46px */
       width: auto;
-      height: auto;
       object-fit: contain;
     }
 
     @media (max-width: 480px) {
       .logo {
-        max-height: 58px;
+        max-height: 72px;        /* ← 手机端更清晰 */
       }
     }
 
+    /* Login 按钮 */
     .login-btn {
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: 600;
       color: #ffffff;
-      opacity: 0.9;
+      opacity: .95;
+      cursor: pointer;
     }
 
     /* ===== Sidebar ===== */
