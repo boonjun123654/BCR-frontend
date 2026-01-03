@@ -48,8 +48,18 @@
       background: #2a2a2a;
     }
 
+    /* ===== LOGO 优化（更大 & 自适应比例） ===== */
     .logo {
-      height: 28px;
+      max-height: 46px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        max-height: 58px;
+      }
     }
 
     .login-btn {
@@ -125,38 +135,34 @@
 <div class="top-bar">
   <div class="icon-btn" onclick="openSidebar()">☰</div>
 
-  <!-- LOGO -->
   <img src="assets/logo.png" class="logo" alt="Logo">
 
-  <!-- Login（登录后可以隐藏） -->
   <div class="login-btn">Login</div>
 </div>
 
 <!-- ===== Sidebar ===== -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
-    <div class="sidebar-item" onclick="loadPage('lobby.html')">大厅</div>
-    <div class="sidebar-item" onclick="loadPage('wallet.html')">钱包</div>
-    <div class="sidebar-item" onclick="loadPage('stats.html')">战绩</div>
+    <div class="sidebar-item" onclick="navigate('lobby.html')">大厅</div>
+    <div class="sidebar-item" onclick="navigate('wallet.html')">钱包</div>
+    <div class="sidebar-item" onclick="navigate('stats.html')">战绩</div>
     <div class="sidebar-item">客服</div>
     <div class="sidebar-item">Profile</div>
   </div>
 </div>
 
-<!-- ===== Page Content ===== -->
+<!-- ===== Page Content (动态注入) ===== -->
 <div id="content" class="content"></div>
-  <!-- 这里由 lobby.html / wallet.html 注入 -->
-</div>
 
 <!-- ===== Bottom Nav ===== -->
 <div class="bottom-nav">
-  <div class="nav-item active" onclick="location.href='lobby.html'">
+  <div id="nav-lobby" class="nav-item active" onclick="navigate('lobby.html')">
     🏠<br>大厅
   </div>
-  <div class="nav-item" onclick="location.href='stats.html'">
+  <div id="nav-stats" class="nav-item" onclick="navigate('stats.html')">
     📊<br>战绩
   </div>
-  <div class="nav-item" onclick="location.href='wallet.html'">
+  <div id="nav-wallet" class="nav-item" onclick="navigate('wallet.html')">
     💰<br>钱包
   </div>
   <div class="nav-item">
@@ -174,17 +180,37 @@
       document.getElementById('sidebar').classList.remove('open');
     }
   }
-  function loadPage(page) {
+
+  /* ===== 动态加载页面 ===== */
+  function navigate(page) {
+
+    // BottomNav 高亮
+    document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+    if (page.includes("lobby")) document.getElementById("nav-lobby").classList.add("active");
+    if (page.includes("wallet")) document.getElementById("nav-wallet").classList.add("active");
+    if (page.includes("stats")) document.getElementById("nav-stats").classList.add("active");
+
     fetch(page)
       .then(res => res.text())
       .then(html => {
+
+        // 只注入 body 内部（避免重复 <html> / <head>）
+        const bodyStart = html.indexOf("<body>");
+        const bodyEnd   = html.indexOf("</body>");
+
+        if (bodyStart !== -1 && bodyEnd !== -1) {
+          html = html.slice(bodyStart + 6, bodyEnd);
+        }
+
         document.getElementById("content").innerHTML = html;
       });
+
+    // 关闭侧边栏
+    document.getElementById('sidebar').classList.remove('open');
   }
 
   // 默认进入大厅
-  loadPage("lobby.html");
-  
+  navigate("lobby.html");
 </script>
 
 </body>
