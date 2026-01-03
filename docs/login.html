@@ -1,35 +1,134 @@
-<!DOCTYPE html>
-<html lang="zh">
+<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login · Baccarat</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #121212;
+      color: #ffffff;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    }
+  </style>
 </head>
 
-<body class="bg-[#0b0f14] text-white flex items-center justify-center h-screen">
+<body>
 
-<div class="bg-[#121821] p-6 rounded-xl w-80">
-  <h2 class="text-center text-[#d4af37] font-bold mb-4">登录</h2>
+<!-- ===== Top Bar（保持一致风格） ===== -->
+<div style="
+  height:60px;
+  background:#1a1a1a;
+  border-bottom:1px solid #2a2a2a;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+">
+  <div style="font-weight:800;">Baccarat</div>
 
-  <input class="w-full mb-3 p-2 bg-[#0b0f14] rounded" placeholder="用户名">
-  <input type="password" class="w-full mb-4 p-2 bg-[#0b0f14] rounded" placeholder="密码">
-
-  <button onclick="login()"
-    class="w-full bg-[#d4af37] text-black py-2 rounded-lg font-semibold">
-    登录
-  </button>
+  <div onclick="location.href='index.html'"
+       style="font-size:13px;color:#bfbfbf;cursor:pointer;">
+    返回大厅
+  </div>
 </div>
 
-<script src="js/app.js"></script>
-<script>
-function login() {
-  loginMock();
-  location.href = 'lobby.html';
-}
-</script>
+
+<!-- ===== 页面容器 ===== -->
+<div style="
+  padding: 22px 18px 40px;
+  max-width:520px;
+  margin:0 auto;
+">
+
+
+  <!-- 页面标题 -->
+  <div style="text-align:center; margin-bottom:18px;">
+    <div style="font-size:26px; font-weight:900;">
+      LOGIN
+    </div>
+    <div style="color:#b3b3b3; font-size:13px; margin-top:4px;">
+      登录以继续游戏
+    </div>
+  </div>
+
+
+  <!-- 半透明登录卡片 -->
+  <div style="
+    background: rgba(30,30,30,.65);
+    border: 1px solid #2c2c2c;
+    border-radius: 18px;
+    padding: 18px 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  ">
+
+    <!-- 用户名 -->
+    <div style="margin-bottom:14px;">
+      <div style="font-size:13px; color:#bfbfbf; margin-bottom:6px;">
+        用户名
+      </div>
+      <input type="text" placeholder="请输入用户名" style="
+        width:100%;
+        padding:12px;
+        border-radius:10px;
+        border:1px solid #3a3a3a;
+        background:#111;
+        color:#fff;
+        font-size:14px;
+        outline:none;
+      ">
+    </div>
+
+    <!-- 密码 -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:13px; color:#bfbfbf; margin-bottom:6px;">
+        密码
+      </div>
+      <input type="password" placeholder="请输入密码" style="
+        width:100%;
+        padding:12px;
+        border-radius:10px;
+        border:1px solid #3a3a3a;
+        background:#111;
+        color:#fff;
+        font-size:14px;
+        outline:none;
+      ">
+    </div>
+
+    <!-- 登录按钮 -->
+    <button style="
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:none;
+      font-weight:900;
+      background:#ffffff;
+      color:#000;
+      letter-spacing:1px;
+      font-size:15px;
+      margin-top:4px;
+    ">
+      登录账户
+    </button>
+
+    <div style="
+      text-align:center;
+      margin-top:14px;
+      font-size:12px;
+      color:#9a9a9a;
+    ">
+      还没有账号？请联系客服进行注册
+    </div>
+
+  </div>
+
+</div>
 
 </body>
 </html>
-
-
