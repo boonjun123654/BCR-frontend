@@ -1,4 +1,4 @@
-<!-- ===== Lobby Header ===== -->
+<!-- ===== 页面顶部 ===== -->
 <div class="lobby-header" style="
   text-align:center;
   padding:22px 20px 8px;
@@ -12,12 +12,40 @@
 </div>
 
 
-<!-- ===== 三按钮功能区 ===== -->
+
+<!-- ====================================== -->
+<!-- 🚀 新增：BANNER 轮播区 -->
+<!-- ====================================== -->
+
+<div class="banner-wrap" style="
+  padding:10px 16px 6px;
+">
+
+  <div class="banner-box" style="
+    width:100%;
+    border-radius:16px;
+    overflow:hidden;
+    background:#111;
+    border:1px solid #2c2c2c;
+    aspect-ratio:16 / 9;
+  ">
+    <img src="assets/banner1.jpg"
+         style="width:100%; height:100%; object-fit:cover;">
+  </div>
+
+</div>
+
+
+
+<!-- ====================================== -->
+<!-- 🔘 三按钮功能区 -->
+<!-- ====================================== -->
+
 <div class="quick-actions" style="
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
   gap:12px;
-  padding:14px 18px 6px;
+  padding:10px 18px 6px;
 ">
 
   <div class="qa-item" onclick="navigate('wallet.html')" style="
@@ -60,14 +88,16 @@
 
 
 
-<!-- ===== 房间列表 ===== -->
+<!-- ====================================== -->
+<!-- 🎲 房间列表（无图片版本） -->
+<!-- ====================================== -->
+
 <div class="room-list" style="
   padding:12px 18px 90px;
   display:flex;
   flex-direction:column;
   gap:20px;
 ">
-
 
   <!-- 黄金房 -->
   <div class="room-card" style="
@@ -76,7 +106,6 @@
     border-radius:18px;
     padding:18px;
   ">
-
     <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
       <div style="font-size:18px; font-weight:800;">
         百家乐 · 黄金
@@ -92,18 +121,6 @@
       ">
         下注中
       </div>
-    </div>
-
-    <div class="room-image" style="
-      width:100%;
-      aspect-ratio:4/3;
-      border-radius:14px;
-      overflow:hidden;
-      margin:10px 0 14px;
-      position:relative;
-    ">
-      <img src="assets/baccarat-gold.jpg"
-           style="width:100%; height:100%; object-fit:cover;">
     </div>
 
     <div style="text-align:center; margin-bottom:10px;">
@@ -136,7 +153,6 @@
     border-radius:18px;
     padding:18px;
   ">
-
     <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
       <div style="font-size:18px; font-weight:800;">
         百家乐 · 钻石
@@ -152,17 +168,6 @@
       ">
         合庄中
       </div>
-    </div>
-
-    <div class="room-image" style="
-      width:100%;
-      aspect-ratio:4/3;
-      border-radius:14px;
-      overflow:hidden;
-      margin:10px 0 14px;
-    ">
-      <img src="assets/baccarat-diamond.jpg"
-           style="width:100%; height:100%; object-fit:cover;">
     </div>
 
     <div style="text-align:center; margin-bottom:10px;">
