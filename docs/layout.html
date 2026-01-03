@@ -25,16 +25,15 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      height: 68px;              /* ← 原本 56px，提高视觉权重 */
+      height: 68px;
       background: #1a1a1a;
       border-bottom: 1px solid #2a2a2a;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 18px;           /* ← 两侧间距更宽 */
+      padding: 0 18px;
     }
 
-    /* 左侧按钮 */
     .icon-btn {
       width: 40px;
       height: 40px;
@@ -49,20 +48,12 @@
       background: #2a2a2a;
     }
 
-    /* LOGO 放大 & 保持比例 */
     .logo {
-      max-height: 64px;          /* ← 原本 46px */
+      max-height: 64px;
       width: auto;
       object-fit: contain;
     }
 
-    @media (max-width: 480px) {
-      .logo {
-        max-height: 72px;        /* ← 手机端更清晰 */
-      }
-    }
-
-    /* Login 按钮 */
     .login-btn {
       font-size: 15px;
       font-weight: 600;
@@ -80,9 +71,7 @@
       display: none;
     }
 
-    .sidebar.open {
-      display: block;
-    }
+    .sidebar.open { display: block; }
 
     .sidebar-panel {
       width: 260px;
@@ -140,9 +129,11 @@
 
   <img src="assets/logo.png" class="logo" alt="Logo">
 
-  <div class="login-btn" onclick="loadPage('login.html')" style="cursor:pointer;">
+  <div class="login-btn" onclick="navigate('login.html')">
     Login
   </div>
+</div>
+
 
 <!-- ===== Sidebar ===== -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
@@ -155,24 +146,30 @@
   </div>
 </div>
 
-<!-- ===== Page Content (动态注入) ===== -->
+
+<!-- ===== Page Content（动态注入） ===== -->
 <div id="content" class="content"></div>
+
 
 <!-- ===== Bottom Nav ===== -->
 <div class="bottom-nav">
   <div id="nav-lobby" class="nav-item active" onclick="navigate('lobby.html')">
     🏠<br>大厅
   </div>
+
   <div id="nav-stats" class="nav-item" onclick="navigate('stats.html')">
     📊<br>战绩
   </div>
+
   <div id="nav-wallet" class="nav-item" onclick="navigate('wallet.html')">
     💰<br>钱包
   </div>
+
   <div class="nav-item">
     👤<br>我的
   </div>
 </div>
+
 
 <script>
   function openSidebar() {
@@ -188,29 +185,26 @@
   /* ===== 动态加载页面 ===== */
   function navigate(page) {
 
-    // BottomNav 高亮
     document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
-    if (page.includes("lobby")) document.getElementById("nav-lobby").classList.add("active");
-    if (page.includes("wallet")) document.getElementById("nav-wallet").classList.add("active");
-    if (page.includes("stats")) document.getElementById("nav-stats").classList.add("active");
+    if (page.includes("lobby"))  nav_lobby.classList.add("active");
+    if (page.includes("wallet")) nav_wallet.classList.add("active");
+    if (page.includes("stats"))  nav_stats.classList.add("active");
 
     fetch(page)
       .then(res => res.text())
       .then(html => {
 
-        // 只注入 body 内部（避免重复 <html> / <head>）
-        const bodyStart = html.indexOf("<body>");
-        const bodyEnd   = html.indexOf("</body>");
-
-        if (bodyStart !== -1 && bodyEnd !== -1) {
-          html = html.slice(bodyStart + 6, bodyEnd);
+        // 只取 <body> 内容
+        const s = html.indexOf("<body>");
+        const e = html.indexOf("</body>");
+        if (s !== -1 && e !== -1) {
+          html = html.slice(s + 6, e);
         }
 
-        document.getElementById("content").innerHTML = html;
+        content.innerHTML = html;
       });
 
-    // 关闭侧边栏
-    document.getElementById('sidebar').classList.remove('open');
+    sidebar.classList.remove('open');
   }
 
   // 默认进入大厅
