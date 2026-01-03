@@ -1,194 +1,222 @@
-<!-- ===== 页面顶部 ===== -->
-<div class="lobby-header" style="
-  text-align:center;
-  padding:22px 20px 8px;
-">
-  <div style="font-size:26px; font-weight:900;">
-    LOBBY
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Baccarat Lobby</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #0f0f0f;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* 手机适配容器 */
+    .app-shell {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: #0f0f0f;
+    }
+
+    /* 通用卡片 */
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2c2c2c;
+      border-radius: 16px;
+    }
+
+    /* Banner */
+    .banner-box {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #2c2c2c;
+      background: #111;
+    }
+
+    .banner-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 三按钮 */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 10px 16px;
+    }
+
+    .qa-item {
+      background: #1a1a1a;
+      border: 1px solid #2d2d2d;
+      border-radius: 14px;
+      padding: 12px 6px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .qa-title {
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 2px;
+    }
+
+    .qa-sub {
+      font-size: 11px;
+      color: #9a9a9a;
+    }
+
+    /* 房间列表 */
+    .room-list {
+      padding: 12px 16px 90px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .room-card {
+      padding: 16px;
+      border-radius: 18px;
+    }
+
+    .room-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #000;
+    }
+
+    .badge-green { background:#22c55e; }
+    .badge-yellow { background:#facc15; }
+
+    .pool-label {
+      font-size: 11px;
+      color: #9a9a9a;
+    }
+
+    .pool-amount {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .enter-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 900;
+      background: #ffffff;
+      color: #000;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    function navigate(path){
+      window.location.href = path;
+    }
+  </script>
+</head>
+
+<body>
+<div class="app-shell">
+
+  <!-- 页面标题 -->
+  <div style="text-align:center; padding:20px 16px 6px;">
+    <div style="font-size:26px; font-weight:900;">LOBBY</div>
+    <div style="color:#b3b3b3; font-size:13px; margin-top:4px;">
+      选择您的赌桌
+    </div>
   </div>
-  <div style="color:#b3b3b3; font-size:13px; margin-top:4px;">
-    选择您的赌桌
-  </div>
-</div>
 
-
-
-<!-- ====================================== -->
-<!-- 🚀 新增：BANNER 轮播区 -->
-<!-- ====================================== -->
-
-<div class="banner-wrap" style="
-  padding:10px 16px 6px;
-">
-
-  <div class="banner-box" style="
-    width:100%;
-    border-radius:16px;
-    overflow:hidden;
-    background:#111;
-    border:1px solid #2c2c2c;
-    aspect-ratio:16 / 9;
-  ">
-    <img src="assets/banner1.jpg"
-         style="width:100%; height:100%; object-fit:cover;">
+  <!-- Banner -->
+  <div style="padding:8px 16px 4px;">
+    <div class="banner-box">
+      <img src="assets/banner1.jpg" alt="promotion banner">
+    </div>
   </div>
 
-</div>
+  <!-- 三按钮 -->
+  <div class="quick-actions">
 
-
-
-<!-- ====================================== -->
-<!-- 🔘 三按钮功能区 -->
-<!-- ====================================== -->
-
-<div class="quick-actions" style="
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:12px;
-  padding:10px 18px 6px;
-">
-
-  <div class="qa-item" onclick="navigate('wallet.html')" style="
-    background:#1a1a1a;
-    border:1px solid #2d2d2d;
-    border-radius:14px;
-    padding:12px 8px;
-    text-align:center;
-  ">
-    <div style="font-size:20px;">💰</div>
-    <div style="font-size:13px; font-weight:900;">Deposit</div>
-    <div style="font-size:11px; color:#9a9a9a;">充值入款</div>
-  </div>
-
-  <div class="qa-item" onclick="navigate('withdraw.html')" style="
-    background:#1a1a1a;
-    border:1px solid #2d2d2d;
-    border-radius:14px;
-    padding:12px 8px;
-    text-align:center;
-  ">
-    <div style="font-size:20px;">🏦</div>
-    <div style="font-size:13px; font-weight:900;">Withdraw</div>
-    <div style="font-size:11px; color:#9a9a9a;">申请提款</div>
-  </div>
-
-  <div class="qa-item" onclick="navigate('history.html')" style="
-    background:#1a1a1a;
-    border:1px solid #2d2d2d;
-    border-radius:14px;
-    padding:12px 8px;
-    text-align:center;
-  ">
-    <div style="font-size:20px;">📜</div>
-    <div style="font-size:13px; font-weight:900;">History</div>
-    <div style="font-size:11px; color:#9a9a9a;">交易记录</div>
-  </div>
-
-</div>
-
-
-
-<!-- ====================================== -->
-<!-- 🎲 房间列表（无图片版本） -->
-<!-- ====================================== -->
-
-<div class="room-list" style="
-  padding:12px 18px 90px;
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-">
-
-  <!-- 黄金房 -->
-  <div class="room-card" style="
-    background:#1a1a1a;
-    border:1px solid #2c2c2c;
-    border-radius:18px;
-    padding:18px;
-  ">
-    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-      <div style="font-size:18px; font-weight:800;">
-        百家乐 · 黄金
-      </div>
-
-      <div style="
-        padding:4px 10px;
-        border-radius:12px;
-        background:#22c55e;
-        color:#000;
-        font-size:11px;
-        font-weight:800;
-      ">
-        下注中
-      </div>
+    <div class="qa-item" onclick="navigate('wallet.html')">
+      <div class="qa-title">Deposit</div>
+      <div class="qa-sub">充值入款</div>
     </div>
 
-    <div style="text-align:center; margin-bottom:10px;">
-      <div style="font-size:11px; color:#9a9a9a;">庄家池金额</div>
-      <div style="font-size:22px; font-weight:900;">
-        RM 28,900
-      </div>
+    <div class="qa-item" onclick="navigate('withdraw.html')">
+      <div class="qa-title">Withdraw</div>
+      <div class="qa-sub">申请提款</div>
     </div>
 
-    <button onclick="navigate('room.html')" style="
-      width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:none;
-      font-weight:900;
-      background:#ffffff;
-      color:#000;
-    ">
-      进入房间
-    </button>
+    <div class="qa-item" onclick="navigate('history.html')">
+      <div class="qa-title">History</div>
+      <div class="qa-sub">交易记录</div>
+    </div>
 
   </div>
 
+  <!-- 房间列表 -->
+  <div class="room-list">
 
+    <!-- 黄金房 -->
+    <div class="card room-card">
 
-  <!-- 钻石房 -->
-  <div class="room-card" style="
-    background:#1a1a1a;
-    border:1px solid #2c2c2c;
-    border-radius:18px;
-    padding:18px;
-  ">
-    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-      <div style="font-size:18px; font-weight:800;">
-        百家乐 · 钻石
+      <div class="room-header">
+        <div style="font-size:18px; font-weight:800;">
+          百家乐 · 黄金
+        </div>
+        <div class="badge badge-green">下注中</div>
       </div>
 
-      <div style="
-        padding:4px 10px;
-        border-radius:12px;
-        background:#facc15;
-        color:#000;
-        font-size:11px;
-        font-weight:800;
-      ">
-        合庄中
+      <div style="text-align:center;">
+        <div class="pool-label">庄家池金额</div>
+        <div class="pool-amount">RM 28,900</div>
       </div>
+
+      <button class="enter-btn" onclick="navigate('room.html')">
+        进入房间
+      </button>
+
     </div>
 
-    <div style="text-align:center; margin-bottom:10px;">
-      <div style="font-size:11px; color:#9a9a9a;">庄家池金额</div>
-      <div style="font-size:22px; font-weight:900;">
-        RM 120,000
-      </div>
-    </div>
+    <!-- 钻石房 -->
+    <div class="card room-card">
 
-    <button onclick="navigate('room.html')" style="
-      width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:none;
-      font-weight:900;
-      background:#ffffff;
-      color:#000;
-    ">
-      进入房间
-    </button>
+      <div class="room-header">
+        <div style="font-size:18px; font-weight:800;">
+          百家乐 · 钻石
+        </div>
+        <div class="badge badge-yellow">合庄中</div>
+      </div>
+
+      <div style="text-align:center;">
+        <div class="pool-label">庄家池金额</div>
+        <div class="pool-amount">RM 120,000</div>
+      </div>
+
+      <button class="enter-btn" onclick="navigate('room.html')">
+        进入房间
+      </button>
+
+    </div>
 
   </div>
 
 </div>
+</body>
+</html>
