@@ -374,13 +374,13 @@ function switchGame(tab){
 
 
 /* —— 页面加载时默认显示 百家乐 —— */
-function initLobby(){
+document.addEventListener("DOMContentLoaded", () => {
   const firstTab = document.querySelector(".game-tab[data-game='baccarat']");
   if(firstTab){
     firstTab.classList.add("active");
     renderRooms(games.baccarat);
   }
-}
+});
 </script>
 
 </body>
