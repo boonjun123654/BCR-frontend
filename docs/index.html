@@ -220,7 +220,26 @@
     fetch(page + "?v=" + Date.now())
       .then(r => r.text())
       .then(html => {
-        content.innerHTML = html;
+
+        const temp = document.createElement("div");
+        temp.innerHTML = html;
+
+        // 插入 HTML 内容
+        content.innerHTML = "";
+        content.append(...temp.children);
+
+        // ⭐ 重新执行 lobby 里的 script
+        temp.querySelectorAll("script").forEach(oldScript => {
+          const s = document.createElement("script");
+
+          if (oldScript.src) {
+            s.src = oldScript.src;
+          } else {
+            s.textContent = oldScript.textContent;
+          }
+
+          content.appendChild(s);
+        });
       });
 
     sidebar.classList.remove("open");
