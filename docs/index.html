@@ -217,7 +217,7 @@
     if (page.includes("wallet")) nav_wallet.classList.add("active");
     if (page.includes("stats"))  nav_stats.classList.add("active");
 
-    fetch(page)
+    fetch(page + "?v=" + Date.now())
       .then(r => r.text())
       .then(html => {
         content.innerHTML = html;
@@ -227,7 +227,7 @@
   }
 
   // 默认进入 Lobby 大厅
-  navigate("lobby.html");
+  navigate("lobby.html?v=" + Date.now());
 </script>
 
 </body>
