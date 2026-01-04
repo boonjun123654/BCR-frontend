@@ -22,18 +22,18 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      height: 68px;
+      height: 64px;
       background: #1a1a1a;
       border-bottom: 1px solid #2a2a2a;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 18px;
+      padding: 0 16px;
     }
 
     .icon-btn {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -43,12 +43,26 @@
 
     .icon-btn:hover { background:#2a2a2a; }
 
-    .logo { max-height: 64px; object-fit: contain; }
+    /* logo 缩小一点 */
+    .logo {
+      max-height: 46px;
+      object-fit: contain;
+    }
 
-    .login-btn {
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
+    /* Login 按钮 + 人头图标 */
+    .login-wrap{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      cursor:pointer;
+      font-size:15px;
+      font-weight:600;
+    }
+
+    .login-wrap svg{
+      width:18px;
+      height:18px;
+      fill:#ffffff;
     }
 
     /* ===== Sidebar ===== */
@@ -74,6 +88,8 @@
       padding:12px 0;
       border-bottom:1px solid #2a2a2a;
       cursor:pointer;
+      font-size:14px;
+      font-weight:600;
     }
 
     /* ===== Main Content ===== */
@@ -95,14 +111,15 @@
     }
 
     .nav-item {
-      font-size:12px;
+      font-size:13px;
       color:#b0b0b0;
       text-align:center;
+      font-weight:500;
     }
 
     .nav-item.active {
       color:#ffffff;
-      font-weight:600;
+      font-weight:700;
     }
   </style>
 </head>
@@ -111,44 +128,64 @@
 
 <!-- ===== Top Bar ===== -->
 <div class="top-bar">
+
   <div class="icon-btn" onclick="openSidebar()">☰</div>
 
   <img src="assets/logo.png" class="logo" alt="Logo">
 
-  <!-- Login 直接跳转，不走动态加载 -->
-  <div class="login-btn" onclick="window.location.href='login.html'">
-    Login
+  <!-- Login 右侧加入白色人头图标 -->
+  <div class="login-wrap" onclick="window.location.href='login.html'">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 2a6 6 0 110 12 6 6 0 010-12zm0 14c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z"/>
+    </svg>
+    <span>Login</span>
   </div>
+
 </div>
 
 
 <!-- ===== Sidebar ===== -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
-    <div class="sidebar-item" onclick="navigate('lobby.html')">大厅</div>
-    <div class="sidebar-item" onclick="navigate('wallet.html')">钱包</div>
-    <div class="sidebar-item" onclick="navigate('stats.html')">战绩</div>
+
+    <div class="sidebar-item" onclick="navigate('lobby.html')">
+      大厅
+    </div>
+
+    <div class="sidebar-item" onclick="navigate('wallet.html')">
+      钱包
+    </div>
+
+    <div class="sidebar-item" onclick="navigate('stats.html')">
+      战绩
+    </div>
+
   </div>
 </div>
 
 
-<!-- ===== Content（页面注入区） ===== -->
+<!-- ===== Content（动态注入区域） ===== -->
 <div id="content" class="content"></div>
 
 
-<!-- ===== Bottom Nav ===== -->
+<!-- ===== Bottom Nav（无 emoji 版本） ===== -->
 <div class="bottom-nav">
-  <div id="nav-lobby" class="nav-item active" onclick="navigate('lobby.html')">
-    🏠<br>大厅
+
+  <div id="nav-lobby" class="nav-item active"
+       onclick="navigate('lobby.html')">
+    大厅
   </div>
 
-  <div id="nav-stats" class="nav-item" onclick="navigate('stats.html')">
-    📊<br>战绩
+  <div id="nav-stats" class="nav-item"
+       onclick="navigate('stats.html')">
+    战绩
   </div>
 
-  <div id="nav-wallet" class="nav-item" onclick="navigate('wallet.html')">
-    💰<br>钱包
+  <div id="nav-wallet" class="nav-item"
+       onclick="navigate('wallet.html')">
+    钱包
   </div>
+
 </div>
 
 
@@ -170,10 +207,9 @@
     }
   }
 
-  /* ===== 页面切换（动态加载） ===== */
+  /* ===== 页面切换（动态加载 lobby / wallet / stats） ===== */
   function navigate(page) {
 
-    // Bottom Nav 高亮
     document.querySelectorAll(".nav-item")
       .forEach(n => n.classList.remove("active"));
 
@@ -181,7 +217,6 @@
     if (page.includes("wallet")) nav_wallet.classList.add("active");
     if (page.includes("stats"))  nav_stats.classList.add("active");
 
-    // 直接插入 HTML（不再截 body）
     fetch(page)
       .then(r => r.text())
       .then(html => {
@@ -191,7 +226,7 @@
     sidebar.classList.remove("open");
   }
 
-  // 默认加载 Lobby
+  // 默认进入 Lobby 大厅
   navigate("lobby.html");
 </script>
 
