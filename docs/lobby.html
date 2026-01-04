@@ -6,59 +6,55 @@
   <title>Baccarat Lobby</title>
 
   <style>
-    body{
-      margin:0;
-      background:#0f0f0f;
-      color:#ffffff;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    body {
+      margin: 0;
+      background: #0f0f0f;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    .app-shell{
-      max-width:480px;
-      margin:0 auto;
-      min-height:100vh;
-      background:#0f0f0f;
+    .app-shell {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: #0f0f0f;
     }
 
-    .banner-box{
-      width:100%;
-      aspect-ratio:16/9;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid #2c2c2c;
-      background:#111;
+    .banner-box {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #2c2c2c;
+      background: #111;
     }
 
-    .banner-box img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
+    .banner-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .quick-actions{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:10px;
-      padding:10px 16px;
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 10px 16px;
     }
 
-    .qa-item{
-      background:#1a1a1a;
-      border:1px solid #2d2d2d;
-      border-radius:14px;
-      padding:12px 6px;
-      text-align:center;
-      cursor:pointer;
+    .qa-item {
+      background: #1a1a1a;
+      border: 1px solid #2d2d2d;
+      border-radius: 14px;
+      padding: 12px 6px;
+      text-align: center;
+      cursor: pointer;
     }
 
-    .qa-title{ font-size:13px;font-weight:900;margin-bottom:2px; }
-    .qa-sub{ font-size:11px;color:#9a9a9a; }
+    .qa-title { font-size: 13px; font-weight: 900; margin-bottom: 2px; }
+    .qa-sub { font-size: 11px; color: #9a9a9a; }
 
-    .game-tabs{
-      display:flex;
-      gap:10px;
-      padding:10px 16px 2px;
-    }
+    .game-tabs{ display:flex; gap:10px; padding: 10px 16px 2px; }
 
     .game-tab{
       padding:10px 14px;
@@ -78,11 +74,11 @@
       border-color:#ffad33;
     }
 
-    .room-list{
-      padding:12px 16px 90px;
-      display:flex;
-      flex-direction:column;
-      gap:16px;
+    .room-list {
+      padding: 12px 16px 90px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
     .room-card-v2{
@@ -93,27 +89,45 @@
       box-shadow:0 12px 28px rgba(0,0,0,.55);
     }
 
-    .room-meta{ display:flex;justify-content:space-between;margin-bottom:10px; }
-    .room-title{ font-size:18px;font-weight:900; }
+    .room-meta{ display:flex; justify-content:space-between; margin-bottom:10px; }
+    .room-title{ font-size:18px; font-weight:900; }
 
-    .badge-glow{ padding:4px 10px;border-radius:12px;font-size:11px;font-weight:900; }
-    .badge-green{ background:linear-gradient(#5cff8b,#2ecc71);color:#002b11; }
-    .badge-yellow{ background:linear-gradient(#ffe86b,#facc15);color:#3b2a00; }
+    .badge-glow{
+      padding:4px 10px;
+      border-radius:12px;
+      font-size:11px;
+      font-weight:900;
+    }
 
-    .pool-label{ font-size:11px;color:#9a9a9a; }
-    .pool-amount{ font-size:22px;font-weight:900; }
+    .badge-green{ background:#22c55e; color:#002b11; }
+    .badge-yellow{ background:#facc15; color:#3b2a00; }
+
+    .room-pool{ text-align:center; }
+    .pool-label{ font-size:11px; color:#9a9a9a; }
+    .pool-amount{ font-size:22px; font-weight:900; }
+
+    .fee-note{ margin-top:6px; font-size:11px; color:#b6b6b6; }
 
     .enter-btn-main{
-      width:100%;padding:12px;border-radius:12px;
-      font-weight:900;border:none;
-      background:linear-gradient(#ffffff,#e9e9e9);
-      color:#000;margin-top:8px;cursor:pointer;
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:none;
+      font-weight:900;
+      background:#ffffff;
+      color:#000;
+      margin-top:8px;
+      cursor:pointer;
     }
 
     .enter-btn-ghost{
-      width:100%;padding:10px;border-radius:12px;
-      border:1px dashed #3a3a3a;background:#111;
-      color:#dcdcdc;margin-top:6px;font-size:13px;
+      width:100%;
+      padding:10px;
+      border-radius:12px;
+      border:1px dashed #3a3a3a;
+      background:#111;
+      color:#dcdcdc;
+      margin-top:6px;
       cursor:pointer;
     }
   </style>
@@ -128,20 +142,21 @@
 <body>
 <div class="app-shell">
 
-  <div style="text-align:center;padding:20px 16px 6px;">
-    <div style="font-size:26px;font-weight:900;">LOBBY</div>
-    <div style="color:#b3b3b3;font-size:13px;margin-top:4px;">
+  <div style="text-align:center; padding:20px 16px 6px;">
+    <div style="font-size:26px; font-weight:900;">LOBBY</div>
+    <div style="color:#b3b3b3; font-size:13px; margin-top:4px;">
       选择您的游戏
     </div>
   </div>
 
   <div style="padding:8px 16px 4px;">
     <div class="banner-box">
-      <img src="assets/banner1.jpg">
+      <img src="assets/banner1.jpg" alt="promotion banner">
     </div>
   </div>
 
   <div class="quick-actions">
+
     <div class="qa-item" onclick="navigate('wallet.html')">
       <div class="qa-title">Deposit</div>
       <div class="qa-sub">充值入款</div>
@@ -156,7 +171,9 @@
       <div class="qa-title">History</div>
       <div class="qa-sub">交易记录</div>
     </div>
+
   </div>
+
 
   <div class="game-tabs">
     <div class="game-tab active" data-game="baccarat" onclick="switchGame(this)">百家</div>
@@ -170,29 +187,34 @@
 
 </div>
 
+
 <script>
-/* 游戏配置 */
+/* ---------- 游戏数据 ---------- */
 const games = {
   baccarat:{ name:"百家乐", rooms:[
     { type:"gold", title:"黄金房", pool:"RM 28,900", status:"下注中" },
     { type:"diamond", title:"钻石房", pool:"RM 120,000", status:"合庄中" },
     { type:"custom", title:"自建房间", desc:"邀请好友 · 房间码进入 · 自定义限额" }
   ]},
+
   sicbo:{ name:"骰宝", rooms:[
     { type:"gold", title:"黄金房", pool:"RM 9,200", status:"下注中" },
     { type:"diamond", title:"钻石房", pool:"RM 61,000", status:"合庄中" },
     { type:"custom", title:"自建房间", desc:"私人房 · 房间码加入" }
   ]},
+
   niuniu:{ name:"牛牛", rooms:[
     { type:"gold", title:"黄金房", pool:"RM 18,400", status:"下注中" },
     { type:"diamond", title:"钻石房", pool:"RM 87,000", status:"合庄中" },
     { type:"custom", title:"自建房间", desc:"好友局 · 自定义限额" }
   ]},
+
   sangong:{ name:"三公", rooms:[
     { type:"gold", title:"黄金房", pool:"RM 12,600", status:"下注中" },
     { type:"diamond", title:"钻石房", pool:"RM 53,000", status:"合庄中" },
     { type:"custom", title:"自建房间", desc:"邀请房 · ROOM CODE" }
   ]},
+
   blackjack:{ name:"21点", rooms:[
     { type:"gold", title:"黄金房", pool:"RM 15,800", status:"下注中" },
     { type:"diamond", title:"钻石房", pool:"RM 74,500", status:"合庄中" },
@@ -200,64 +222,96 @@ const games = {
   ]}
 };
 
+
+/* ---------- 渲染房间 ---------- */
 function renderRooms(game){
   const box = document.getElementById("roomContainer");
+  if(!box) return;
+
   box.innerHTML = "";
 
-  game.rooms.forEach(r=>{
-    if(r.type==="custom"){
+  game.rooms.forEach(r => {
+
+    if(r.type === "custom"){
       box.innerHTML += `
         <div class="room-card-v2">
           <div class="room-meta">
             <div class="room-title">${game.name} · ${r.title}</div>
             <div class="badge-glow badge-yellow">自定义房</div>
           </div>
+
           <div class="room-pool">
             <div class="pool-label">${r.desc}</div>
           </div>
+
           <div class="fee-note">平台佣金 4.5% · 自动扣除</div>
+
           <button class="enter-btn-ghost" onclick="navigate('create-room.html')">
             创建房间（生成 CODE）
           </button>
-        </div>`;
+        </div>
+      `;
       return;
     }
 
     box.innerHTML += `
       <div class="room-card-v2">
+
         <div class="room-meta">
           <div class="room-title">${game.name} · ${r.title}</div>
-          <div class="badge-glow ${r.status==='下注中'?'badge-green':'badge-yellow'}">${r.status}</div>
+          <div class="badge-glow ${r.status==='下注中'?'badge-green':'badge-yellow'}">
+            ${r.status}
+          </div>
         </div>
+
         <div class="room-pool">
           <div class="pool-label">庄家池金额</div>
           <div class="pool-amount">${r.pool}</div>
         </div>
+
         <div class="fee-note">平台抽佣 4.5%（系统结算）</div>
+
         <button class="enter-btn-main" onclick="navigate('room.html')">
           进入房间
         </button>
-      </div>`;
+
+      </div>
+    `;
   });
 }
 
+
+/* ---------- tab 切换 ---------- */
 function switchGame(tab){
-  document.querySelectorAll(".game-tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".game-tab")
+    .forEach(t => t.classList.remove("active"));
+
   tab.classList.add("active");
-  renderRooms(games[tab.dataset.game]);
+
+  const key = tab.dataset.game;
+  renderRooms(games[key]);
 }
 
-/* ⭐ 通用初始化（支持 index 动态加载） */
+
+/* ---------- ⭐ 统一初始化入口 ---------- */
 function initLobby(){
+
   const firstTab = document.querySelector(".game-tab[data-game='baccarat']");
-  if(firstTab){
-    firstTab.classList.add("active");
-    renderRooms(games.baccarat);
-  }
+  if(!firstTab) return;
+
+  firstTab.classList.add("active");
+
+  renderRooms(games.baccarat);
 }
 
-/* 兼容直接访问 lobby.html */
-initLobby();
+
+/* ---------- ⭐ 兼容两种加载方式 ---------- */
+/* ① 直接打开 lobby.html */
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", initLobby);
+}else{
+  initLobby();
+}
 </script>
 
 </body>
