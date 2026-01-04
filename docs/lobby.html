@@ -292,26 +292,6 @@ function switchGame(tab){
   renderRooms(games[key]);
 }
 
-
-/* ---------- ⭐ 统一初始化入口 ---------- */
-function initLobby(){
-
-  const firstTab = document.querySelector(".game-tab[data-game='baccarat']");
-  if(!firstTab) return;
-
-  firstTab.classList.add("active");
-
-  renderRooms(games.baccarat);
-}
-
-
-/* ---------- ⭐ 兼容两种加载方式 ---------- */
-/* ① 直接打开 lobby.html */
-if(document.readyState === "loading"){
-  document.addEventListener("DOMContentLoaded", initLobby);
-}else{
-  initLobby();
-}
 </script>
 
 </body>
