@@ -94,6 +94,7 @@ window.initLobby = function () {
 
   /* ---------- tab 切换 ---------- */
   function switchGame(tab){
+
     document.querySelectorAll(".game-tab")
       .forEach(t => t.classList.remove("active"));
 
@@ -103,11 +104,23 @@ window.initLobby = function () {
     renderRooms(games[key]);
   }
 
-  // 绑定点击事件
+
+  /* ---------- 防止重复绑定事件 ---------- */
+  document.querySelectorAll(".game-tab").forEach(tab=>{
+    tab.replaceWith(tab.cloneNode(true));
+  });
+
   document.querySelectorAll(".game-tab").forEach(tab=>{
     tab.addEventListener("click", ()=>switchGame(tab));
   });
 
-  // ⭐ 默认进入 百家乐
-  renderRooms(games.baccarat);
+
+  /* ---------- 默认进 百家乐 ---------- */
+  const firstTab = document.querySelector(".game-tab[data-game='baccarat']");
+  if(firstTab){
+    firstTab.classList.add("active");
+    renderRooms(games.baccarat);
+  }
+
+  console.log("✔ Lobby initialized");
 };
