@@ -17,7 +17,6 @@
       overflow-x: hidden;
     }
 
-    /* ===== Top Bar ===== */
     .top-bar {
       position: sticky;
       top: 0;
@@ -43,10 +42,7 @@
 
     .icon-btn:hover { background:#2a2a2a; }
 
-    .logo {
-      max-height: 46px;
-      object-fit: contain;
-    }
+    .logo { max-height: 46px; object-fit: contain; }
 
     .login-wrap{
       display:flex;
@@ -57,13 +53,8 @@
       font-weight:600;
     }
 
-    .login-wrap svg{
-      width:18px;
-      height:18px;
-      fill:#ffffff;
-    }
+    .login-wrap svg{ width:18px; height:18px; fill:#ffffff; }
 
-    /* ===== Sidebar ===== */
     .sidebar {
       position: fixed;
       inset: 0;
@@ -90,10 +81,8 @@
       font-weight:600;
     }
 
-    /* ===== Content ===== */
     .content { padding-bottom: 80px; }
 
-    /* ===== Bottom Nav ===== */
     .bottom-nav {
       position:fixed;
       bottom:0;
@@ -145,17 +134,9 @@
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
 
-    <div class="sidebar-item" onclick="navigate('lobby.html')">
-      大厅
-    </div>
-
-    <div class="sidebar-item" onclick="navigate('wallet.html')">
-      钱包
-    </div>
-
-    <div class="sidebar-item" onclick="navigate('stats.html')">
-      战绩
-    </div>
+    <div class="sidebar-item" onclick="navigate('lobby.html')">大厅</div>
+    <div class="sidebar-item" onclick="navigate('wallet.html')">钱包</div>
+    <div class="sidebar-item" onclick="navigate('stats.html')">战绩</div>
 
   </div>
 </div>
@@ -195,63 +176,72 @@ const nav_wallet = document.getElementById("nav-wallet");
 const nav_stats  = document.getElementById("nav-stats");
 
 
-function openSidebar() {
-  sidebar.classList.add("open");
-}
+function openSidebar(){ sidebar.classList.add("open"); }
 
-function closeSidebar(e) {
-  if (e.target.id === "sidebar") {
+function closeSidebar(e){
+  if(e.target.id === "sidebar"){
     sidebar.classList.remove("open");
   }
 }
 
 
-/* ===== 页面动态加载器 ===== */
-function navigate(page){
+/* =============================
+   页面动态加载（核心修复版）
+============================= */
+async function navigate(page){
 
   document.querySelectorAll(".nav-item")
-    .forEach(n=>n.classList.remove("active"));
+    .forEach(n => n.classList.remove("active"));
 
   if(page.includes("lobby"))  nav_lobby.classList.add("active");
   if(page.includes("wallet")) nav_wallet.classList.add("active");
   if(page.includes("stats"))  nav_stats.classList.add("active");
 
-  /* 避免缓存 — 强制刷新 */
-  fetch(page + "?v=" + Date.now())
-    .then(r=>r.text())
-    .then(html=>{
 
-      const temp = document.createElement("div");
-      temp.innerHTML = html;
+  const resp = await fetch(page + "?v=" + Date.now());
+  const html = await resp.text();
 
-      /* 先把页面结构加载进去 */
-      content.innerHTML = "";
-      content.append(...temp.children);
+  const temp = document.createElement("div");
+  temp.innerHTML = html;
 
-      /* ⭐ 重新执行 lobby / wallet / stats 中的 script */
-      temp.querySelectorAll("script").forEach(oldScript=>{
-        const s = document.createElement("script");
+  content.innerHTML = "";
+  content.append(...temp.children);
 
-        if(oldScript.src){
-          s.src = oldScript.src;
-        }else{
-          s.textContent = oldScript.textContent;
-        }
 
-        content.appendChild(s);
-      });
+  /* ===== 清理旧函数，避免污染 ===== */
+  window.initLobby = undefined;
 
-      /* ⭐ 若页面声明 initLobby()，自动执行 */
-      if(typeof initLobby === "function"){
-        initLobby();
-      }
-    });
+
+  /* ===== 重新执行页面脚本 ===== */
+  temp.querySelectorAll("script").forEach(oldScript => {
+
+    const s = document.createElement("script");
+
+    if(oldScript.src){
+      s.src = oldScript.src + "?v=" + Date.now();
+    }else{
+      s.textContent = oldScript.textContent;
+    }
+
+    content.appendChild(s);
+  });
+
+
+  /* ===== 仅 lobby 才会执行 ===== */
+  setTimeout(() => {
+
+    if(typeof window.initLobby === "function"){
+      console.log("✔ initLobby() triggered from index");
+      window.initLobby();
+    }
+
+  }, 50);
 
   sidebar.classList.remove("open");
 }
 
 
-/* ===== 默认进入 Lobby ===== */
+/* ===== 默认进入大厅 ===== */
 navigate("lobby.html");
 </script>
 
