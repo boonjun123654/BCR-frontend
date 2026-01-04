@@ -63,29 +63,32 @@
       color: #9a9a9a;
     }
 
-    /* 游戏 Tabs */
     .game-tabs{
       display:flex;
-      gap:8px;
-      overflow-x:auto;
-      padding: 6px 16px 2px;
+      gap:10px;
+      padding: 10px 16px 2px;
     }
 
     .game-tab{
-      padding:10px 12px;
-      border-radius:12px;
+      padding:10px 14px;
+      border-radius:14px;
       background:#151515;
-      border:1px solid #2b2b2b;
+      border:1px solid #2c2c2c;
       font-size:13px;
-      white-space:nowrap;
+      font-weight:800;
+      color:#d8d8d8;
       cursor:pointer;
-      transition:.2s;
+      transition:.25s;
+    }
+
+    .game-tab:hover{
+      border-color:#ffaa33;
     }
 
     .game-tab.active{
-      background:linear-gradient(120deg,#ffd54a,#ff9f1c);
+      background:linear-gradient(120deg,#ffcf4a,#ff9a1c);
       color:#000;
-      font-weight:900;
+      border-color:#ffad33;
     }
 
     /* 房间列表 */
@@ -230,13 +233,12 @@
 
   <!-- 游戏 Tabs -->
   <div class="game-tabs">
-    <div class="game-tab active" onclick="switchGame('baccarat', this)">🃏 百家乐</div>
-    <div class="game-tab" onclick="switchGame('sicbo', this)">🎲 骰宝</div>
-    <div class="game-tab" onclick="switchGame('niuniu', this)">🐮 牛牛</div>
-    <div class="game-tab" onclick="switchGame('sangong', this)">🏆 三公</div>
-    <div class="game-tab" onclick="switchGame('blackjack', this)">🂡 21 点</div>
+    <div class="game-tab active" data-game="baccarat" onclick="switchGame(this)">百家乐</div>
+    <div class="game-tab" data-game="sicbo" onclick="switchGame(this)">骰宝</div>
+    <div class="game-tab" data-game="niuniu" onclick="switchGame(this)">牛牛</div>
+    <div class="game-tab" data-game="sangong" onclick="switchGame(this)">三公</div>
+    <div class="game-tab" data-game="blackjack" onclick="switchGame(this)">21 点</div>
   </div>
-
 
   <!-- 房间容器 -->
   <div id="roomContainer" class="room-list"></div>
@@ -299,15 +301,16 @@ const games = {
 /* 渲染房间 */
 function renderRooms(game){
   const box = document.getElementById("roomContainer");
+  if(!box) return;
+
   box.innerHTML = "";
 
-  game.rooms.forEach(r=>{
+  game.rooms.forEach(r => {
 
-    /* 自建房 */
+    // 自建房
     if(r.type === "custom"){
       box.innerHTML += `
         <div class="room-card-v2">
-
           <div class="room-meta">
             <div class="room-title">${game.name} · ${r.title}</div>
             <div class="badge-glow badge-yellow">自定义房</div>
@@ -318,25 +321,24 @@ function renderRooms(game){
           </div>
 
           <div class="fee-note">
-            平台佣金 4.5% · 自动扣除（不可关闭）
+            平台佣金 4.5% · 自动扣除
           </div>
 
           <button class="enter-btn-ghost" onclick="navigate('create-room.html')">
-            创建房间（生成房间 CODE）
+            创建房间（生成 CODE）
           </button>
-
         </div>
       `;
       return;
     }
 
-    /* 公共房 */
+    // 公共房
     box.innerHTML += `
       <div class="room-card-v2">
 
         <div class="room-meta">
           <div class="room-title">${game.name} · ${r.title}</div>
-          <div class="badge-glow ${r.status==='下注中' ? 'badge-green' : 'badge-yellow'}">
+          <div class="badge-glow ${r.status==='下注中'?'badge-green':'badge-yellow'}">
             ${r.status}
           </div>
         </div>
@@ -347,7 +349,7 @@ function renderRooms(game){
         </div>
 
         <div class="fee-note">
-          平台抽佣：4.5%（系统结算时自动扣除）
+          平台抽佣 4.5%（系统结算）
         </div>
 
         <button class="enter-btn-main" onclick="navigate('room.html')">
@@ -360,16 +362,25 @@ function renderRooms(game){
 }
 
 
-/* Tab 切换 */
-function switchGame(key, el){
-  document.querySelectorAll(".game-tab").forEach(t=>t.classList.remove("active"));
-  el.classList.add("active");
+function switchGame(tab){
+  document.querySelectorAll(".game-tab")
+    .forEach(t => t.classList.remove("active"));
+
+  tab.classList.add("active");
+
+  const key = tab.dataset.game;
   renderRooms(games[key]);
 }
 
 
-/* 默认显示百家乐 */
-renderRooms(games.baccarat);
+/* —— 页面加载时默认显示 百家乐 —— */
+document.addEventListener("DOMContentLoaded", () => {
+  const firstTab = document.querySelector(".game-tab[data-game='baccarat']");
+  if(firstTab){
+    firstTab.classList.add("active");
+    renderRooms(games.baccarat);
+  }
+});
 </script>
 
 </body>
