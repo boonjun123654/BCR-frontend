@@ -43,13 +43,11 @@
 
     .icon-btn:hover { background:#2a2a2a; }
 
-    /* logo 缩小一点 */
     .logo {
       max-height: 46px;
       object-fit: contain;
     }
 
-    /* Login 按钮 + 人头图标 */
     .login-wrap{
       display:flex;
       align-items:center;
@@ -92,7 +90,7 @@
       font-weight:600;
     }
 
-    /* ===== Main Content ===== */
+    /* ===== Content ===== */
     .content { padding-bottom: 80px; }
 
     /* ===== Bottom Nav ===== */
@@ -133,7 +131,6 @@
 
   <img src="assets/logo.png" class="logo" alt="Logo">
 
-  <!-- Login 右侧加入白色人头图标 -->
   <div class="login-wrap" onclick="window.location.href='login.html'">
     <svg viewBox="0 0 24 24">
       <path d="M12 2a6 6 0 110 12 6 6 0 010-12zm0 14c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z"/>
@@ -164,11 +161,11 @@
 </div>
 
 
-<!-- ===== Content（动态注入区域） ===== -->
+<!-- ===== Page Content ===== -->
 <div id="content" class="content"></div>
 
 
-<!-- ===== Bottom Nav（无 emoji 版本） ===== -->
+<!-- ===== Bottom Nav ===== -->
 <div class="bottom-nav">
 
   <div id="nav-lobby" class="nav-item active"
@@ -190,63 +187,72 @@
 
 
 <script>
-  const sidebar = document.getElementById("sidebar");
-  const content = document.getElementById("content");
+const sidebar = document.getElementById("sidebar");
+const content = document.getElementById("content");
 
-  const nav_lobby  = document.getElementById("nav-lobby");
-  const nav_wallet = document.getElementById("nav-wallet");
-  const nav_stats  = document.getElementById("nav-stats");
+const nav_lobby  = document.getElementById("nav-lobby");
+const nav_wallet = document.getElementById("nav-wallet");
+const nav_stats  = document.getElementById("nav-stats");
 
-  function openSidebar() {
-    sidebar.classList.add("open");
-  }
 
-  function closeSidebar(e) {
-    if (e.target.id === "sidebar") {
-      sidebar.classList.remove("open");
-    }
-  }
+function openSidebar() {
+  sidebar.classList.add("open");
+}
 
-  /* ===== 页面切换（动态加载 lobby / wallet / stats） ===== */
-  function navigate(page) {
-
-    document.querySelectorAll(".nav-item")
-      .forEach(n => n.classList.remove("active"));
-
-    if (page.includes("lobby"))  nav_lobby.classList.add("active");
-    if (page.includes("wallet")) nav_wallet.classList.add("active");
-    if (page.includes("stats"))  nav_stats.classList.add("active");
-
-    fetch(page + "?v=" + Date.now())
-      .then(r => r.text())
-      .then(html => {
-
-        const temp = document.createElement("div");
-        temp.innerHTML = html;
-
-        // 插入 HTML 内容
-        content.innerHTML = "";
-        content.append(...temp.children);
-
-        // ⭐ 重新执行 lobby 里的 script
-        temp.querySelectorAll("script").forEach(oldScript => {
-          const s = document.createElement("script");
-
-          if (oldScript.src) {
-            s.src = oldScript.src;
-          } else {
-            s.textContent = oldScript.textContent;
-          }
-
-          content.appendChild(s);
-        });
-      });
-
+function closeSidebar(e) {
+  if (e.target.id === "sidebar") {
     sidebar.classList.remove("open");
   }
+}
 
-  // 默认进入 Lobby 大厅
-  navigate("lobby.html?v=" + Date.now());
+
+/* ===== 页面动态加载器 ===== */
+function navigate(page){
+
+  document.querySelectorAll(".nav-item")
+    .forEach(n=>n.classList.remove("active"));
+
+  if(page.includes("lobby"))  nav_lobby.classList.add("active");
+  if(page.includes("wallet")) nav_wallet.classList.add("active");
+  if(page.includes("stats"))  nav_stats.classList.add("active");
+
+  /* 避免缓存 — 强制刷新 */
+  fetch(page + "?v=" + Date.now())
+    .then(r=>r.text())
+    .then(html=>{
+
+      const temp = document.createElement("div");
+      temp.innerHTML = html;
+
+      /* 先把页面结构加载进去 */
+      content.innerHTML = "";
+      content.append(...temp.children);
+
+      /* ⭐ 重新执行 lobby / wallet / stats 中的 script */
+      temp.querySelectorAll("script").forEach(oldScript=>{
+        const s = document.createElement("script");
+
+        if(oldScript.src){
+          s.src = oldScript.src;
+        }else{
+          s.textContent = oldScript.textContent;
+        }
+
+        content.appendChild(s);
+      });
+
+      /* ⭐ 若页面声明 initLobby()，自动执行 */
+      if(typeof initLobby === "function"){
+        initLobby();
+      }
+    });
+
+  sidebar.classList.remove("open");
+}
+
+
+/* ===== 默认进入 Lobby ===== */
+navigate("lobby.html");
 </script>
 
 </body>
