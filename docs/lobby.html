@@ -1,171 +1,194 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Baccarat Lobby</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Baccarat Lobby</title>
 
-  <style>
-    body {
-      margin: 0;
-      background: #0f0f0f;
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
+<style>
+  body {
+    margin: 0;
+    background: #0f0f0f;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
 
-    .app-shell {
-      max-width: 480px;
-      margin: 0 auto;
-      min-height: 100vh;
-      background: #0f0f0f;
-    }
+  .app-shell {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #0f0f0f;
+  }
 
-    .card {
-      background: #1a1a1a;
-      border: 1px solid #2c2c2c;
-      border-radius: 16px;
-    }
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #2c2c2c;
+    border-radius: 16px;
+  }
 
-    .banner-box {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid #2c2c2c;
-      background: #111;
-    }
+  .banner-box {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #2c2c2c;
+    background: #111;
+  }
 
-    .banner-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  .banner-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-    /* 三按钮 */
-    .quick-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-      padding: 10px 16px;
-    }
+  /* 三按钮 */
+  .quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 10px 16px;
+  }
 
-    .qa-item {
-      background: #1a1a1a;
-      border: 1px solid #2d2d2d;
-      border-radius: 14px;
-      padding: 12px 6px;
-      text-align: center;
-      cursor: pointer;
-    }
+  .qa-item {
+    background: #1a1a1a;
+    border: 1px solid #2d2d2d;
+    border-radius: 14px;
+    padding: 12px 6px;
+    text-align: center;
+    cursor: pointer;
+  }
 
-    .qa-title { font-size: 13px; font-weight: 900; }
-    .qa-sub { font-size: 11px; color: #9a9a9a; }
+  .qa-title { font-size: 13px; font-weight: 900; }
+  .qa-sub { font-size: 11px; color: #9a9a9a; }
 
-    /* 游戏类型按钮条 */
-    .game-tabs {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 12px 16px;
-    }
+  /* ===== 游戏类型按钮（等宽修复） ===== */
+  .game-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 12px 16px;
+  }
 
-    .game-tab {
-      padding: 10px 14px;
-      border-radius: 14px;
-      border: 1px solid #2c2c2c;
-      background: #161616;
-      font-size: 13px;
-      font-weight: 900;
-      white-space: nowrap;
-      cursor: pointer;
-    }
+  .game-tab {
+    border-radius: 14px;
+    border: 1px solid #2c2c2c;
+    background: #161616;
+    font-size: 13px;
+    font-weight: 900;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+    user-select: none;
+  }
 
-    .game-tab.active {
-      background: #ffffff;
-      color: #000;
-    }
+  .game-tab.active {
+    background: #ffffff;
+    color: #000;
+  }
 
-    /* 房间列表 */
-    .room-list {
-      padding: 8px 16px 90px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+  /* ===== 房间列表 ===== */
+  .room-list {
+    padding: 8px 16px 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 
-    .room-card {
-      padding: 16px 16px 12px;
-      border-radius: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+  .rooms-group {
+    flex-direction: column;
+    gap: 16px;
+    display: none;
+  }
 
-    .room-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
+  .rooms-group.active {
+    display: flex;
+  }
 
-    .badge {
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 800;
-      color: #000;
-    }
+  .room-card {
+    padding: 16px 16px 12px;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
 
-    .badge-green { background:#22c55e; }
-    .badge-yellow { background:#facc15; }
-    .badge-blue { background:#60a5fa; }
+  .room-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
 
-    .pool-label { font-size: 11px; color: #9a9a9a; }
-    .pool-amount { font-size: 22px; font-weight: 900; }
+  .badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #000;
+  }
 
-    .enter-btn {
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: none;
-      font-weight: 900;
-      background: #ffffff;
-      color: #000;
-      margin-top: 4px;
-      cursor: pointer;
-    }
+  .badge-green { background:#22c55e; }
+  .badge-yellow { background:#facc15; }
+  .badge-blue { background:#60a5fa; }
 
-    /* ⭐ 底部图片条（100×50 空间） */
-    .room-strip {
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 6px;
-    }
+  .pool-label { font-size: 11px; color: #9a9a9a; }
+  .pool-amount { font-size: 22px; font-weight: 900; }
 
-    .room-strip img {
-      width: 100px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 1px solid #2a2a2a;
-    }
-  </style>
+  .enter-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 900;
+    background: #ffffff;
+    color: #000;
+    margin-top: 4px;
+    cursor: pointer;
+  }
 
-  <script>
-    function navigate(path){
-      window.location.href = path;
-    }
+  /* ⭐ 新版房间底部横幅（≈ 卡片 1/4 高度） */
+  .room-banner {
+    width: 100%;
+    height: 95px;
+    margin-top: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #2a2a2a;
+  }
 
-    /* 游戏切换 */
-    function switchGame(type){
-      document.querySelectorAll(".game-tab").forEach(t => t.classList.remove("active"));
-      document.getElementById("tab-" + type).classList.add("active");
+  .room-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
 
-      document.querySelectorAll(".rooms-group").forEach(g => g.style.display = "none");
-      document.getElementById("rooms-" + type).style.display = "flex";
-    }
-  </script>
+<script>
+  function navigate(path){
+    window.location.href = path;
+  }
+
+  /* ===== 修复：游戏切换不可点击 ===== */
+  function switchGame(type){
+
+    // tab 激活状态
+    document.querySelectorAll(".game-tab")
+      .forEach(t => t.classList.remove("active"));
+
+    document.getElementById("tab-" + type)
+      .classList.add("active");
+
+    // 隐藏所有组
+    document.querySelectorAll(".rooms-group")
+      .forEach(g => g.classList.remove("active"));
+
+    // 显示当前组
+    document.getElementById("rooms-" + type)
+      .classList.add("active");
+  }
+
+  // 默认百家乐
+  window.onload = () => switchGame("baccarat");
+</script>
 </head>
 
 <body>
@@ -182,7 +205,7 @@
   <!-- Banner -->
   <div style="padding:8px 16px 4px;">
     <div class="banner-box">
-      <img src="assets/banner1.jpg" alt="promotion banner">
+      <img src="assets/banner1.jpg">
     </div>
   </div>
 
@@ -204,9 +227,9 @@
     </div>
   </div>
 
-  <!-- ⭐ 游戏类型按钮区 -->
+  <!-- ⭐ 等宽游戏按钮 -->
   <div class="game-tabs">
-    <div id="tab-baccarat"  class="game-tab active" onclick="switchGame('baccarat')">百家乐</div>
+    <div id="tab-baccarat"  class="game-tab" onclick="switchGame('baccarat')">百家乐</div>
     <div id="tab-sicbo"     class="game-tab" onclick="switchGame('sicbo')">骰宝</div>
     <div id="tab-sangong"   class="game-tab" onclick="switchGame('sangong')">三公</div>
     <div id="tab-bj21"      class="game-tab" onclick="switchGame('bj21')">BlackJack 21</div>
@@ -214,14 +237,13 @@
   </div>
 
   <!-- =========================
-       ⭐ 房间列表（每个游戏三种房）
+       ♠ 房间列表
        ========================= -->
   <div class="room-list">
 
     <!-- ♠ 百家乐 -->
-    <div id="rooms-baccarat" class="rooms-group" style="display:flex; flex-direction:column; gap:16px;">
+    <div id="rooms-baccarat" class="rooms-group active">
 
-      <!-- 黄金房 -->
       <div class="card room-card">
         <div class="room-header">
           <div style="font-size:18px; font-weight:800;">百家乐 · 黄金房</div>
@@ -233,15 +255,14 @@
           <div class="pool-amount">RM 28,900</div>
         </div>
 
-        <button class="enter-btn" onclick="navigate('room.html')">进入房间</button>
+        <button class="enter-btn">进入房间</button>
 
-        <!-- ⭐ 100×50 图片条 -->
-        <div class="room-strip">
+        <!-- ⭐ 大图横幅 -->
+        <div class="room-banner">
           <img src="assets/room/gold.jpg">
         </div>
       </div>
 
-      <!-- 钻石房 -->
       <div class="card room-card">
         <div class="room-header">
           <div style="font-size:18px; font-weight:800;">百家乐 · 钻石房</div>
@@ -253,14 +274,13 @@
           <div class="pool-amount">RM 120,000</div>
         </div>
 
-        <button class="enter-btn" onclick="navigate('room.html')">进入房间</button>
+        <button class="enter-btn">进入房间</button>
 
-        <div class="room-strip">
+        <div class="room-banner">
           <img src="assets/room/diamond.jpg">
         </div>
       </div>
 
-      <!-- 自定义房 -->
       <div class="card room-card">
         <div class="room-header">
           <div style="font-size:18px; font-weight:800;">百家乐 · 自定义房</div>
@@ -268,25 +288,19 @@
         </div>
 
         <div style="text-align:center;">
-          <div class="pool-label">玩家可自设：台费 / 底注 / 上限</div>
+          <div class="pool-label">玩家自设 · 台费 / 底注 / 上限</div>
         </div>
 
-        <button class="enter-btn" onclick="navigate('create-room.html')">
-          创建房间
-        </button>
+        <button class="enter-btn">创建房间</button>
 
-        <div class="room-strip">
+        <div class="room-banner">
           <img src="assets/room/custom.jpg">
         </div>
       </div>
-
     </div>
 
-
-    <!-- ♣ 骰宝 -->
-    <div id="rooms-sicbo" class="rooms-group" style="display:none; flex-direction:column; gap:16px;">
-
-      <!-- 结构保持一致（仅展示一组示例） -->
+    <!-- 其它游戏（结构相同，可复用） -->
+    <div id="rooms-sicbo" class="rooms-group">
       <div class="card room-card">
         <div class="room-header">
           <div style="font-size:18px; font-weight:800;">骰宝 · 黄金房</div>
@@ -298,19 +312,15 @@
           <div class="pool-amount">RM 9,400</div>
         </div>
 
-        <button class="enter-btn" onclick="navigate('room.html')">进入房间</button>
+        <button class="enter-btn">进入房间</button>
 
-        <div class="room-strip">
+        <div class="room-banner">
           <img src="assets/room/sicbo.jpg">
         </div>
       </div>
-
-      <!-- 其他房间同结构… -->
     </div>
 
-    <!-- 其他游戏类型同结构… -->
   </div>
-
 </div>
 </body>
 </html>
