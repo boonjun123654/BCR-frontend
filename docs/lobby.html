@@ -32,7 +32,6 @@
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid #2c2c2c;
-    background: #111;
   }
 
   .banner-box img {
@@ -41,7 +40,9 @@
     object-fit: cover;
   }
 
-  /* 三按钮 */
+  /* =========================
+     顶部三功能按钮（保持朴素）
+     ========================= */
   .quick-actions {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -61,7 +62,9 @@
   .qa-title { font-size: 13px; font-weight: 900; }
   .qa-sub { font-size: 11px; color: #9a9a9a; }
 
-  /* ===== 游戏类型按钮（等宽修复） ===== */
+  /* =========================
+     🎮 游戏切换按钮（美化版）
+     ========================= */
   .game-tabs {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -70,23 +73,35 @@
   }
 
   .game-tab {
-    border-radius: 14px;
-    border: 1px solid #2c2c2c;
-    background: #161616;
+    padding: 10px 0;
+    text-align: center;
     font-size: 13px;
     font-weight: 900;
-    text-align: center;
-    padding: 10px 0;
+    border-radius: 14px;
     cursor: pointer;
     user-select: none;
+
+    /* 玻璃按钮 + 渐变描边 */
+    background: linear-gradient(#141414,#141414) padding-box,
+                linear-gradient(130deg,#a78bfa,#60a5fa,#fbbf24) border-box;
+    border: 1.5px solid transparent;
+    box-shadow: 0 4px 10px rgba(0,0,0,.35);
+    transition: .25s;
+  }
+
+  .game-tab:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(255,255,255,.15);
   }
 
   .game-tab.active {
-    background: #ffffff;
+    background: linear-gradient(#ffffff,#ffffff) padding-box,
+                linear-gradient(130deg,#a78bfa,#60a5fa,#fbbf24) border-box;
     color: #000;
+    box-shadow: 0 8px 18px rgba(255,255,255,.25);
   }
 
-  /* ===== 房间列表 ===== */
+  /* ========================= */
   .room-list {
     padding: 8px 16px 90px;
     display: flex;
@@ -95,21 +110,16 @@
   }
 
   .rooms-group {
+    display: none;
     flex-direction: column;
     gap: 16px;
-    display: none;
   }
 
-  .rooms-group.active {
-    display: flex;
-  }
+  .rooms-group.active { display: flex; }
 
   .room-card {
     padding: 16px 16px 12px;
     border-radius: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
   }
 
   .room-header {
@@ -141,11 +151,11 @@
     font-weight: 900;
     background: #ffffff;
     color: #000;
-    margin-top: 4px;
     cursor: pointer;
+    margin-top: 4px;
   }
 
-  /* ⭐ 新版房间底部横幅（≈ 卡片 1/4 高度） */
+  /* 房间底部大横幅 */
   .room-banner {
     width: 100%;
     height: 95px;
@@ -167,26 +177,27 @@
     window.location.href = path;
   }
 
-  /* ===== 修复：游戏切换不可点击 ===== */
+  /* =========================
+     🟢 修复：游戏切换无反应
+     ========================= */
   function switchGame(type){
 
-    // tab 激活状态
+    // tabs 激活
     document.querySelectorAll(".game-tab")
       .forEach(t => t.classList.remove("active"));
 
-    document.getElementById("tab-" + type)
-      .classList.add("active");
+    const tab = document.getElementById("tab-" + type);
+    if (tab) tab.classList.add("active");
 
-    // 隐藏所有组
+    // 房间组切换
     document.querySelectorAll(".rooms-group")
       .forEach(g => g.classList.remove("active"));
 
-    // 显示当前组
-    document.getElementById("rooms-" + type)
-      .classList.add("active");
+    const group = document.getElementById("rooms-" + type);
+    if (group) group.classList.add("active");
   }
 
-  // 默认百家乐
+  // 默认 → 百家乐
   window.onload = () => switchGame("baccarat");
 </script>
 </head>
@@ -209,7 +220,7 @@
     </div>
   </div>
 
-  <!-- 三按钮 -->
+  <!-- 三功能按钮 -->
   <div class="quick-actions">
     <div class="qa-item" onclick="navigate('wallet.html')">
       <div class="qa-title">Deposit</div>
@@ -227,7 +238,7 @@
     </div>
   </div>
 
-  <!-- ⭐ 等宽游戏按钮 -->
+  <!-- 🎮 游戏 tabs（独立风格） -->
   <div class="game-tabs">
     <div id="tab-baccarat"  class="game-tab" onclick="switchGame('baccarat')">百家乐</div>
     <div id="tab-sicbo"     class="game-tab" onclick="switchGame('sicbo')">骰宝</div>
@@ -236,12 +247,10 @@
     <div id="tab-niuniu"    class="game-tab" onclick="switchGame('niuniu')">牛牛</div>
   </div>
 
-  <!-- =========================
-       ♠ 房间列表
-       ========================= -->
+  <!-- ♠ 房间列表 -->
   <div class="room-list">
 
-    <!-- ♠ 百家乐 -->
+    <!-- 百家乐 -->
     <div id="rooms-baccarat" class="rooms-group active">
 
       <div class="card room-card">
@@ -257,7 +266,6 @@
 
         <button class="enter-btn">进入房间</button>
 
-        <!-- ⭐ 大图横幅 -->
         <div class="room-banner">
           <img src="assets/room/gold.jpg">
         </div>
@@ -280,26 +288,9 @@
           <img src="assets/room/diamond.jpg">
         </div>
       </div>
-
-      <div class="card room-card">
-        <div class="room-header">
-          <div style="font-size:18px; font-weight:800;">百家乐 · 自定义房</div>
-          <div class="badge badge-blue">自定义规则</div>
-        </div>
-
-        <div style="text-align:center;">
-          <div class="pool-label">玩家自设 · 台费 / 底注 / 上限</div>
-        </div>
-
-        <button class="enter-btn">创建房间</button>
-
-        <div class="room-banner">
-          <img src="assets/room/custom.jpg">
-        </div>
-      </div>
     </div>
 
-    <!-- 其它游戏（结构相同，可复用） -->
+    <!-- 骰宝 -->
     <div id="rooms-sicbo" class="rooms-group">
       <div class="card room-card">
         <div class="room-header">
