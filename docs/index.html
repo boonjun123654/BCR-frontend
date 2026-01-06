@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -44,12 +43,34 @@
 
     .icon-btn:hover { background:#2a2a2a; }
 
-    .logo { max-height: 64px; object-fit: contain; }
+    /* ⭐ LOGO 缩小（更协调） */
+    .logo {
+      max-height: 48px;
+      object-fit: contain;
+      opacity: .95;
+    }
 
+    /* ⭐ Login 美化：玻璃+渐变描边按钮 */
     .login-btn {
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 14px;
+
+      background: linear-gradient(#1a1a1a, #1a1a1a) padding-box,
+                  linear-gradient(120deg, #9a7bff, #ffaf7b) border-box;
+
+      border: 1.5px solid transparent;
+      box-shadow: 0 6px 14px rgba(0,0,0,.35);
       cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(255,175,123,.2);
+      background: linear-gradient(#222,#222) padding-box,
+                  linear-gradient(120deg,#b894ff,#ffc38c) border-box;
     }
 
     /* ===== Sidebar ===== */
@@ -116,7 +137,7 @@
 
   <img src="assets/logo.png" class="logo" alt="Logo">
 
-  <!-- Login 直接跳转，不走动态加载 -->
+  <!-- Login 直接跳转 -->
   <div class="login-btn" onclick="window.location.href='login.html'">
     Login
   </div>
@@ -174,7 +195,6 @@
   /* ===== 页面切换（动态加载） ===== */
   function navigate(page) {
 
-    // Bottom Nav 高亮
     document.querySelectorAll(".nav-item")
       .forEach(n => n.classList.remove("active"));
 
@@ -182,7 +202,6 @@
     if (page.includes("wallet")) nav_wallet.classList.add("active");
     if (page.includes("stats"))  nav_stats.classList.add("active");
 
-    // 直接插入 HTML（不再截 body）
     fetch(page)
       .then(r => r.text())
       .then(html => {
