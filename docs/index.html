@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -17,22 +18,23 @@
       overflow-x: hidden;
     }
 
+    /* ===== Top Bar ===== */
     .top-bar {
       position: sticky;
       top: 0;
       z-index: 100;
-      height: 64px;
+      height: 68px;
       background: #1a1a1a;
       border-bottom: 1px solid #2a2a2a;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 0 18px;
     }
 
     .icon-btn {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -42,19 +44,15 @@
 
     .icon-btn:hover { background:#2a2a2a; }
 
-    .logo { max-height: 46px; object-fit: contain; }
+    .logo { max-height: 64px; object-fit: contain; }
 
-    .login-wrap{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      cursor:pointer;
-      font-size:15px;
-      font-weight:600;
+    .login-btn {
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
     }
 
-    .login-wrap svg{ width:18px; height:18px; fill:#ffffff; }
-
+    /* ===== Sidebar ===== */
     .sidebar {
       position: fixed;
       inset: 0;
@@ -77,12 +75,12 @@
       padding:12px 0;
       border-bottom:1px solid #2a2a2a;
       cursor:pointer;
-      font-size:14px;
-      font-weight:600;
     }
 
+    /* ===== Main Content ===== */
     .content { padding-bottom: 80px; }
 
+    /* ===== Bottom Nav ===== */
     .bottom-nav {
       position:fixed;
       bottom:0;
@@ -98,15 +96,14 @@
     }
 
     .nav-item {
-      font-size:13px;
+      font-size:12px;
       color:#b0b0b0;
       text-align:center;
-      font-weight:500;
     }
 
     .nav-item.active {
       color:#ffffff;
-      font-weight:700;
+      font-weight:600;
     }
   </style>
 </head>
@@ -115,134 +112,88 @@
 
 <!-- ===== Top Bar ===== -->
 <div class="top-bar">
-
   <div class="icon-btn" onclick="openSidebar()">☰</div>
 
   <img src="assets/logo.png" class="logo" alt="Logo">
 
-  <div class="login-wrap" onclick="window.location.href='login.html'">
-    <svg viewBox="0 0 24 24">
-      <path d="M12 2a6 6 0 110 12 6 6 0 010-12zm0 14c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z"/>
-    </svg>
-    <span>Login</span>
+  <!-- Login 直接跳转，不走动态加载 -->
+  <div class="login-btn" onclick="window.location.href='login.html'">
+    Login
   </div>
-
 </div>
 
 
 <!-- ===== Sidebar ===== -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
-
     <div class="sidebar-item" onclick="navigate('lobby.html')">大厅</div>
     <div class="sidebar-item" onclick="navigate('wallet.html')">钱包</div>
     <div class="sidebar-item" onclick="navigate('stats.html')">战绩</div>
-
   </div>
 </div>
 
 
-<!-- ===== Page Content ===== -->
+<!-- ===== Content（页面注入区） ===== -->
 <div id="content" class="content"></div>
 
 
 <!-- ===== Bottom Nav ===== -->
 <div class="bottom-nav">
-
-  <div id="nav-lobby" class="nav-item active"
-       onclick="navigate('lobby.html')">
-    大厅
+  <div id="nav-lobby" class="nav-item active" onclick="navigate('lobby.html')">
+    🏠<br>大厅
   </div>
 
-  <div id="nav-stats" class="nav-item"
-       onclick="navigate('stats.html')">
-    战绩
+  <div id="nav-stats" class="nav-item" onclick="navigate('stats.html')">
+    📊<br>战绩
   </div>
 
-  <div id="nav-wallet" class="nav-item"
-       onclick="navigate('wallet.html')">
-    钱包
+  <div id="nav-wallet" class="nav-item" onclick="navigate('wallet.html')">
+    💰<br>钱包
   </div>
-
 </div>
 
 
 <script>
-const sidebar = document.getElementById("sidebar");
-const content = document.getElementById("content");
+  const sidebar = document.getElementById("sidebar");
+  const content = document.getElementById("content");
 
-const nav_lobby  = document.getElementById("nav-lobby");
-const nav_wallet = document.getElementById("nav-wallet");
-const nav_stats  = document.getElementById("nav-stats");
+  const nav_lobby  = document.getElementById("nav-lobby");
+  const nav_wallet = document.getElementById("nav-wallet");
+  const nav_stats  = document.getElementById("nav-stats");
 
+  function openSidebar() {
+    sidebar.classList.add("open");
+  }
 
-function openSidebar(){ sidebar.classList.add("open"); }
+  function closeSidebar(e) {
+    if (e.target.id === "sidebar") {
+      sidebar.classList.remove("open");
+    }
+  }
 
-function closeSidebar(e){
-  if(e.target.id === "sidebar"){
+  /* ===== 页面切换（动态加载） ===== */
+  function navigate(page) {
+
+    // Bottom Nav 高亮
+    document.querySelectorAll(".nav-item")
+      .forEach(n => n.classList.remove("active"));
+
+    if (page.includes("lobby"))  nav_lobby.classList.add("active");
+    if (page.includes("wallet")) nav_wallet.classList.add("active");
+    if (page.includes("stats"))  nav_stats.classList.add("active");
+
+    // 直接插入 HTML（不再截 body）
+    fetch(page)
+      .then(r => r.text())
+      .then(html => {
+        content.innerHTML = html;
+      });
+
     sidebar.classList.remove("open");
   }
-}
 
-
-/* =============================
-   页面动态加载（核心修复版）
-============================= */
-async function navigate(page){
-
-  document.querySelectorAll(".nav-item")
-    .forEach(n => n.classList.remove("active"));
-
-  if(page.includes("lobby"))  nav_lobby.classList.add("active");
-  if(page.includes("wallet")) nav_wallet.classList.add("active");
-  if(page.includes("stats"))  nav_stats.classList.add("active");
-
-
-  const resp = await fetch(page + "?v=" + Date.now());
-  const html = await resp.text();
-
-  const temp = document.createElement("div");
-  temp.innerHTML = html;
-
-  content.innerHTML = "";
-  content.append(...temp.children);
-
-
-  /* ===== 清理旧函数，避免污染 ===== */
-  window.initLobby = undefined;
-
-
-  /* ===== 重新执行页面脚本 ===== */
-  temp.querySelectorAll("script").forEach(oldScript => {
-
-    const s = document.createElement("script");
-
-    if(oldScript.src){
-      s.src = oldScript.src + "?v=" + Date.now();
-    }else{
-      s.textContent = oldScript.textContent;
-    }
-
-    content.appendChild(s);
-  });
-
-
-  /* ===== 仅 lobby 才会执行 ===== */
-  setTimeout(() => {
-
-    if(typeof window.initLobby === "function"){
-      console.log("✔ initLobby() triggered from index");
-      window.initLobby();
-    }
-
-  }, 200);
-
-  sidebar.classList.remove("open");
-}
-
-
-/* ===== 默认进入大厅 ===== */
-navigate("lobby.html");
+  // 默认加载 Lobby
+  navigate("lobby.html");
 </script>
 
 </body>
