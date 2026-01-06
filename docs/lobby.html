@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -14,7 +13,6 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* 手机适配容器 */
     .app-shell {
       max-width: 480px;
       margin: 0 auto;
@@ -22,14 +20,12 @@
       background: #0f0f0f;
     }
 
-    /* 通用卡片 */
     .card {
       background: #1a1a1a;
       border: 1px solid #2c2c2c;
       border-radius: 16px;
     }
 
-    /* Banner */
     .banner-box {
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -62,34 +58,53 @@
       cursor: pointer;
     }
 
-    .qa-title {
-      font-size: 13px;
-      font-weight: 900;
-      margin-bottom: 2px;
+    .qa-title { font-size: 13px; font-weight: 900; }
+    .qa-sub { font-size: 11px; color: #9a9a9a; }
+
+    /* 游戏类型按钮条 */
+    .game-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 12px 16px;
     }
 
-    .qa-sub {
-      font-size: 11px;
-      color: #9a9a9a;
+    .game-tab {
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid #2c2c2c;
+      background: #161616;
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .game-tab.active {
+      background: #ffffff;
+      color: #000;
     }
 
     /* 房间列表 */
     .room-list {
-      padding: 12px 16px 90px;
+      padding: 8px 16px 90px;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
     .room-card {
-      padding: 16px;
+      padding: 16px 16px 12px;
       border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .room-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .badge {
@@ -102,16 +117,10 @@
 
     .badge-green { background:#22c55e; }
     .badge-yellow { background:#facc15; }
+    .badge-blue { background:#60a5fa; }
 
-    .pool-label {
-      font-size: 11px;
-      color: #9a9a9a;
-    }
-
-    .pool-amount {
-      font-size: 22px;
-      font-weight: 900;
-    }
+    .pool-label { font-size: 11px; color: #9a9a9a; }
+    .pool-amount { font-size: 22px; font-weight: 900; }
 
     .enter-btn {
       width: 100%;
@@ -121,8 +130,25 @@
       font-weight: 900;
       background: #ffffff;
       color: #000;
-      margin-top: 8px;
+      margin-top: 4px;
       cursor: pointer;
+    }
+
+    /* ⭐ 底部图片条（100×50 空间） */
+    .room-strip {
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .room-strip img {
+      width: 100px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #2a2a2a;
     }
   </style>
 
@@ -130,13 +156,22 @@
     function navigate(path){
       window.location.href = path;
     }
+
+    /* 游戏切换 */
+    function switchGame(type){
+      document.querySelectorAll(".game-tab").forEach(t => t.classList.remove("active"));
+      document.getElementById("tab-" + type).classList.add("active");
+
+      document.querySelectorAll(".rooms-group").forEach(g => g.style.display = "none");
+      document.getElementById("rooms-" + type).style.display = "flex";
+    }
   </script>
 </head>
 
 <body>
 <div class="app-shell">
 
-  <!-- 页面标题 -->
+  <!-- 标题 -->
   <div style="text-align:center; padding:20px 16px 6px;">
     <div style="font-size:26px; font-weight:900;">LOBBY</div>
     <div style="color:#b3b3b3; font-size:13px; margin-top:4px;">
@@ -153,7 +188,6 @@
 
   <!-- 三按钮 -->
   <div class="quick-actions">
-
     <div class="qa-item" onclick="navigate('wallet.html')">
       <div class="qa-title">Deposit</div>
       <div class="qa-sub">充值入款</div>
@@ -168,54 +202,113 @@
       <div class="qa-title">History</div>
       <div class="qa-sub">交易记录</div>
     </div>
-
   </div>
 
-  <!-- 房间列表 -->
+  <!-- ⭐ 游戏类型按钮区 -->
+  <div class="game-tabs">
+    <div id="tab-baccarat"  class="game-tab active" onclick="switchGame('baccarat')">百家乐</div>
+    <div id="tab-sicbo"     class="game-tab" onclick="switchGame('sicbo')">骰宝</div>
+    <div id="tab-sangong"   class="game-tab" onclick="switchGame('sangong')">三公</div>
+    <div id="tab-bj21"      class="game-tab" onclick="switchGame('bj21')">BlackJack 21</div>
+    <div id="tab-niuniu"    class="game-tab" onclick="switchGame('niuniu')">牛牛</div>
+  </div>
+
+  <!-- =========================
+       ⭐ 房间列表（每个游戏三种房）
+       ========================= -->
   <div class="room-list">
 
-    <!-- 黄金房 -->
-    <div class="card room-card">
+    <!-- ♠ 百家乐 -->
+    <div id="rooms-baccarat" class="rooms-group" style="display:flex; flex-direction:column; gap:16px;">
 
-      <div class="room-header">
-        <div style="font-size:18px; font-weight:800;">
-          百家乐 · 黄金
+      <!-- 黄金房 -->
+      <div class="card room-card">
+        <div class="room-header">
+          <div style="font-size:18px; font-weight:800;">百家乐 · 黄金房</div>
+          <div class="badge badge-green">下注中</div>
         </div>
-        <div class="badge badge-green">下注中</div>
+
+        <div style="text-align:center;">
+          <div class="pool-label">庄家池金额</div>
+          <div class="pool-amount">RM 28,900</div>
+        </div>
+
+        <button class="enter-btn" onclick="navigate('room.html')">进入房间</button>
+
+        <!-- ⭐ 100×50 图片条 -->
+        <div class="room-strip">
+          <img src="assets/room/gold.jpg">
+        </div>
       </div>
 
-      <div style="text-align:center;">
-        <div class="pool-label">庄家池金额</div>
-        <div class="pool-amount">RM 28,900</div>
+      <!-- 钻石房 -->
+      <div class="card room-card">
+        <div class="room-header">
+          <div style="font-size:18px; font-weight:800;">百家乐 · 钻石房</div>
+          <div class="badge badge-yellow">合庄中</div>
+        </div>
+
+        <div style="text-align:center;">
+          <div class="pool-label">庄家池金额</div>
+          <div class="pool-amount">RM 120,000</div>
+        </div>
+
+        <button class="enter-btn" onclick="navigate('room.html')">进入房间</button>
+
+        <div class="room-strip">
+          <img src="assets/room/diamond.jpg">
+        </div>
       </div>
 
-      <button class="enter-btn" onclick="navigate('room.html')">
-        进入房间
-      </button>
+      <!-- 自定义房 -->
+      <div class="card room-card">
+        <div class="room-header">
+          <div style="font-size:18px; font-weight:800;">百家乐 · 自定义房</div>
+          <div class="badge badge-blue">自定义规则</div>
+        </div>
+
+        <div style="text-align:center;">
+          <div class="pool-label">玩家可自设：台费 / 底注 / 上限</div>
+        </div>
+
+        <button class="enter-btn" onclick="navigate('create-room.html')">
+          创建房间
+        </button>
+
+        <div class="room-strip">
+          <img src="assets/room/custom.jpg">
+        </div>
+      </div>
 
     </div>
 
-    <!-- 钻石房 -->
-    <div class="card room-card">
 
-      <div class="room-header">
-        <div style="font-size:18px; font-weight:800;">
-          百家乐 · 钻石
+    <!-- ♣ 骰宝 -->
+    <div id="rooms-sicbo" class="rooms-group" style="display:none; flex-direction:column; gap:16px;">
+
+      <!-- 结构保持一致（仅展示一组示例） -->
+      <div class="card room-card">
+        <div class="room-header">
+          <div style="font-size:18px; font-weight:800;">骰宝 · 黄金房</div>
+          <div class="badge badge-green">下注中</div>
         </div>
-        <div class="badge badge-yellow">合庄中</div>
+
+        <div style="text-align:center;">
+          <div class="pool-label">奖池金额</div>
+          <div class="pool-amount">RM 9,400</div>
+        </div>
+
+        <button class="enter-btn" onclick="navigate('room.html')">进入房间</button>
+
+        <div class="room-strip">
+          <img src="assets/room/sicbo.jpg">
+        </div>
       </div>
 
-      <div style="text-align:center;">
-        <div class="pool-label">庄家池金额</div>
-        <div class="pool-amount">RM 120,000</div>
-      </div>
-
-      <button class="enter-btn" onclick="navigate('room.html')">
-        进入房间
-      </button>
-
+      <!-- 其他房间同结构… -->
     </div>
 
+    <!-- 其他游戏类型同结构… -->
   </div>
 
 </div>
