@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Baccarat Lobby</title>
+<title>Lobby</title>
 
 <style>
 body{
@@ -12,44 +12,41 @@ body{
   color:#fff;
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 }
-
 .app-shell{
   max-width:480px;
   margin:0 auto;
   min-height:100vh;
 }
 
-/* =========================
-   通用卡片渐变
-   ========================= */
-.gradient-card{
-  background:
-    linear-gradient(#141414,#141414) padding-box,
-    linear-gradient(135deg,#a78bfa,#60a5fa,#fbbf24) border-box;
-  border:1.5px solid transparent;
-  border-radius:18px;
+/* ================= Banner Slider ================= */
+.banner-wrap{
+  padding:10px 16px;
 }
-
-/* =========================
-   Banner
-   ========================= */
 .banner-box{
+  position:relative;
   width:100%;
-  aspect-ratio:16/9;
+  height:150px;
   border-radius:16px;
   overflow:hidden;
-  border:1px solid #2c2c2c;
+  border:1px solid #2a2a2a;
 }
-.banner-box img{width:100%;height:100%;object-fit:cover}
+.banner-box img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:.6s;
+}
+.banner-box img.active{opacity:1}
 
-/* =========================
-   快捷按钮
-   ========================= */
+/* ================= Quick Actions ================= */
 .quick-actions{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
-  padding:10px 16px;
+  padding:8px 16px;
 }
 .qa-item{
   background:#1a1a1a;
@@ -62,60 +59,46 @@ body{
 .qa-title{font-size:13px;font-weight:900}
 .qa-sub{font-size:11px;color:#9a9a9a}
 
-/* =========================
-   Promotion Banner
-   ========================= */
-.promo-banner{
+/* ================= Promo Banner ================= */
+.promo{
   padding:6px 16px 10px;
 }
-.promo-banner img{
+.promo img{
   width:100%;
-  border-radius:14px;
+  height:80px;
+  object-fit:cover;
+  border-radius:12px;
   border:1px solid #2a2a2a;
 }
 
-/* =========================
-   游戏 Tabs（重点美化）
-   ========================= */
+/* ================= Game Tabs ================= */
 .game-tabs{
   display:flex;
   gap:14px;
-  padding:12px 16px 6px;
+  padding:10px 16px;
 }
-
 .game-tab{
   flex:1;
-  text-align:center;
   padding:12px 0;
+  text-align:center;
   font-weight:900;
   border-radius:999px;
   cursor:pointer;
-  user-select:none;
   background:
-    linear-gradient(#121212,#121212) padding-box,
+    linear-gradient(#141414,#141414) padding-box,
     linear-gradient(135deg,#a78bfa,#60a5fa,#fbbf24) border-box;
   border:1.5px solid transparent;
-  transition:.25s;
 }
-
-.game-tab:hover{
-  transform:translateY(-1px);
-  box-shadow:0 6px 16px rgba(255,255,255,.15);
-}
-
 .game-tab.active{
   background:
     linear-gradient(#ffffff,#ffffff) padding-box,
     linear-gradient(135deg,#a78bfa,#60a5fa,#fbbf24) border-box;
   color:#000;
-  box-shadow:0 8px 18px rgba(255,255,255,.25);
 }
 
-/* =========================
-   房间列表
-   ========================= */
+/* ================= Room List ================= */
 .room-list{
-  padding:10px 16px 90px;
+  padding:8px 16px 90px;
   display:flex;
   flex-direction:column;
   gap:16px;
@@ -123,60 +106,34 @@ body{
 .rooms-group{display:none;gap:16px}
 .rooms-group.active{display:flex;flex-direction:column}
 
-/* =========================
-   房间卡片
-   ========================= */
-.room-card{padding:14px}
-
-.room-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+/* ================= Room Card ================= */
+.room-card{
+  padding:14px;
+  border-radius:18px;
+  background:
+    linear-gradient(#141414,#141414) padding-box,
+    linear-gradient(135deg,#a78bfa,#60a5fa,#fbbf24) border-box;
+  border:1.5px solid transparent;
 }
-
-.badge{
-  padding:4px 10px;
-  border-radius:12px;
-  font-size:11px;
+.room-title{
+  font-size:18px;
   font-weight:800;
-  color:#000;
 }
-.badge-green{background:#22c55e}
-.badge-yellow{background:#facc15}
-
 .online{
   font-size:12px;
   color:#9a9a9a;
   margin-top:4px;
 }
 
-/* 房间图片 */
-.room-banner{
-  margin-top:10px;
-  height:95px;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid #2a2a2a;
-}
-.room-banner img{width:100%;height:100%;object-fit:cover}
-
-/* =========================
-   开奖结果（提示式大路）
-   ========================= */
+/* Results */
 .road{
-  margin-top:10px;
+  margin-top:8px;
   display:flex;
   align-items:center;
   gap:6px;
 }
-.road-label{
-  font-size:11px;
-  color:#9a9a9a;
-  margin-right:6px;
-}
-.dot{
-  width:18px;height:18px;border-radius:50%;
-}
+.road-label{font-size:11px;color:#9a9a9a;margin-right:4px}
+.dot{width:18px;height:18px;border-radius:50%}
 .zhuang{background:#ef4444}
 .xian{background:#3b82f6}
 .he{background:#22c55e}
@@ -187,37 +144,47 @@ body{
   font-size:12px;
 }
 
-/* =========================
-   进入按钮
-   ========================= */
+/* Room Image */
+.room-banner{
+  margin-top:10px;
+  height:95px;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid #2a2a2a;
+}
+.room-banner img{width:100%;height:100%;object-fit:cover}
+
+/* Enter Button */
 .enter-btn{
   margin-top:12px;
   width:100%;
-  padding:13px;
+  padding:12px;
   border-radius:14px;
   border:none;
   font-weight:900;
-  cursor:pointer;
-  background:linear-gradient(135deg,#a78bfa,#60a5fa,#fbbf24);
+  background:#ffffff;
   color:#000;
-  transition:.25s;
-}
-.enter-btn:hover{
-  transform:translateY(-1px);
-  box-shadow:0 6px 16px rgba(255,255,255,.35);
+  cursor:pointer;
 }
 </style>
 
 <script>
 function navigate(p){location.href=p}
-
-function switchGame(type){
-  document.querySelectorAll('.game-tab').forEach(t=>t.classList.remove('active'))
-  document.getElementById('tab-'+type).classList.add('active')
-
+function switchGame(t){
+  document.querySelectorAll('.game-tab').forEach(b=>b.classList.remove('active'))
+  document.getElementById('tab-'+t).classList.add('active')
   document.querySelectorAll('.rooms-group').forEach(g=>g.classList.remove('active'))
-  document.getElementById('rooms-'+type).classList.add('active')
+  document.getElementById('rooms-'+t).classList.add('active')
 }
+
+/* banner slider */
+let idx=0;
+setInterval(()=>{
+  const imgs=document.querySelectorAll('.banner-box img')
+  imgs.forEach(i=>i.classList.remove('active'))
+  idx=(idx+1)%imgs.length
+  imgs[idx].classList.add('active')
+},3500)
 
 window.onload=()=>switchGame('baccarat')
 </script>
@@ -226,32 +193,28 @@ window.onload=()=>switchGame('baccarat')
 <body>
 <div class="app-shell">
 
-<!-- 标题 -->
-<div style="text-align:center;padding:20px 16px 6px">
-  <div style="font-size:26px;font-weight:900">LOBBY</div>
-  <div style="font-size:13px;color:#b3b3b3">选择您的赌桌</div>
-</div>
-
 <!-- Banner -->
-<div style="padding:8px 16px">
+<div class="banner-wrap">
   <div class="banner-box">
-    <img src="assets/banner1.jpg">
+    <img src="assets/banner1.jpg" class="active">
+    <img src="assets/banner2.jpg">
+    <img src="assets/banner3.jpg">
   </div>
 </div>
 
-<!-- 快捷 -->
+<!-- Quick -->
 <div class="quick-actions">
   <div class="qa-item" onclick="navigate('wallet.html')"><div class="qa-title">Deposit</div><div class="qa-sub">充值入款</div></div>
   <div class="qa-item" onclick="navigate('withdraw.html')"><div class="qa-title">Withdraw</div><div class="qa-sub">申请提款</div></div>
   <div class="qa-item" onclick="navigate('history.html')"><div class="qa-title">History</div><div class="qa-sub">交易记录</div></div>
 </div>
 
-<!-- Promotion -->
-<div class="promo-banner">
+<!-- Promo -->
+<div class="promo">
   <img src="assets/promo.jpg">
 </div>
 
-<!-- 游戏 -->
+<!-- Games -->
 <div class="game-tabs">
   <div id="tab-baccarat" class="game-tab" onclick="switchGame('baccarat')">百家乐</div>
   <div id="tab-sicbo" class="game-tab" onclick="switchGame('sicbo')">骰宝</div>
@@ -259,13 +222,10 @@ window.onload=()=>switchGame('baccarat')
 
 <div class="room-list">
 
-<!-- 百家乐 -->
+<!-- Baccarat Rooms -->
 <div id="rooms-baccarat" class="rooms-group active">
-  <div class="gradient-card room-card">
-    <div class="room-header">
-      <div style="font-size:18px;font-weight:800">百家乐 · 黄金房</div>
-      <div class="badge badge-green">下注中</div>
-    </div>
+  <div class="room-card">
+    <div class="room-title">百家乐 · 黄金房</div>
     <div class="online">在线人数：128</div>
 
     <div class="road">
@@ -285,13 +245,10 @@ window.onload=()=>switchGame('baccarat')
   </div>
 </div>
 
-<!-- 骰宝 -->
+<!-- Sicbo Rooms -->
 <div id="rooms-sicbo" class="rooms-group">
-  <div class="gradient-card room-card">
-    <div class="room-header">
-      <div style="font-size:18px;font-weight:800">骰宝 · 黄金房</div>
-      <div class="badge badge-yellow">下注中</div>
-    </div>
+  <div class="room-card">
+    <div class="room-title">骰宝 · 黄金房</div>
     <div class="online">在线人数：76</div>
 
     <div class="road">
