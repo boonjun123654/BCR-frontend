@@ -199,33 +199,44 @@ function navigate(p){
 function switchGame(type){
   document.querySelectorAll('.game-tab')
     .forEach(t=>t.classList.remove('active'))
+
   document.getElementById('tab-'+type)
     .classList.add('active')
 
   document.querySelectorAll('.rooms-group')
     .forEach(g=>g.classList.remove('active'))
+
   document.getElementById('rooms-'+type)
     .classList.add('active')
 }
 
 window.onload = () => {
 
+  // 默认显示百家乐
   switchGame('baccarat')
 
-  /* ⭐ 捕获阶段事件委托（终极稳定） */
-  document.querySelector('.game-tabs')
-    .addEventListener('click', e => {
-      const tab = e.target.closest('.game-tab')
-      if(!tab) return
+  const tabs = document.querySelector('.game-tabs')
 
-      if(tab.id === 'tab-baccarat') switchGame('baccarat')
-      if(tab.id === 'tab-sicbo') switchGame('sicbo')
-    }, true)
+  const handler = (e) => {
+    const tab = e.target.closest('.game-tab')
+    if(!tab) return
 
-  /* Banner 轮播 */
+    e.preventDefault()
+    e.stopPropagation()
+
+    if(tab.id === 'tab-baccarat') switchGame('baccarat')
+    if(tab.id === 'tab-sicbo') switchGame('sicbo')
+  }
+
+  // ⭐ 同时监听 touch + click（关键）
+  tabs.addEventListener('touchstart', handler, {passive:false})
+  tabs.addEventListener('click', handler, true)
+
+  // Banner 轮播
   const imgs = document.querySelectorAll('.banner-box img')
   let idx = 0
   imgs[0].classList.add('active')
+
   setInterval(()=>{
     imgs.forEach(i=>i.classList.remove('active'))
     idx=(idx+1)%imgs.length
