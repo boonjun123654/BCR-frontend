@@ -18,9 +18,11 @@ body{
   min-height:100vh;
 }
 
-/* ================= Banner Slider ================= */
+/* ================= Banner ================= */
 .banner-wrap{
   padding:10px 16px;
+  position:relative;
+  z-index:1;
 }
 .banner-box{
   position:relative;
@@ -59,15 +61,17 @@ body{
 .qa-title{font-size:13px;font-weight:900}
 .qa-sub{font-size:11px;color:#9a9a9a}
 
-/* ================= Promo Banner ================= */
+/* ================= Promo ================= */
 .promo{
-  padding:6px 16px 10px;
+  padding:8px 16px 12px;
+  position:relative;
+  z-index:1;
 }
 .promo img{
   width:100%;
-  height:110px;
+  height:120px;
   object-fit:cover;
-  border-radius:12px;
+  border-radius:14px;
   border:1px solid #2a2a2a;
 }
 
@@ -77,7 +81,7 @@ body{
   gap:14px;
   padding:10px 16px;
   position:relative;
-  z-index:5;
+  z-index:20;           /* 关键：防止被盖住 */
 }
 .game-tab{
   flex:1;
@@ -92,12 +96,13 @@ body{
     linear-gradient(#141414,#141414) padding-box,
     linear-gradient(135deg,#a78bfa,#60a5fa,#fbbf24) border-box;
   border:1.5px solid transparent;
+  transition:.25s;
 }
 .game-tab.active{
-  background:
-    linear-gradient(#ffffff,#ffffff) padding-box,
-    linear-gradient(135deg,#a78bfa,#60a5fa,#fbbf24) border-box;
+  background:#ffffff;
   color:#000;
+  transform:scale(1.03);
+  box-shadow:0 6px 16px rgba(255,255,255,.35);
 }
 
 /* ================= Room List ================= */
@@ -108,10 +113,15 @@ body{
   gap:16px;
 }
 .rooms-group{display:none}
-.rooms-group.active{display:flex;flex-direction:column;gap:16px}
+.rooms-group.active{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
 
 /* ================= Room Card ================= */
 .room-card{
+  position:relative;
   padding:14px;
   border-radius:18px;
   background:
@@ -122,16 +132,26 @@ body{
 .room-title{
   font-size:18px;
   font-weight:800;
+  margin-bottom:6px;
 }
-.online{
-  font-size:13px;
-  color:#cfcfcf;
-  margin-top:6px;
+
+/* 在线人数（左上角） */
+.online-badge{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:#111;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  color:#fff;
+  border:1px solid #2a2a2a;
 }
 
 /* Results */
 .road{
-  margin-top:8px;
+  margin-top:6px;
   display:flex;
   align-items:center;
   gap:6px;
@@ -187,16 +207,19 @@ function switchGame(type){
   document.getElementById('rooms-'+type).classList.add('active')
 }
 
-/* Banner auto slide */
-let idx=0
-setInterval(()=>{
-  const imgs=document.querySelectorAll('.banner-box img')
-  imgs.forEach(i=>i.classList.remove('active'))
-  idx=(idx+1)%imgs.length
-  imgs[idx].classList.add('active')
-},3500)
+window.onload = () => {
+  switchGame('baccarat')
 
-window.onload=()=>switchGame('baccarat')
+  const imgs = document.querySelectorAll('.banner-box img')
+  let idx = 0
+  imgs[0].classList.add('active')
+
+  setInterval(()=>{
+    imgs.forEach(i=>i.classList.remove('active'))
+    idx = (idx + 1) % imgs.length
+    imgs[idx].classList.add('active')
+  },3500)
+}
 </script>
 </head>
 
@@ -206,7 +229,7 @@ window.onload=()=>switchGame('baccarat')
 <!-- Banner -->
 <div class="banner-wrap">
   <div class="banner-box">
-    <img src="assets/banner1.jpg" class="active">
+    <img src="assets/banner1.jpg">
     <img src="assets/banner2.jpg">
     <img src="assets/banner3.jpg">
   </div>
@@ -235,8 +258,8 @@ window.onload=()=>switchGame('baccarat')
 <!-- Baccarat -->
 <div id="rooms-baccarat" class="rooms-group active">
   <div class="room-card">
+    <div class="online-badge">128</div>
     <div class="room-title">百家乐 · 黄金房</div>
-    <div class="online">在线人数：128</div>
 
     <div class="road">
       <div class="road-label">最近结果</div>
@@ -258,8 +281,8 @@ window.onload=()=>switchGame('baccarat')
 <!-- Sicbo -->
 <div id="rooms-sicbo" class="rooms-group">
   <div class="room-card">
+    <div class="online-badge">76</div>
     <div class="room-title">骰宝 · 黄金房</div>
-    <div class="online">在线人数：76</div>
 
     <div class="road">
       <div class="road-label">最近结果</div>
