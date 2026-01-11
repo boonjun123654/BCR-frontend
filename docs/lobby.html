@@ -161,17 +161,53 @@ body{
 }
 .room-banner img{width:100%;height:100%;object-fit:cover;}
 
-/* ===== Slot ===== */
-.slot-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
-.slot-card{text-align:center;padding:14px;}
-.slot-logo{height:70px;object-fit:contain;margin-bottom:8px;}
+/* ===== Slot Grid ===== */
+.slot-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+/* 整个 Slot 卡片 */
+.slot-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* 图片固定框：500 x 250 等比缩放 */
+.slot-image-box{
+  width:100%;
+  max-width:500px;     /* 桌面最大 500 */
+  aspect-ratio: 2 / 1; /* 500 : 250 */
+  background:#000;
+  border-radius:16px 16px 0 0;
+  overflow:hidden;
+  border:1px solid #2c2c2c;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* 图片本身 */
+.slot-image{
+  width:100%;
+  height:100%;
+  object-fit:contain; /* ❗ 不裁切、不拉伸 */
+  background:#000;
+}
+
+/* 查看账号按钮（独立，不在图片框内） */
 .slot-btn{
   width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:none;
+  max-width:500px;
+  padding:14px 0;
+  font-size:16px;
   font-weight:900;
   background:#22c55e;
+  color:#fff;
+  border:none;
+  border-radius:0 0 16px 16px;
   cursor:pointer;
 }
 
@@ -305,17 +341,31 @@ body{
 
   <div id="rooms-slot" class="rooms-group">
     <div class="slot-grid">
-      <div class="card slot-card">
-        <img src="assets/slot/mega888.png" class="slot-logo">
-        <button class="slot-btn" onclick="openSlot('MEGA888')">查看账号</button>
+      <div class="slot-card">
+        <div class="slot-image-box">
+          <img src="assets/slot/mega888.png" class="slot-image">
+        </div>
+        <button class="slot-btn" onclick="openSlot('MEGA888')">
+          查看账号
+        </button>
       </div>
-      <div class="card slot-card">
-        <img src="assets/slot/pussy888.png" class="slot-logo">
-        <button class="slot-btn" onclick="openSlot('PUSSY888')">查看账号</button>
+
+      <div class="slot-card">
+        <div class="slot-image-box">
+          <img src="assets/slot/pussy888.png" class="slot-image">
+        </div>
+        <button class="slot-btn" onclick="openSlot('PUSSY888')">
+          查看账号
+        </button>
       </div>
-      <div class="card slot-card">
-        <img src="assets/slot/918kiss.png" class="slot-logo">
-        <button class="slot-btn" onclick="openSlot('918KISS')">查看账号</button>
+
+      <div class="slot-card">
+        <div class="slot-image-box">
+          <img src="assets/slot/918kiss.png" class="slot-image">
+        </div>
+        <button class="slot-btn" onclick="openSlot('918KISS')">
+          查看账号
+        </button>
       </div>
     </div>
   </div>
