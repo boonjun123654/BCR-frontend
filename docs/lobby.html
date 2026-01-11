@@ -161,12 +161,20 @@ body{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.7);
-  display:none;
+  display:flex;              /* ❗ 不再用 display:none */
+  opacity:0;
+  pointer-events:none;       /* ✅ 默认不拦截点击 */
   align-items:center;
   justify-content:center;
   z-index:999;
+  transition:.25s;
 }
-.modal.active{display:flex;}
+
+.modal.active{
+  opacity:1;
+  pointer-events:auto;       /* ✅ 只有 active 才能点 */
+}
+
 .modal-card{
   width:85%;
   max-width:340px;
