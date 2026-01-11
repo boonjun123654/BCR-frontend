@@ -161,18 +161,19 @@ body{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.7);
-  display:flex;              /* ❗ 不再用 display:none */
+  display:flex;
   opacity:0;
-  pointer-events:none;       /* ✅ 默认不拦截点击 */
+  pointer-events:none;
   align-items:center;
   justify-content:center;
-  z-index:999;
+  z-index:-1;          /* ✅ 关键：默认在最底层 */
   transition:.25s;
 }
 
 .modal.active{
   opacity:1;
-  pointer-events:auto;       /* ✅ 只有 active 才能点 */
+  pointer-events:auto;
+  z-index:999;         /* ✅ 只有打开时才盖住页面 */
 }
 
 .modal-card{
