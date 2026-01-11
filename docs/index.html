@@ -175,6 +175,49 @@ function initBanner(){
   }, 3000);
 }
 
+/* ===== Slot Modal Logic ===== */
+const slotData = {
+  MEGA888: {
+    logo: "assets/slot/mega888.png",
+    id: "mega_123",
+    pw: "888888",
+    url: "www.mega888.com"
+  },
+  PUSSY888: {
+    logo: "assets/slot/pussy888.png",
+    id: "pussy_456",
+    pw: "888888",
+    url: "www.pussy888.com"
+  },
+  "918KISS": {
+    logo: "assets/slot/918kiss.png",
+    id: "kiss_789",
+    pw: "888888",
+    url: "www.918kiss.com"
+  }
+};
+
+function openSlot(name){
+  const d = slotData[name];
+  if (!d) return;
+
+  document.getElementById("slotLogo").src = d.logo;
+  document.getElementById("slotInfo").innerHTML =
+    `账号：${d.id}<br>密码：${d.pw}<br>下载：${d.url}`;
+
+  document.getElementById("slotModal").classList.add("active");
+}
+
+function closeSlot(){
+  document.getElementById("slotModal").classList.remove("active");
+}
+
+function copyText(){
+  const text = document.getElementById("slotInfo").innerText;
+  navigator.clipboard.writeText(text);
+  alert("已复制");
+}
+
 /* ===== 页面切换 ===== */
 function navigate(page){
   clearInterval(bannerTimer);
