@@ -152,27 +152,57 @@ function showSlot(name){
   );
 }
 
+let bannerIndex = 0;
+let bannerTimer;
+
+function initBanner(){
+  const track = document.querySelector(".banner-track");
+  const dots  = document.querySelectorAll(".banner-dot");
+  if (!track || dots.length === 0) return;
+
+  clearInterval(bannerTimer);
+
+  function show(i){
+    bannerIndex = i;
+    track.style.transform = `translateX(-${i * 100}%)`;
+    dots.forEach(d => d.classList.remove("active"));
+    dots[i].classList.add("active");
+  }
+  show(0);
+
+  bannerTimer = setInterval(() => {
+    show((bannerIndex + 1) % dots.length);
+  }, 3000);
+}
+
 /* ===== 页面切换 ===== */
 function navigate(page){
+  clearInterval(bannerTimer);
   document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
   if(page.includes("lobby")) nav_lobby.classList.add("active");
   if(page.includes("wallet")) nav_wallet.classList.add("active");
   if(page.includes("stats")) nav_stats.classList.add("active");
 
   fetch(page)
-    .then(r=>r.text())
-    .then(html=>{
+    .then(r => r.text())
+    .then(html => {
       content.innerHTML = html;
-      if(page.includes("lobby")){
-        setTimeout(()=>switchGame("baccarat"),0);
+
+      if (page.includes("lobby")) {
+        setTimeout(() => {
+          switchGame("baccarat");
+          initBanner();          // ✅ 关键：启动 Banner 自动轮播
+        }, 0);
       }
     });
 
   sidebar.classList.remove("open");
 }
 
+
 /* 默认加载 Lobby */
 navigate("lobby.html");
+
 </script>
 
 </body>
