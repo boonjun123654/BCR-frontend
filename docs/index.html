@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Baccarat</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-
 <style>
 html,body{height:100%;margin:0;}
 body{
@@ -29,41 +27,57 @@ body{
   justify-content:space-between;
   padding:0 18px;
 }
-.icon-btn{
-  width:40px;height:40px;
-  display:flex;align-items:center;justify-content:center;
-  border-radius:10px;cursor:pointer;
-}
-.icon-btn:hover{background:#2a2a2a;}
+
 .logo{max-height:48px;opacity:.95;}
 
-.login-btn{
-  font-size:14px;font-weight:700;
-  padding:8px 16px;border-radius:14px;
-  background:linear-gradient(#1a1a1a,#1a1a1a) padding-box,
-             linear-gradient(120deg,#9a7bff,#ffaf7b) border-box;
-  border:1.5px solid transparent;
+/* ===== Icon Buttons ===== */
+.icon-box{
+  width:46px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
   cursor:pointer;
+  transition:.2s;
 }
+.icon-box:hover{background:#2a2a2a;}
 
 /* ===== Sidebar ===== */
 .sidebar{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.6);
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
   z-index:200;
   display:none;
 }
 .sidebar.open{display:block;}
+
 .sidebar-panel{
-  width:260px;height:100%;
-  background:#1a1a1a;
+  width:260px;
+  height:100%;
+  background:linear-gradient(180deg,#1c1c1c,#141414);
   border-right:1px solid #2a2a2a;
-  padding:20px;
+  padding:18px;
+  animation:slideIn .25s ease;
 }
+
+@keyframes slideIn{
+  from{transform:translateX(-100%);}
+  to{transform:translateX(0);}
+}
+
 .sidebar-item{
-  padding:12px 0;
-  border-bottom:1px solid #2a2a2a;
+  padding:14px 12px;
+  border-radius:10px;
+  margin-bottom:6px;
   cursor:pointer;
+  color:#d0d0d0;
+  transition:.2s;
+}
+.sidebar-item:hover{
+  background:#2a2a2a;
+  color:#fff;
 }
 
 /* ===== Content ===== */
@@ -91,23 +105,6 @@ body{
   color:#fff;
   font-weight:600;
 }
-
-/* ===== Gradient Menu Button ===== */
-.menu-btn{
-  width:46px;
-  height:46px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  border-radius:12px;
-  transition:.2s ease;
-}
-
-.menu-btn:hover{
-  background:#2a2a2a;
-}
-
 </style>
 </head>
 
@@ -115,38 +112,42 @@ body{
 
 <!-- Top Bar -->
 <div class="top-bar">
-  <div class="menu-btn" onclick="openSidebar()">
-    <svg
-      width="26"
-      height="26"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg">
 
+  <!-- Menu Button -->
+  <div class="icon-box" onclick="openSidebar()">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
       <defs>
-        <linearGradient id="menuGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#9a7bff"/>
-          <stop offset="100%" stop-color="#ffaf7b"/>
+        <linearGradient id="menuGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"  stop-color="#a9d3f0"/>
+          <stop offset="35%" stop-color="#3863b8"/>
+          <stop offset="65%" stop-color="#213260"/>
+          <stop offset="100%" stop-color="#f2eaff"/>
         </linearGradient>
       </defs>
-
-      <rect x="3" y="6"  width="18" height="2.6" rx="1.3" fill="url(#menuGradient)"/>
-      <rect x="3" y="11" width="18" height="2.6" rx="1.3" fill="url(#menuGradient)"/>
-      <rect x="3" y="16" width="18" height="2.6" rx="1.3" fill="url(#menuGradient)"/>
-
+      <rect x="3" y="6"  width="18" height="2.6" rx="1.3" fill="url(#menuGrad)"/>
+      <rect x="3" y="11" width="18" height="2.6" rx="1.3" fill="url(#menuGrad)"/>
+      <rect x="3" y="16" width="18" height="2.6" rx="1.3" fill="url(#menuGrad)"/>
     </svg>
   </div>
 
   <img src="assets/logo.png" class="logo">
-  <div class="login-btn" onclick="location.href='login.html'">Login</div>
+
+  <!-- Login Icon -->
+  <div class="icon-box" onclick="location.href='login.html'">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5Z" fill="#fff"/>
+      <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
 </div>
 
 <!-- Sidebar -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
-    <div class="sidebar-item" onclick="navigate('lobby.html')">大厅</div>
-    <div class="sidebar-item" onclick="navigate('wallet.html')">钱包</div>
-    <div class="sidebar-item" onclick="navigate('stats.html')">战绩</div>
+    <div class="sidebar-item" onclick="navigate('lobby.html')">🏠 大厅</div>
+    <div class="sidebar-item" onclick="navigate('wallet.html')">💰 钱包</div>
+    <div class="sidebar-item" onclick="navigate('stats.html')">📊 战绩</div>
   </div>
 </div>
 
@@ -155,135 +156,26 @@ body{
 
 <!-- Bottom Nav -->
 <div class="bottom-nav">
-  <div id="nav-lobby" class="nav-item active" onclick="navigate('lobby.html')"><br>大厅</div>
-  <div id="nav-stats" class="nav-item" onclick="navigate('stats.html')"><br>战绩</div>
-  <div id="nav-wallet" class="nav-item" onclick="navigate('wallet.html')"><br>钱包</div>
+  <div id="nav-lobby" class="nav-item active" onclick="navigate('lobby.html')">大厅</div>
+  <div id="nav-stats" class="nav-item" onclick="navigate('stats.html')">战绩</div>
+  <div id="nav-wallet" class="nav-item" onclick="navigate('wallet.html')">钱包</div>
 </div>
 
 <script>
-const sidebar = document.getElementById("sidebar");
-const content = document.getElementById("content");
+const sidebar=document.getElementById("sidebar");
+const content=document.getElementById("content");
 
-const nav_lobby  = document.getElementById("nav-lobby");
-const nav_wallet = document.getElementById("nav-wallet");
-const nav_stats  = document.getElementById("nav-stats");
+function openSidebar(){sidebar.classList.add("open")}
+function closeSidebar(e){if(e.target.id==="sidebar")sidebar.classList.remove("open")}
 
-function openSidebar(){ sidebar.classList.add("open"); }
-function closeSidebar(e){ if(e.target.id==="sidebar") sidebar.classList.remove("open"); }
-
-/* ===== Lobby 必须的全局函数 ===== */
-function switchGame(type){
-  document.querySelectorAll(".game-tab").forEach(t=>t.classList.remove("active"));
-  document.querySelectorAll(".rooms-group").forEach(g=>g.classList.remove("active"));
-  document.getElementById("tab-"+type)?.classList.add("active");
-  document.getElementById("rooms-"+type)?.classList.add("active");
-}
-
-function showSlot(name){
-  const data={
-    MEGA888:{id:'mega_123',pw:'888888',url:'www.mega888.com'},
-    PUSSY888:{id:'pussy_456',pw:'888888',url:'www.pussy888.com'},
-    '918KISS':{id:'kiss_789',pw:'888888',url:'www.918kiss.com'}
-  };
-  alert(
-    `${name}\n\n账号：${data[name].id}\n密码：${data[name].pw}\n下载：${data[name].url}`
-  );
-}
-
-let bannerIndex = 0;
-let bannerTimer;
-
-function initBanner(){
-  const track = document.querySelector(".banner-track");
-  const dots  = document.querySelectorAll(".banner-dot");
-  if (!track || dots.length === 0) return;
-
-  clearInterval(bannerTimer);
-
-  function show(i){
-    bannerIndex = i;
-    track.style.transform = `translateX(-${i * 100}%)`;
-    dots.forEach(d => d.classList.remove("active"));
-    dots[i].classList.add("active");
-  }
-  show(0);
-
-  bannerTimer = setInterval(() => {
-    show((bannerIndex + 1) % dots.length);
-  }, 3000);
-}
-
-/* ===== Slot Modal Logic ===== */
-const slotData = {
-  MEGA888: {
-    logo: "assets/slot/mega888.png",
-    id: "mega_123",
-    pw: "888888",
-    url: "www.mega888.com"
-  },
-  PUSSY888: {
-    logo: "assets/slot/pussy888.png",
-    id: "pussy_456",
-    pw: "888888",
-    url: "www.pussy888.com"
-  },
-  "918KISS": {
-    logo: "assets/slot/918kiss.png",
-    id: "kiss_789",
-    pw: "888888",
-    url: "www.918kiss.com"
-  }
-};
-
-function openSlot(name){
-  const d = slotData[name];
-  if (!d) return;
-
-  document.getElementById("slotLogo").src = d.logo;
-  document.getElementById("slotInfo").innerHTML =
-    `账号：${d.id}<br>密码：${d.pw}<br>下载：${d.url}`;
-
-  document.getElementById("slotModal").classList.add("active");
-}
-
-function closeSlot(){
-  document.getElementById("slotModal").classList.remove("active");
-}
-
-function copyText(){
-  const text = document.getElementById("slotInfo").innerText;
-  navigator.clipboard.writeText(text);
-  alert("已复制");
-}
-
-/* ===== 页面切换 ===== */
 function navigate(page){
-  clearInterval(bannerTimer);
-  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
-  if(page.includes("lobby")) nav_lobby.classList.add("active");
-  if(page.includes("wallet")) nav_wallet.classList.add("active");
-  if(page.includes("stats")) nav_stats.classList.add("active");
-
-  fetch(page)
-    .then(r => r.text())
-    .then(html => {
-      content.innerHTML = html;
-
-      if (page.includes("lobby")) {
-        setTimeout(() => {
-          switchGame("baccarat");
-          initBanner();          // ✅ 关键：启动 Banner 自动轮播
-        }, 0);
-      }
-    });
-
+  fetch(page).then(r=>r.text()).then(html=>{
+    content.innerHTML=html;
+  });
   sidebar.classList.remove("open");
 }
 
-
-/* 默认加载 Lobby */
 navigate("lobby.html");
-
 </script>
 
 </body>
