@@ -1,241 +1,207 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login · Baccarat</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
 
-  <style>
-    *, *::before, *::after{
-      box-sizing:border-box;
-    }
+<style>
+*, *::before, *::after{
+  box-sizing:border-box;
+}
 
-    body{
-      margin:0;
-      background:#0f0f0f;
-      color:#ffffff;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:100vh;
-      overflow:hidden;
-    }
+body{
+  margin:0;
+  background:#2f2f2f;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+}
 
-    /* 背景暗色柔光（贴近 lobby） */
-    .bg-glow{
-      position:absolute;
-      width:420px;
-      height:420px;
-      border-radius:50%;
-      filter:blur(140px);
-      opacity:.35;
-      background:radial-gradient(circle at 50% 30%, #3b1d5a, #0f0f0f 65%, transparent);
-    }
+/* ===== Overlay ===== */
+.overlay{
+  width:100%;
+  min-height:100vh;
+  background:rgba(0,0,0,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-    .login-wrap{
-      width:100%;
-      max-width:420px;
-      padding:18px;
-      position:relative;
-      z-index:2;
-    }
+/* ===== Card ===== */
+.login-card{
+  width:100%;
+  max-width:420px;
+  background:#0f0f0f;
+  border-radius:16px;
+  padding:18px 18px 20px;
+  box-shadow:0 25px 50px rgba(0,0,0,.7);
+  color:#fff;
+  position:relative;
+}
 
-    .login-card{
-      background:linear-gradient(180deg, #1a1a1a, #121212);
-      border:1px solid #2a2a2a;
-      border-radius:18px;
-      padding:22px 18px 18px;
-      box-shadow:
-        0 18px 40px rgba(0,0,0,.65),
-        inset 0 1px 0 rgba(255,255,255,.05);
-      position:relative;
-      overflow:hidden;
-    }
+/* Header */
+.login-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.login-header h1{
+  font-size:18px;
+  font-weight:700;
+  margin:0;
+}
+.close-btn{
+  font-size:20px;
+  cursor:pointer;
+  opacity:.7;
+}
+.close-btn:hover{opacity:1}
 
-    /* 顶部细渐变线（低调） */
-    .login-card::before{
-      content:"";
-      position:absolute;
-      top:0;
-      left:0;
-      right:0;
-      height:2px;
-      background:linear-gradient(
-        90deg,
-        #9a7bff,
-        #ffaf7b
-      );
-      opacity:.65;
-    }
+/* ===== Logo ===== */
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin:14px 0 22px;
+}
+.logo-box{
+  padding:10px 18px;
+  border-radius:12px;
+  background:
+    linear-gradient(#0f0f0f,#0f0f0f) padding-box,
+    linear-gradient(120deg,#6ee7b7,#facc15,#fb7185) border-box;
+  border:1.5px solid transparent;
+}
+.logo-box img{
+  height:32px;
+}
 
-    /* 关闭按钮 */
-    .close-btn{
-      position:absolute;
-      right:14px;
-      top:12px;
-      font-size:18px;
-      color:#9a9a9a;
-      cursor:pointer;
-      padding:4px 6px;
-      border-radius:10px;
-      transition:.2s;
-    }
-    .close-btn:hover{
-      color:#fff;
-      background:rgba(255,255,255,.08);
-    }
+/* ===== Input ===== */
+.field{
+  margin-bottom:14px;
+}
+.input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:24px;
+  border:none;
+  background:#3f3f3f;
+  color:#fff;
+  font-size:14px;
+  outline:none;
+}
+.input::placeholder{
+  color:#bdbdbd;
+}
 
-    /* ===== Logo 区 ===== */
-    .login-title{
-      text-align:center;
-      margin-bottom:18px;
-    }
+/* Password row */
+.password-wrap{
+  position:relative;
+}
+.show-btn{
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:13px;
+  color:#34d399;
+  cursor:pointer;
+  user-select:none;
+}
 
-    .login-logo{
-      height:42px;
-      width:auto;
-      opacity:.95;
-    }
+/* Links */
+.link{
+  font-size:13px;
+  color:#34d399;
+  margin:6px 0 14px;
+  display:inline-block;
+  cursor:pointer;
+}
 
-    /* 输入框 */
-    .field{
-      margin-bottom:14px;
-    }
+/* ===== Buttons ===== */
+.login-btn{
+  width:100%;
+  padding:14px;
+  border-radius:26px;
+  border:none;
+  background:#bdbdbd;
+  color:#000;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+}
+.login-btn:hover{
+  background:#d4d4d4;
+}
 
-    .label{
-      font-size:13px;
-      color:#bdbdbd;
-      margin-bottom:6px;
-    }
-
-    .input-box{
-      position:relative;
-    }
-
-    .input-box input{
-      width:100%;
-      padding:13px 14px 13px 40px;
-      border-radius:12px;
-      border:1px solid #2f2f2f;
-      background:#0f0f0f;
-      color:#ffffff;
-      font-size:14px;
-      outline:none;
-      transition:.25s;
-    }
-
-    .icon{
-      position:absolute;
-      left:14px;
-      top:50%;
-      transform:translateY(-50%);
-      opacity:.55;
-      font-size:15px;
-    }
-
-    .input-box input:focus{
-      border-color:#9a7bff;
-      box-shadow:0 0 0 2px rgba(154,123,255,.25);
-      background:#121212;
-    }
-
-    /* 登录按钮（降亮度） */
-    .login-btn{
-      width:100%;
-      padding:13px;
-      border-radius:14px;
-      border:none;
-      font-weight:900;
-      background:linear-gradient(180deg,#f0f0f0,#dcdcdc);
-      color:#000;
-      font-size:15px;
-      margin-top:6px;
-      cursor:pointer;
-      transition:.2s;
-    }
-    .login-btn:hover{
-      transform:translateY(-1px);
-      box-shadow:0 10px 18px rgba(0,0,0,.45);
-    }
-
-    /* 注册按钮（低调描边） */
-    .register-btn{
-      width:100%;
-      margin-top:10px;
-      padding:12px;
-      border-radius:14px;
-      border:1px solid #2f2f2f;
-      background:#141414;
-      color:#ffffff;
-      font-weight:700;
-      cursor:pointer;
-      transition:.2s;
-    }
-    .register-btn:hover{
-      background:#1a1a1a;
-    }
-
-    .hint{
-      text-align:center;
-      margin-top:12px;
-      font-size:12px;
-      color:#8f8f8f;
-    }
-  </style>
+/* Register */
+.register{
+  text-align:center;
+  margin-top:14px;
+  font-size:13px;
+  color:#cfcfcf;
+}
+.register span{
+  color:#34d399;
+  cursor:pointer;
+}
+</style>
 </head>
 
 <body>
 
-<div class="bg-glow"></div>
-
-<div class="login-wrap">
+<div class="overlay">
   <div class="login-card">
 
-    <div class="close-btn" onclick="goBack()">✕</div>
+    <!-- Header -->
+    <div class="login-header">
+      <h1>Login</h1>
+      <div class="close-btn" onclick="goBack()">✕</div>
+    </div>
 
     <!-- Logo -->
-    <div class="login-title">
-      <img src="assets/logo.png" class="login-logo" alt="Logo">
-    </div>
-
-    <!-- 用户名 -->
-    <div class="field">
-      <div class="label">用户名</div>
-      <div class="input-box">
-        <span class="icon">👤</span>
-        <input type="text" placeholder="请输入用户名">
+    <div class="logo-wrap">
+      <div class="logo-box">
+        <img src="assets/logo.png" alt="Logo">
       </div>
     </div>
 
-    <!-- 密码 -->
+    <!-- Username -->
     <div class="field">
-      <div class="label">密码</div>
-      <div class="input-box">
-        <span class="icon">🔒</span>
-        <input type="password" placeholder="请输入密码">
-      </div>
+      <input class="input" type="text" placeholder="Username">
     </div>
 
-    <!-- 登录 -->
-    <button class="login-btn">登录账户</button>
+    <!-- Password -->
+    <div class="field password-wrap">
+      <input id="password" class="input" type="password" placeholder="Password">
+      <span class="show-btn" onclick="togglePassword()">Show</span>
+    </div>
 
-    <!-- 注册 -->
-    <button class="register-btn" onclick="alert('请联系客服注册')">
-      注册新账号
-    </button>
+    <div class="link">Forgot password?</div>
 
-    <div class="hint">
-      还没有账号？请联系客服进行注册
+    <!-- Login -->
+    <button class="login-btn">Sign in</button>
+
+    <!-- Register -->
+    <div class="register">
+      Do not have an account?
+      <span onclick="alert('请联系客服注册')">Register now</span>
     </div>
 
   </div>
 </div>
 
 <script>
-  function goBack(){
-    window.location.href = "index.html";
-  }
+function togglePassword(){
+  const p = document.getElementById("password");
+  p.type = p.type === "password" ? "text" : "password";
+}
+function goBack(){
+  window.location.href = "index.html";
+}
 </script>
 
 </body>
