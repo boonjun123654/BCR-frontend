@@ -53,19 +53,24 @@ body{
   z-index:200;
   display:none;
 }
-.sidebar.open{display:block;}
+.sidebar.open .sidebar-panel{
+  transform:translateX(0);
+}
 .sidebar-panel{
   width:280px;
   height:100%;
   background:#1f2426;
   border-right:1px solid #2b2f31;
   padding:18px 16px;
+  transform:translateX(-100%);
+  transition:.28s cubic-bezier(.4,0,.2,1);
 }
 
 .sidebar-item{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  position:relative;
   padding:14px 12px;
   margin-bottom:6px;
   border-radius:12px;
@@ -116,9 +121,13 @@ body{
   opacity:0;
 }
 
-.sidebar-item:hover::before{
+.sidebar-item.active::before{
   opacity:1;
 }
+.sidebar-item.active{
+  background:rgba(255,255,255,.08);
+}
+
 .sidebar-section{
   margin:18px 0 8px;
   font-size:12px;
@@ -220,7 +229,24 @@ body{
 <!-- Sidebar -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
-    <div class="sidebar-item">
+    <!-- Sidebar Header -->
+    <div style="
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+    ">
+      <img src="assets/logo.png" style="height:36px;opacity:.95">
+      <div style="
+        font-size:20px;
+        cursor:pointer;
+        opacity:.6;
+      " onclick="closeSidebar({target:{id:'sidebar'}})">✕</div>
+    </div>
+    
+    <div class="sidebar-section">MAIN</div>
+
+    <div class="sidebar-item active" onclick="navigate('lobby.html')">
       <div class="left">
         <span class="icon">🎮</span>
         <span>Lobby</span>
@@ -228,7 +254,7 @@ body{
       <span class="arrow">›</span>
     </div>
 
-    <div class="sidebar-item">
+    <div class="sidebar-item" onclick="navigate('stats.html')">
       <div class="left">
         <span class="icon">🎉</span>
         <span>战绩</span>
@@ -236,7 +262,7 @@ body{
       <span class="arrow">›</span>
     </div>
 
-    <div class="sidebar-item">
+    <div class="sidebar-item" onclick="navigate('wallet.html')">
       <div class="left">
         <span class="icon">🕹</span>
         <span>Wallet</span>
