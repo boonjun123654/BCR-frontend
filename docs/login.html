@@ -24,15 +24,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  position:relative;
   border-bottom:1px solid #1f1f1f;
-}
-.back{
-  position:absolute;
-  left:16px;
-  font-size:20px;
-  cursor:pointer;
-  opacity:.8;
 }
 .header-title{
   font-size:17px;
@@ -43,37 +35,17 @@ body{
 .container{
   max-width:420px;
   margin:0 auto;
-  padding:24px 18px;
+  padding:26px 18px;
 }
 
 /* ===== Logo ===== */
 .logo-wrap{
   display:flex;
   justify-content:center;
-  margin:18px 0 22px;
+  margin:20px 0 26px;
 }
-.logo-box{
-  padding:10px 18px;
-  border-radius:14px;
-  background:
-    linear-gradient(#000,#000) padding-box,
-    linear-gradient(120deg,#34d399,#facc15,#fb7185) border-box;
-  border:1.5px solid transparent;
-}
-.logo-box img{
-  height:34px;
-}
-
-/* ===== Username Type ===== */
-.type-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 14px;
-  border-radius:20px;
-  background:#2a2a2a;
-  margin-bottom:14px;
-  font-size:14px;
+.logo-wrap img{
+  height:42px;
 }
 
 /* ===== Inputs ===== */
@@ -85,12 +57,16 @@ body{
   background:#3f3f3f;
   color:#fff;
   font-size:14px;
-  margin-bottom:12px;
+  margin-bottom:14px;
 }
 .input::placeholder{color:#bdbdbd}
 
+/* Password + Show */
 .password-wrap{
   position:relative;
+}
+.password-wrap .input{
+  padding-right:64px; /* 给 Show 预留空间 */
 }
 .show{
   position:absolute;
@@ -100,9 +76,10 @@ body{
   font-size:13px;
   color:#34d399;
   cursor:pointer;
+  user-select:none;
 }
 
-/* ===== Links ===== */
+/* Links */
 .forgot{
   font-size:13px;
   color:#34d399;
@@ -115,7 +92,7 @@ body{
   padding:14px;
   border-radius:28px;
   border:none;
-  background:#bdbdbd;
+  background:#cfcfcf;
   color:#000;
   font-weight:700;
   font-size:15px;
@@ -124,7 +101,7 @@ body{
   transform:scale(.98);
 }
 
-/* ===== Register ===== */
+/* Register */
 .register{
   text-align:center;
   margin-top:16px;
@@ -140,22 +117,14 @@ body{
 <body>
 
 <div class="header">
-  <div class="back" onclick="history.back()">‹</div>
   <div class="header-title">Login</div>
 </div>
 
 <div class="container">
 
-  <!-- Logo -->
+  <!-- Logo（无边框） -->
   <div class="logo-wrap">
-    <div class="logo-box">
-      <img src="assets/logo.png" alt="Logo">
-    </div>
-  </div>
-
-  <!-- Username type -->
-  <div class="type-pill">
-    👤 Username
+    <img src="assets/logo.png" alt="Logo">
   </div>
 
   <!-- Username -->
