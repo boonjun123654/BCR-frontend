@@ -1,150 +1,109 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Baccarat</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Baccarat</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <style>
-    html, body { height: 100%; margin: 0; }
+<style>
+html,body{height:100%;margin:0;}
+body{
+  background:#121212;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  overflow-x:hidden;
+}
 
-    body {
-      background: #121212;
-      color: #ffffff;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-      overflow-x: hidden;
-    }
+/* ===== Top Bar ===== */
+.top-bar{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:68px;
+  background:#1a1a1a;
+  border-bottom:1px solid #2a2a2a;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+}
+.icon-btn{
+  width:40px;height:40px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:10px;cursor:pointer;
+}
+.icon-btn:hover{background:#2a2a2a;}
+.logo{max-height:48px;opacity:.95;}
 
-    /* ===== Top Bar ===== */
-    .top-bar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      height: 68px;
-      background: #1a1a1a;
-      border-bottom: 1px solid #2a2a2a;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 18px;
-    }
+.login-btn{
+  font-size:14px;font-weight:700;
+  padding:8px 16px;border-radius:14px;
+  background:linear-gradient(#1a1a1a,#1a1a1a) padding-box,
+             linear-gradient(120deg,#9a7bff,#ffaf7b) border-box;
+  border:1.5px solid transparent;
+  cursor:pointer;
+}
 
-    .icon-btn {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+/* ===== Sidebar ===== */
+.sidebar{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:200;
+  display:none;
+}
+.sidebar.open{display:block;}
+.sidebar-panel{
+  width:260px;height:100%;
+  background:#1a1a1a;
+  border-right:1px solid #2a2a2a;
+  padding:20px;
+}
+.sidebar-item{
+  padding:12px 0;
+  border-bottom:1px solid #2a2a2a;
+  cursor:pointer;
+}
 
-    .icon-btn:hover { background:#2a2a2a; }
+/* ===== Content ===== */
+.content{padding-bottom:80px;}
 
-    /* ⭐ LOGO 缩小（更协调） */
-    .logo {
-      max-height: 48px;
-      object-fit: contain;
-      opacity: .95;
-    }
-
-    /* ⭐ Login 美化：玻璃+渐变描边按钮 */
-    .login-btn {
-      font-size: 14px;
-      font-weight: 700;
-      padding: 8px 16px;
-      border-radius: 14px;
-
-      background: linear-gradient(#1a1a1a, #1a1a1a) padding-box,
-                  linear-gradient(120deg, #9a7bff, #ffaf7b) border-box;
-
-      border: 1.5px solid transparent;
-      box-shadow: 0 6px 14px rgba(0,0,0,.35);
-      cursor: pointer;
-      transition: .25s ease;
-    }
-
-    .login-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(255,175,123,.2);
-      background: linear-gradient(#222,#222) padding-box,
-                  linear-gradient(120deg,#b894ff,#ffc38c) border-box;
-    }
-
-    /* ===== Sidebar ===== */
-    .sidebar {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.6);
-      z-index: 200;
-      display: none;
-    }
-
-    .sidebar.open { display:block; }
-
-    .sidebar-panel {
-      width: 260px;
-      height:100%;
-      background:#1a1a1a;
-      border-right:1px solid #2a2a2a;
-      padding:20px;
-    }
-
-    .sidebar-item {
-      padding:12px 0;
-      border-bottom:1px solid #2a2a2a;
-      cursor:pointer;
-    }
-
-    /* ===== Main Content ===== */
-    .content { padding-bottom: 80px; }
-
-    /* ===== Bottom Nav ===== */
-    .bottom-nav {
-      position:fixed;
-      bottom:0;
-      left:0;
-      right:0;
-      height:60px;
-      background:#1a1a1a;
-      border-top:1px solid #2a2a2a;
-      display:flex;
-      justify-content:space-around;
-      align-items:center;
-      z-index:100;
-    }
-
-    .nav-item {
-      font-size:12px;
-      color:#b0b0b0;
-      text-align:center;
-    }
-
-    .nav-item.active {
-      color:#ffffff;
-      font-weight:600;
-    }
-  </style>
+/* ===== Bottom Nav ===== */
+.bottom-nav{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  height:60px;
+  background:#1a1a1a;
+  border-top:1px solid #2a2a2a;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:100;
+}
+.nav-item{
+  font-size:12px;
+  color:#b0b0b0;
+  text-align:center;
+  cursor:pointer;
+}
+.nav-item.active{
+  color:#fff;
+  font-weight:600;
+}
+</style>
 </head>
 
 <body>
 
-<!-- ===== Top Bar ===== -->
+<!-- Top Bar -->
 <div class="top-bar">
   <div class="icon-btn" onclick="openSidebar()">☰</div>
-
-  <img src="assets/logo.png" class="logo" alt="Logo">
-
-  <!-- Login 直接跳转 -->
-  <div class="login-btn" onclick="window.location.href='login.html'">
-    Login
-  </div>
+  <img src="assets/logo.png" class="logo">
+  <div class="login-btn" onclick="location.href='login.html'">Login</div>
 </div>
 
-
-<!-- ===== Sidebar ===== -->
+<!-- Sidebar -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
     <div class="sidebar-item" onclick="navigate('lobby.html')">大厅</div>
@@ -153,66 +112,67 @@
   </div>
 </div>
 
-
-<!-- ===== Content（页面注入区） ===== -->
+<!-- Content -->
 <div id="content" class="content"></div>
 
-
-<!-- ===== Bottom Nav ===== -->
+<!-- Bottom Nav -->
 <div class="bottom-nav">
-  <div id="nav-lobby" class="nav-item active" onclick="navigate('lobby.html')">
-    🏠<br>大厅
-  </div>
-
-  <div id="nav-stats" class="nav-item" onclick="navigate('stats.html')">
-    📊<br>战绩
-  </div>
-
-  <div id="nav-wallet" class="nav-item" onclick="navigate('wallet.html')">
-    💰<br>钱包
-  </div>
+  <div id="nav-lobby" class="nav-item active" onclick="navigate('lobby.html')">🏠<br>大厅</div>
+  <div id="nav-stats" class="nav-item" onclick="navigate('stats.html')">📊<br>战绩</div>
+  <div id="nav-wallet" class="nav-item" onclick="navigate('wallet.html')">💰<br>钱包</div>
 </div>
 
-
 <script>
-  const sidebar = document.getElementById("sidebar");
-  const content = document.getElementById("content");
+const sidebar = document.getElementById("sidebar");
+const content = document.getElementById("content");
 
-  const nav_lobby  = document.getElementById("nav-lobby");
-  const nav_wallet = document.getElementById("nav-wallet");
-  const nav_stats  = document.getElementById("nav-stats");
+const nav_lobby  = document.getElementById("nav-lobby");
+const nav_wallet = document.getElementById("nav-wallet");
+const nav_stats  = document.getElementById("nav-stats");
 
-  function openSidebar() {
-    sidebar.classList.add("open");
-  }
+function openSidebar(){ sidebar.classList.add("open"); }
+function closeSidebar(e){ if(e.target.id==="sidebar") sidebar.classList.remove("open"); }
 
-  function closeSidebar(e) {
-    if (e.target.id === "sidebar") {
-      sidebar.classList.remove("open");
-    }
-  }
+/* ===== Lobby 必须的全局函数 ===== */
+function switchGame(type){
+  document.querySelectorAll(".game-tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".rooms-group").forEach(g=>g.classList.remove("active"));
+  document.getElementById("tab-"+type)?.classList.add("active");
+  document.getElementById("rooms-"+type)?.classList.add("active");
+}
 
-  /* ===== 页面切换（动态加载） ===== */
-  function navigate(page) {
+function showSlot(name){
+  const data={
+    MEGA888:{id:'mega_123',pw:'888888',url:'www.mega888.com'},
+    PUSSY888:{id:'pussy_456',pw:'888888',url:'www.pussy888.com'},
+    '918KISS':{id:'kiss_789',pw:'888888',url:'www.918kiss.com'}
+  };
+  alert(
+    `${name}\n\n账号：${data[name].id}\n密码：${data[name].pw}\n下载：${data[name].url}`
+  );
+}
 
-    document.querySelectorAll(".nav-item")
-      .forEach(n => n.classList.remove("active"));
+/* ===== 页面切换 ===== */
+function navigate(page){
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+  if(page.includes("lobby")) nav_lobby.classList.add("active");
+  if(page.includes("wallet")) nav_wallet.classList.add("active");
+  if(page.includes("stats")) nav_stats.classList.add("active");
 
-    if (page.includes("lobby"))  nav_lobby.classList.add("active");
-    if (page.includes("wallet")) nav_wallet.classList.add("active");
-    if (page.includes("stats"))  nav_stats.classList.add("active");
+  fetch(page)
+    .then(r=>r.text())
+    .then(html=>{
+      content.innerHTML = html;
+      if(page.includes("lobby")){
+        setTimeout(()=>switchGame("baccarat"),0);
+      }
+    });
 
-    fetch(page)
-      .then(r => r.text())
-      .then(html => {
-        content.innerHTML = html;
-      });
+  sidebar.classList.remove("open");
+}
 
-    sidebar.classList.remove("open");
-  }
-
-  // 默认加载 Lobby
-  navigate("lobby.html");
+/* 默认加载 Lobby */
+navigate("lobby.html");
 </script>
 
 </body>
