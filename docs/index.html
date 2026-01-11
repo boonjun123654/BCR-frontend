@@ -55,33 +55,55 @@ body{
 }
 .sidebar.open{display:block;}
 .sidebar-panel{
-  width:260px;
+  width:280px;
   height:100%;
-  background:linear-gradient(180deg,#1c1c1c,#141414);
-  border-right:1px solid #2a2a2a;
-  padding:18px;
+  background:#1f2426;
+  border-right:1px solid #2b2f31;
+  padding:18px 16px;
 }
 
 .sidebar-item{
-  position:relative;
-  padding:14px 14px 14px 18px;
-  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 12px;
+  margin-bottom:6px;
   border-radius:12px;
   font-size:15px;
-  font-weight:500;
-  color:#e5e5e5;
+  color:#e6e6e6;
   cursor:pointer;
-  transition:.25s ease;
-  overflow:hidden;
+  transition:.2s ease;
 }
 
-/* 左侧渐变强调条 */
+.sidebar-item:hover{
+  background:rgba(255,255,255,.06);
+}
+
+/* 左侧 icon 区 */
+.sidebar-item .left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* 小 icon */
+.sidebar-item .icon{
+  font-size:18px;
+  width:22px;
+  text-align:center;
+}
+
+/* 右侧箭头 */
+.sidebar-item .arrow{
+  opacity:.5;
+}
+
 .sidebar-item::before{
   content:"";
   position:absolute;
   left:0;
-  top:8px;
-  bottom:8px;
+  top:10px;
+  bottom:10px;
   width:3px;
   border-radius:2px;
   background:linear-gradient(
@@ -91,43 +113,20 @@ body{
     #213260,
     #f2eaff
   );
-  opacity:.55;
+  opacity:0;
 }
 
-/* Hover 效果 */
-.sidebar-item:hover{
-  background:rgba(255,255,255,.06);
-  color:#ffffff;
-}
-
-/* Hover 时强调条更亮 */
 .sidebar-item:hover::before{
   opacity:1;
 }
-
-.sidebar-item.active{
-  background:rgba(255,255,255,.08);
-  color:#ffffff;
+.sidebar-section{
+  margin:18px 0 8px;
+  font-size:12px;
+  color:#9aa0a6;
+  letter-spacing:.5px;
 }
-
-.sidebar-item.active::before{
-  opacity:1;
-}
-
-.sidebar-panel::after{
-  content:"";
-  position:absolute;
-  bottom:16px;
-  left:18px;
-  right:18px;
-  height:1px;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    #3863b8,
-    transparent
-  );
-  opacity:.3;
+.highlight{
+  color:#f2eaff;
 }
 
 /* ===== Content ===== */
@@ -221,9 +220,29 @@ body{
 <!-- Sidebar -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
-    <div class="sidebar-item active" onclick="navigate('lobby.html')">大厅</div>
-    <div class="sidebar-item" onclick="navigate('wallet.html')">钱包</div>
-    <div class="sidebar-item" onclick="navigate('stats.html')">战绩</div>
+    <div class="sidebar-item">
+      <div class="left">
+        <span class="icon">🎮</span>
+        <span>Lobby</span>
+      </div>
+      <span class="arrow">›</span>
+    </div>
+
+    <div class="sidebar-item">
+      <div class="left">
+        <span class="icon">🎉</span>
+        <span>战绩</span>
+      </div>
+      <span class="arrow">›</span>
+    </div>
+
+    <div class="sidebar-item">
+      <div class="left">
+        <span class="icon">🕹</span>
+        <span>Wallet</span>
+      </div>
+      <span class="arrow">›</span>
+    </div>
   </div>
 </div>
 
