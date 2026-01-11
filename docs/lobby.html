@@ -23,32 +23,44 @@ body{
   border-radius:16px;
 }
 
-/* ================= Banner Slider ================= */
-.banner-wrap{
-  padding:12px 16px 4px;
+/* ===== Banner ===== */
+.banner-wrap{padding:12px 16px 0;}
+.banner-box{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+  border:1px solid #2c2c2c;
 }
-.banner-slider{
+.banner-track{
   display:flex;
-  gap:12px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
+  transition:.5s ease;
 }
-.banner-slider::-webkit-scrollbar{display:none;}
 .banner-item{
   min-width:100%;
   aspect-ratio:16/9;
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid #2c2c2c;
-  scroll-snap-align:start;
 }
 .banner-item img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
+.banner-dots{
+  position:absolute;
+  bottom:8px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:6px;
+}
+.banner-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:rgba(255,255,255,.4);
+}
+.banner-dot.active{background:#fff;}
 
-/* ================= Quick Actions ================= */
+/* ===== Quick Actions ===== */
 .quick-actions{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -66,7 +78,7 @@ body{
 .qa-title{font-size:13px;font-weight:900;}
 .qa-sub{font-size:11px;color:#9a9a9a;}
 
-/* ================= Game Tabs ================= */
+/* ===== Game Tabs ===== */
 .game-tabs{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -80,7 +92,6 @@ body{
   font-weight:900;
   border-radius:14px;
   cursor:pointer;
-
   background:linear-gradient(#141414,#141414) padding-box,
              linear-gradient(120deg,#9a7bff,#ffaf7b) border-box;
   border:1.5px solid transparent;
@@ -91,24 +102,12 @@ body{
   color:#000;
 }
 
-/* ================= Room List ================= */
-.room-list{
-  padding:8px 16px 90px;
-}
-.rooms-group{
-  display:none;
-  flex-direction:column;
-  gap:16px;
-}
+/* ===== Room List ===== */
+.room-list{padding:8px 16px 90px;}
+.rooms-group{display:none;flex-direction:column;gap:16px;}
 .rooms-group.active{display:flex;}
-.room-card{
-  padding:16px;
-  border-radius:18px;
-}
-.room-header{
-  display:flex;
-  justify-content:space-between;
-}
+.room-card{padding:16px;border-radius:18px;}
+.room-header{display:flex;justify-content:space-between;}
 .badge{
   padding:4px 10px;
   border-radius:12px;
@@ -117,7 +116,6 @@ body{
   color:#000;
 }
 .badge-green{background:#22c55e;}
-.badge-yellow{background:#facc15;}
 .pool-label{font-size:11px;color:#9a9a9a;}
 .pool-amount{font-size:22px;font-weight:900;}
 .enter-btn{
@@ -137,29 +135,12 @@ body{
   overflow:hidden;
   border:1px solid #2a2a2a;
 }
-.room-banner img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+.room-banner img{width:100%;height:100%;object-fit:cover;}
 
-/* ================= Slot Game ================= */
-.slot-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
-}
-.slot-card{
-  padding:14px;
-  border-radius:16px;
-  text-align:center;
-}
-.slot-logo{
-  width:100%;
-  height:80px;
-  object-fit:contain;
-  margin-bottom:10px;
-}
+/* ===== Slot ===== */
+.slot-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.slot-card{text-align:center;padding:14px;}
+.slot-logo{height:70px;object-fit:contain;margin-bottom:8px;}
 .slot-btn{
   width:100%;
   padding:10px;
@@ -169,11 +150,74 @@ body{
   background:#22c55e;
   cursor:pointer;
 }
+
+/* ===== Slot Modal ===== */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  z-index:-1;
+  transition:.25s;
+}
+.modal.active{
+  opacity:1;
+  pointer-events:auto;
+  z-index:999;
+}
+.modal-card{
+  width:85%;
+  max-width:340px;
+  background:#1a1a1a;
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
+}
+.modal-logo{height:60px;object-fit:contain;margin-bottom:10px;}
+.modal-info{font-size:14px;line-height:1.6;color:#ddd;}
+.copy-btn{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  font-weight:900;
+  background:#fff;
+}
+.close-btn{
+  margin-top:8px;
+  width:100%;
+  padding:8px;
+  background:none;
+  border:none;
+  color:#aaa;
+}
 </style>
 
 <script>
-function navigate(p){ location.href=p; }
+/* ===== Banner Auto Slide ===== */
+let bannerIndex=0;
+let bannerTimer;
+function initBanner(){
+  const track=document.querySelector(".banner-track");
+  const dots=document.querySelectorAll(".banner-dot");
+  function show(i){
+    bannerIndex=i;
+    track.style.transform=`translateX(-${i*100}%)`;
+    dots.forEach(d=>d.classList.remove("active"));
+    dots[i].classList.add("active");
+  }
+  function next(){
+    show((bannerIndex+1)%dots.length);
+  }
+  bannerTimer=setInterval(next,3000);
+}
 
+/* ===== Game Switch ===== */
 function switchGame(type){
   document.querySelectorAll(".game-tab").forEach(t=>t.classList.remove("active"));
   document.querySelectorAll(".rooms-group").forEach(g=>g.classList.remove("active"));
@@ -181,96 +225,129 @@ function switchGame(type){
   document.getElementById("rooms-"+type)?.classList.add("active");
 }
 
-window.onload=()=>switchGame("baccarat");
+/* ===== Slot Modal ===== */
+const slotData={
+  MEGA888:{logo:"assets/slot/mega888.png",id:"mega_123",pw:"888888",url:"www.mega888.com"},
+  PUSSY888:{logo:"assets/slot/pussy888.png",id:"pussy_456",pw:"888888",url:"www.pussy888.com"},
+  "918KISS":{logo:"assets/slot/918kiss.png",id:"kiss_789",pw:"888888",url:"www.918kiss.com"}
+};
+
+function openSlot(name){
+  const d=slotData[name];
+  document.getElementById("slotLogo").src=d.logo;
+  document.getElementById("slotInfo").innerHTML=
+    `账号：${d.id}<br>密码：${d.pw}<br>下载：${d.url}`;
+  document.getElementById("slotModal").classList.add("active");
+}
+function closeSlot(){
+  document.getElementById("slotModal").classList.remove("active");
+}
+function copyText(){
+  navigator.clipboard.writeText(
+    document.getElementById("slotInfo").innerText
+  );
+  alert("已复制");
+}
+
+window.onload=()=>{
+  switchGame("baccarat");
+  initBanner();
+};
 </script>
 </head>
 
 <body>
 <div class="app-shell">
 
-<!-- ===== Banner Slider ===== -->
+<!-- Banner -->
 <div class="banner-wrap">
-  <div class="banner-slider">
-    <div class="banner-item"><img src="assets/banner1.jpg"></div>
-    <div class="banner-item"><img src="assets/banner2.jpg"></div>
-    <div class="banner-item"><img src="assets/banner3.jpg"></div>
+  <div class="banner-box">
+    <div class="banner-track">
+      <div class="banner-item"><img src="assets/banner1.jpg"></div>
+      <div class="banner-item"><img src="assets/banner2.jpg"></div>
+      <div class="banner-item"><img src="assets/banner3.jpg"></div>
+    </div>
+    <div class="banner-dots">
+      <div class="banner-dot active"></div>
+      <div class="banner-dot"></div>
+      <div class="banner-dot"></div>
+    </div>
   </div>
 </div>
 
-<!-- ===== Quick Actions ===== -->
+<!-- Quick -->
 <div class="quick-actions">
-  <div class="qa-item" onclick="navigate('wallet.html')">
-    <div class="qa-title">Deposit</div>
-    <div class="qa-sub">充值入款</div>
-  </div>
-  <div class="qa-item" onclick="navigate('withdraw.html')">
-    <div class="qa-title">Withdraw</div>
-    <div class="qa-sub">申请提款</div>
-  </div>
-  <div class="qa-item" onclick="navigate('history.html')">
-    <div class="qa-title">History</div>
-    <div class="qa-sub">交易记录</div>
-  </div>
+  <div class="qa-item">Deposit</div>
+  <div class="qa-item">Withdraw</div>
+  <div class="qa-item">History</div>
 </div>
 
-<!-- ===== Game Tabs ===== -->
+<!-- Tabs -->
 <div class="game-tabs">
   <div id="tab-baccarat" class="game-tab" onclick="switchGame('baccarat')">Baccarat</div>
   <div id="tab-sicbo" class="game-tab" onclick="switchGame('sicbo')">SicBo</div>
   <div id="tab-slot" class="game-tab" onclick="switchGame('slot')">Slot Game</div>
 </div>
 
-<!-- ===== Room List ===== -->
+<!-- Rooms -->
 <div class="room-list">
-
-<div id="rooms-baccarat" class="rooms-group active">
-  <div class="card room-card">
-    <div class="room-header">
-      <div style="font-size:18px;font-weight:800;">百家乐 · 黄金房</div>
-      <div class="badge badge-green">下注中</div>
-    </div>
-    <div style="text-align:center">
-      <div class="pool-label">庄家池金额</div>
-      <div class="pool-amount">RM 28,900</div>
-    </div>
-    <button class="enter-btn">进入房间</button>
-    <div class="room-banner"><img src="assets/room/gold.jpg"></div>
-  </div>
-</div>
-
-<div id="rooms-sicbo" class="rooms-group">
-  <div class="card room-card">
-    <div class="room-header">
-      <div style="font-size:18px;font-weight:800;">骰宝 · 黄金房</div>
-      <div class="badge badge-green">下注中</div>
-    </div>
-    <div style="text-align:center">
-      <div class="pool-label">奖池金额</div>
-      <div class="pool-amount">RM 9,400</div>
-    </div>
-    <button class="enter-btn">进入房间</button>
-    <div class="room-banner"><img src="assets/room/sicbo.jpg"></div>
-  </div>
-</div>
-
-<div id="rooms-slot" class="rooms-group">
-  <div class="slot-grid">
-    <div class="card slot-card">
-      <img src="assets/slot/mega888.png" class="slot-logo">
-      <button class="slot-btn">查看账号</button>
-    </div>
-    <div class="card slot-card">
-      <img src="assets/slot/pussy888.png" class="slot-logo">
-      <button class="slot-btn">查看账号</button>
-    </div>
-    <div class="card slot-card">
-      <img src="assets/slot/918kiss.png" class="slot-logo">
-      <button class="slot-btn">查看账号</button>
+  <div id="rooms-baccarat" class="rooms-group active">
+    <div class="card room-card">
+      <div class="room-header">
+        <div>百家乐 · 黄金房</div>
+        <div class="badge badge-green">下注中</div>
+      </div>
+      <div style="text-align:center">
+        <div class="pool-label">庄家池金额</div>
+        <div class="pool-amount">RM 28,900</div>
+      </div>
+      <button class="enter-btn">进入房间</button>
+      <div class="room-banner"><img src="assets/room/gold.jpg"></div>
     </div>
   </div>
+
+  <div id="rooms-sicbo" class="rooms-group">
+    <div class="card room-card">
+      <div class="room-header">
+        <div>骰宝 · 黄金房</div>
+        <div class="badge badge-green">下注中</div>
+      </div>
+      <div style="text-align:center">
+        <div class="pool-label">奖池金额</div>
+        <div class="pool-amount">RM 9,400</div>
+      </div>
+      <button class="enter-btn">进入房间</button>
+      <div class="room-banner"><img src="assets/room/sicbo.jpg"></div>
+    </div>
+  </div>
+
+  <div id="rooms-slot" class="rooms-group">
+    <div class="slot-grid">
+      <div class="card slot-card">
+        <img src="assets/slot/mega888.png" class="slot-logo">
+        <button class="slot-btn" onclick="openSlot('MEGA888')">查看账号</button>
+      </div>
+      <div class="card slot-card">
+        <img src="assets/slot/pussy888.png" class="slot-logo">
+        <button class="slot-btn" onclick="openSlot('PUSSY888')">查看账号</button>
+      </div>
+      <div class="card slot-card">
+        <img src="assets/slot/918kiss.png" class="slot-logo">
+        <button class="slot-btn" onclick="openSlot('918KISS')">查看账号</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
-</div>
+<!-- Slot Modal -->
+<div id="slotModal" class="modal">
+  <div class="modal-card">
+    <img id="slotLogo" class="modal-logo">
+    <div id="slotInfo" class="modal-info"></div>
+    <button class="copy-btn" onclick="copyText()">一键复制</button>
+    <button class="close-btn" onclick="closeSlot()">关闭</button>
+  </div>
 </div>
 
 </body>
