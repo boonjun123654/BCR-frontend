@@ -60,6 +60,30 @@ body{
 }
 .banner-dot.active{background:#fff;}
 
+
+/* ===== Promo Video ===== */
+.video-wrap{
+  padding: 6px 16px 10px;
+}
+
+.video-box{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #2c2c2c;
+  background: #000;
+}
+
+.video-box iframe,
+.video-box video{
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit: cover;
+}
+
 /* ===== Quick Actions ===== */
 .quick-actions{
   display:grid;
@@ -223,6 +247,20 @@ body{
   <div class="qa-item"><div class="qa-title">Deposit</div><div class="qa-sub">充值入款</div></div>
   <div class="qa-item"><div class="qa-title">Withdraw</div><div class="qa-sub">申请提款</div></div>
   <div class="qa-item"><div class="qa-title">History</div><div class="qa-sub">交易记录</div></div>
+</div>
+
+<!-- Promo Video -->
+<div class="video-wrap">
+  <div class="video-box">
+    <video
+      src="assets/promo.mp4"
+      controls
+      muted
+      playsinline
+      preload="metadata"
+      poster="assets/banner1.jpg">
+    </video>
+  </div>
 </div>
 
 <!-- Game Tabs -->
