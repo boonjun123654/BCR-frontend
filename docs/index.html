@@ -240,6 +240,17 @@ body{
   color:#fff;
   cursor:pointer;
 }
+.sidebar-unread{
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  background:#ff4d4f;
+  color:#fff;
+  font-size:11px;
+  padding:2px 6px;
+  border-radius:10px;
+  display:none;
+}
 
 .contact-btn:hover{
   background:#4a74c9;
@@ -367,6 +378,17 @@ body{
   background:#4a74c9;
 }
 
+.chat-time{
+  font-size:11px;
+  color:#9aa0a6;
+  margin-top:4px;
+  text-align:right;
+}
+
+.chat-msg.bot .chat-time{
+  text-align:left;
+}
+
 /* ===== 语言切换区域 ===== */
 .lang-switch{
   display:flex;
@@ -396,10 +418,33 @@ body{
     bottom:90px;
   }
 }
+/* ===== 图片缩放区域 ===== */
+
+.img-preview{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:500;
+}
+
+.img-preview img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+}
+
 
 </style>
 </head>
 <body>
+
+<div id="imgPreview" class="img-preview" onclick="closePreview()">
+  <img id="previewImg">
+</div>
+
   
 <!-- Chat Box -->
 <div id="chatBox" class="chat-box">
@@ -526,7 +571,11 @@ body{
         <div class="contact-title">在线客服</div>
         <div class="contact-desc">24 / 7 Live Support</div>
       </div>
-      <button class="contact-btn" onclick="openChat()">联系客服</button>
+      <button class="contact-btn" onclick="openChat()">
+        客服
+        <span id="sidebarUnread" class="sidebar-unread">1</span>
+      </button>
+
     </div>
 
     <!-- LANGUAGE -->
@@ -590,7 +639,18 @@ function handleEnter(e){
 function addMessage(text, type){
   const msg = document.createElement("div");
   msg.className = `chat-msg ${type}`;
-  msg.innerText = text;
+
+  const content = document.createElement("div");
+  content.innerText = text;
+
+  const time = document.createElement("div");
+  const now = new Date();
+  time.className = "chat-time";
+  time.innerText = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+
+  msg.appendChild(content);
+  msg.appendChild(time);
+
   chatBody.appendChild(msg);
   chatBody.scrollTop = chatBody.scrollHeight;
 }
@@ -604,6 +664,7 @@ function sendImage(input){
   img.src = URL.createObjectURL(file);
   img.style.maxWidth = "160px";
   img.style.borderRadius = "10px";
+  img.onclick = () => openPreview(img.src);
 
   const wrap = document.createElement("div");
   wrap.className = "chat-msg user";
@@ -613,6 +674,15 @@ function sendImage(input){
   chatBody.scrollTop = chatBody.scrollHeight;
 
   input.value = "";
+}
+
+function openPreview(src){
+  document.getElementById("previewImg").src = src;
+  document.getElementById("imgPreview").style.display = "flex";
+}
+
+function closePreview(){
+  document.getElementById("imgPreview").style.display = "none";
 }
 
 /* 未读红点 */
@@ -743,10 +813,41 @@ function navigate(page){
 
   sidebar.classList.remove("open");
 }
+  
+/* ===== 未读信息显示 ===== */
+let unreadCount = 0;
+
+function showUnread(){
+  if(!document.getElementById("chatBox").classList.contains("active")){
+    unreadCount++;
+    document.getElementById("sidebarUnread").innerText = unreadCount;
+    document.getElementById("sidebarUnread").style.display = "inline-block";
+  }
+}
+
+function openChat(){
+  document.getElementById("chatBox").classList.add("active");
+  unreadDot.style.display = "none";
+  unreadCount = 0;
+  document.getElementById("sidebarUnread").style.display = "none";
+}
 
 /* 默认加载 Lobby */
 navigate("lobby.html");
 
+if (window.visualViewport) {
+  visualViewport.addEventListener("resize", () => {
+    const chatBox = document.getElementById("chatBox");
+    const keyboardHeight = window.innerHeight - visualViewport.height;
+
+    if (keyboardHeight > 100) {
+      chatBox.style.bottom = keyboardHeight + 20 + "px";
+    } else {
+      chatBox.style.bottom = "70px";
+    }
+  });
+}
+  
 </script>
 
 </body>
