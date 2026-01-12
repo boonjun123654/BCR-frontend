@@ -78,6 +78,17 @@ body{
   );
 }
 
+/* ===== 房间分组显示控制（重要） ===== */
+.rooms-group{
+  display:none;
+  flex-direction:column;
+  gap:16px;
+}
+
+.rooms-group.active{
+  display:flex;
+}
+
 /* ===== Quick Actions ===== */
 .quick-actions{
   display:grid;
@@ -215,6 +226,8 @@ body{
   border-radius:20px;
   overflow:hidden;
   padding:16px;
+  max-width:420px;
+  margin:0 auto;
   background:linear-gradient(180deg,#1a1c22 0%,#121418 100%);
   border:1px solid rgba(255,255,255,.08);
   box-shadow:0 20px 50px rgba(0,0,0,.6);
