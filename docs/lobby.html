@@ -67,7 +67,15 @@ body{
   
 /* ===== Brand Gradient ===== */
 :root{
-  --brand-gradient: linear-gradient(120deg,#9a7bff,#ffaf7b);
+  --brand-gradient: linear-gradient(
+    120deg,
+    #213260,
+    #3863b8,
+    #a9d3f0,
+    #f2eaff,
+    #3863b8,
+    #213260
+  );
 }
 
 /* ===== Quick Actions ===== */
@@ -144,9 +152,9 @@ body{
 }
 .badge-green{
   background:#22c55e;
-  animation:pulse 1.8s infinite;
+  animation:badgePulse 1.8s infinite;
 }
-@keyframes pulse{
+@keyframes onlinePulse{
   0%{box-shadow:0 0 0 0 rgba(34,197,94,.6);}
   70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}
   100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
@@ -368,10 +376,10 @@ body{
   height:6px;
   background:#22c55e;
   border-radius:50%;
-  animation:pulse 1.4s infinite;
+  animation:onlinePulse 1.4s infinite;
 }
 
-@keyframes pulse{
+@keyframes onlinePulse{
   0%{opacity:.4;}
   50%{opacity:1;}
   100%{opacity:.4;}
@@ -383,7 +391,7 @@ body{
   border-radius:10px;
   font-size:11px;
   font-weight:800;
-  background:linear-gradient(120deg,#9a7bff,#ffaf7b);
+  background: var(--brand-gradient);
   color:#000;
 }
 
@@ -471,6 +479,7 @@ body{
 
         <div class="badge badge-green">下注中</div>
       </div>
+    </div>
 
       <div class="room-info-box">
         <div class="info-row">
