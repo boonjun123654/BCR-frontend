@@ -208,8 +208,139 @@ body{
   background:#2a2a2a;
 }
 
+/* ===== Contact US区域 ===== */
+.contact-card{
+  background:#22282a;
+  border:1px solid #2f3538;
+  border-radius:14px;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
+}
+
+.contact-title{
+  font-size:14px;
+  font-weight:600;
+}
+
+.contact-desc{
+  font-size:12px;
+  color:#9aa0a6;
+  margin-top:2px;
+}
+
+.contact-btn{
+  padding:8px 14px;
+  font-size:13px;
+  font-weight:600;
+  border-radius:10px;
+  background:#3863b8;
+  color:#fff;
+  cursor:pointer;
+}
+
+.contact-btn:hover{
+  background:#4a74c9;
+}
+
+.chat-box{
+  position:fixed;
+  bottom:70px;
+  left:16px;
+  width:260px;
+  background:#1f2426;
+  border:1px solid #2f3538;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+  transform:translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  transition:.25s ease;
+  z-index:300;
+}
+
+.chat-box.active{
+  transform:translateY(0);
+  opacity:1;
+  pointer-events:auto;
+}
+
+.chat-header{
+  padding:10px 12px;
+  font-size:14px;
+  font-weight:600;
+  background:#22282a;
+  display:flex;
+  justify-content:space-between;
+}
+
+.chat-body{
+  padding:12px;
+  font-size:13px;
+  color:#e6e6e6;
+}
+
+.chat-msg.bot{
+  background:#2a3033;
+  padding:8px 10px;
+  border-radius:10px;
+  display:inline-block;
+}
+
+.chat-input{
+  border-top:1px solid #2f3538;
+}
+
+.chat-input input{
+  width:100%;
+  padding:10px;
+  background:none;
+  border:none;
+  color:#888;
+}
+
+/* ===== 语言切换区域 ===== */
+.lang-switch{
+  display:flex;
+  gap:8px;
+}
+
+.lang-btn{
+  flex:1;
+  padding:8px 0;
+  font-size:13px;
+  font-weight:600;
+  border-radius:10px;
+  background:#22282a;
+  border:1px solid #2f3538;
+  color:#b0b0b0;
+  cursor:pointer;
+}
+
+.lang-btn.active{
+  background:#3863b8;
+  border-color:#3863b8;
+  color:#fff;
+}
+
 </style>
 </head>
+
+<div id="chatBox" class="chat-box">
+  <div class="chat-header">
+    客服中心
+    <span onclick="closeChat()">✕</span>
+  </div>
+  <div class="chat-body">
+    <div class="chat-msg bot">您好，请问有什么可以帮您？</div>
+  </div>
+  <div class="chat-input">
+    <input placeholder="输入内容…" disabled>
+  </div>
+</div>
 
 <body>
 
@@ -257,6 +388,7 @@ body{
 <!-- Sidebar -->
 <div id="sidebar" class="sidebar" onclick="closeSidebar(event)">
   <div class="sidebar-panel">
+
     <!-- Sidebar Header -->
     <div style="
       display:flex;
@@ -265,13 +397,13 @@ body{
       margin-bottom:18px;
     ">
       <img src="assets/logo.png" style="height:36px;opacity:.95">
-      <div style="
-        font-size:20px;
-        cursor:pointer;
-        opacity:.6;
-      " onclick="closeSidebar({target:{id:'sidebar'}})">✕</div>
+      <div
+        style="font-size:20px;cursor:pointer;opacity:.6;"
+        onclick="closeSidebar({target:{id:'sidebar'}})"
+      >✕</div>
     </div>
-    
+
+    <!-- MAIN -->
     <div class="sidebar-section">MAIN</div>
 
     <div class="sidebar-item active" onclick="navigate('lobby.html')">
@@ -297,6 +429,27 @@ body{
       </div>
       <span class="arrow">›</span>
     </div>
+
+    <!-- CONTACT US -->
+    <div class="sidebar-section">CONTACT US</div>
+
+    <div class="contact-card">
+      <div>
+        <div class="contact-title">在线客服</div>
+        <div class="contact-desc">24 / 7 Live Support</div>
+      </div>
+      <button class="contact-btn" onclick="openChat()">联系客服</button>
+    </div>
+
+    <!-- LANGUAGE -->
+    <div class="sidebar-section">LANGUAGE</div>
+
+    <div class="lang-switch">
+      <button class="lang-btn active">中文</button>
+      <button class="lang-btn">English</button>
+      <button class="lang-btn">BM</button>
+    </div>
+
   </div>
 </div>
 
@@ -430,6 +583,13 @@ function navigate(page){
   sidebar.classList.remove("open");
 }
 
+function openChat(){
+  document.getElementById("chatBox").classList.add("active");
+}
+
+function closeChat(){
+  document.getElementById("chatBox").classList.remove("active");
+}
 
 /* 默认加载 Lobby */
 navigate("lobby.html");
