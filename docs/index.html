@@ -249,8 +249,8 @@ body{
   position:fixed;
   bottom:70px;
   left:16px;
-  width:350px;
-  height:500px;
+  width:280px;
+  height:420px;
   background:#1f2426;
   border:1px solid #2f3538;
   border-radius:14px;
@@ -276,6 +276,7 @@ body{
   background:#22282a;
   display:flex;
   justify-content:space-between;
+  border-bottom:1px solid #2f3538;
 }
 
 .chat-body{
@@ -283,7 +284,7 @@ body{
   font-size:13px;
   color:#e6e6e6;
   overflow-y:auto;   /* 👈 关键 */
-  height:260px;      /* 根据总高度减 header/input */
+  height:calc(100% - 96px);      /* 根据总高度减 header/input */
 }
 }
 
@@ -292,18 +293,52 @@ body{
   padding:8px 10px;
   border-radius:10px;
   display:inline-block;
+  margin-bottom:8px;
 }
 
-.chat-input{
+.chat-input-bar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  padding:10px;
+  background:#1c2123;
   border-top:1px solid #2f3538;
 }
 
-.chat-input input{
-  width:100%;
-  padding:10px;
-  background:none;
+.chat-input{
+  flex:1;
+  height:36px;
+  padding:0 12px;
+
+  border-radius:18px;
   border:none;
-  color:#888;
+  outline:none;
+
+  background:#2a3033;
+  color:#ffffff;
+  font-size:13px;
+}
+
+.chat-input::placeholder{
+  color:#8b8f92;
+}
+
+.chat-send-btn{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:none;
+
+  background:#3863b8;
+  color:#ffffff;
+  font-size:16px;
+
+  cursor:pointer;
+}
+
+.chat-send-btn:hover{
+  background:#4a74c9;
 }
 
 /* ===== 语言切换区域 ===== */
@@ -338,11 +373,19 @@ body{
     客服中心
     <span onclick="closeChat()">✕</span>
   </div>
+
   <div class="chat-body">
     <div class="chat-msg bot">您好，请问有什么可以帮您？</div>
   </div>
-  <div class="chat-input">
-    <input placeholder="输入内容…" disabled>
+
+  <!-- 输入区（WhatsApp 风格） -->
+  <div class="chat-input-bar">
+    <input
+      type="text"
+      placeholder="输入内容…"
+      class="chat-input"
+    >
+    <button class="chat-send-btn">➤</button>
   </div>
 </div>
 
