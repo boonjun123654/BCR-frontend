@@ -162,21 +162,20 @@ body{
 }
 
 /* ===== 简易路纸 ===== */
-.road-map{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:4px;
-  margin:10px 0;
+.mini-road{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  margin:8px 0 10px;
 }
-.road-cell{
-  width:100%;
-  aspect-ratio:1/1;
+.road{
+  width:16px;
+  height:16px;
   border-radius:4px;
-  background:#2a2a2a;
 }
-.road-banker{background:#ef4444;}
-.road-player{background:#2563eb;}
-.road-tie{background:#22c55e;}
+.road.banker{background:#2563eb;}
+.road.player{background:#ef4444;}
+.road.tie{background:#22c55e;}
 
 /* ===== Enter Button ===== */
 .enter-btn{
@@ -188,12 +187,14 @@ body{
   margin-top:6px;
   cursor:pointer;
 
-  background: linear-gradient(
+  background:linear-gradient(
     120deg,
-    #a9d3f0,
-    #3863b8,
     #213260,
-    #f2eaff
+    #3863b8,
+    #a9d3f0,
+    #f2eaff,
+    #3863b8,
+    #213260
   );
 
   color:#000;
@@ -323,35 +324,57 @@ body{
 }
 
 .room-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
   font-weight:900;
 }
 
-.room-meta{
+.vip-badge{
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:800;
+  background:linear-gradient(
+    120deg,
+    #a9d3f0,
+    #3863b8,
+    #213260,
+    #f2eaff
+  );
+  color:#000;
+}
+
+.room-status{
   display:flex;
-  align-items:center;
   gap:8px;
-  font-size:12px;
-  color:#9ca3af;
+  align-items:center;
 }
 
-.room-online{
+.online-badge{
   display:flex;
   align-items:center;
-  gap:4px;
+  gap:6px;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:12px;
+  background:#0f172a;
+  color:#93c5fd;
 }
 
-.room-limit{
-  margin-top:6px;
-  font-size:12px;
-  color:#9aa0a6;
-  text-align:center;
+.online-badge .dot{
+  width:6px;
+  height:6px;
+  background:#22c55e;
+  border-radius:50%;
+  animation:pulse 1.4s infinite;
 }
 
-.room-dealers{
-  margin-top:4px;
-  font-size:12px;
-  color:#cbd5f5;
-  text-align:center;
+@keyframes pulse{
+  0%{opacity:.4;}
+  50%{opacity:1;}
+  100%{opacity:.4;}
 }
 
 /* 房间等级标签 */
@@ -362,6 +385,26 @@ body{
   font-weight:800;
   background:linear-gradient(120deg,#9a7bff,#ffaf7b);
   color:#000;
+}
+
+.room-info-box{
+  background:#111;
+  border:1px solid #2a2a2a;
+  border-radius:12px;
+  padding:10px 12px;
+  margin:10px 0;
+  font-size:13px;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+}
+
+.info-row.muted{
+  color:#9aa0a6;
+  font-size:12px;
+  margin-top:4px;
 }
 
 </style>
@@ -416,22 +459,28 @@ body{
 
       <div class="room-top">
         <div class="room-title">
-          Baccarat
-          <span class="room-tag">VIP</span>
+          <span class="game-name">Baccarat</span>
+          <span class="vip-badge">VIP</span>
         </div>
 
-        <div class="room-meta">
-          <div class="room-online">👤 128</div>
-          <div class="badge badge-green">下注中</div>
+      <div class="room-status">
+        <div class="online-badge">
+          <span class="dot"></span>
+          128 在线
         </div>
+
+        <div class="badge badge-green">下注中</div>
       </div>
 
-      <div class="room-limit">
-        最低 RM10 · 最高 RM5,000
-      </div>
+      <div class="room-info-box">
+        <div class="info-row">
+          <span>最低 RM10</span>
+          <span>最高 RM5,000</span>
+        </div>
 
-      <div class="room-dealers">
-        庄家：Alex56 · Jason841 · Mei
+        <div class="info-row muted">
+          庄家：Alex56 · Jason841 · Mei
+        </div>
       </div>
 
       <div style="text-align:center">
@@ -440,13 +489,12 @@ body{
       </div>
 
       <!-- ✅ 路纸在这里 -->
-      <div class="road-map">
-        <div class="road-cell road-banker"></div>
-        <div class="road-cell road-player"></div>
-        <div class="road-cell road-player"></div>
-        <div class="road-cell road-banker"></div>
-        <div class="road-cell road-tie"></div>
-        <div class="road-cell road-player"></div>
+      <div class="mini-road">
+        <span class="road banker"></span>
+        <span class="road player"></span>
+        <span class="road player"></span>
+        <span class="road banker"></span>
+        <span class="road tie"></span>
       </div>
 
       <button class="enter-btn">进入房间</button>
