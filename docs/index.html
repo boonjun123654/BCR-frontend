@@ -28,6 +28,7 @@ body{
   align-items:center;
   justify-content:space-between;
   padding:0 18px;
+  position: relative;
 }
 .icon-btn{
   width:40px;height:40px;
@@ -35,7 +36,13 @@ body{
   border-radius:10px;cursor:pointer;
 }
 .icon-btn:hover{background:#2a2a2a;}
-.logo{max-height:44px;opacity:.95;}
+.logo{
+  max-height:44px;
+  opacity:.95;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+}
 
 .login-btn{
   font-size:14px;font-weight:700;
@@ -256,7 +263,7 @@ body{
 
     <div class="sidebar-item active" onclick="navigate('lobby.html')">
       <div class="left">
-        <span class="icon">🎮</span>
+        <span class="icon">♠️</span>
         <span>Lobby</span>
       </div>
       <span class="arrow">›</span>
@@ -264,7 +271,7 @@ body{
 
     <div class="sidebar-item" onclick="navigate('stats.html')">
       <div class="left">
-        <span class="icon">🎉</span>
+        <span class="icon">♥️</span>
         <span>战绩</span>
       </div>
       <span class="arrow">›</span>
@@ -272,7 +279,7 @@ body{
 
     <div class="sidebar-item" onclick="navigate('wallet.html')">
       <div class="left">
-        <span class="icon">🕹</span>
+        <span class="icon">♣️</span>
         <span>Wallet</span>
       </div>
       <span class="arrow">›</span>
