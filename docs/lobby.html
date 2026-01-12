@@ -123,122 +123,6 @@ body{
   color:#000;
 }
 
-/* ===== Room List ===== */
-.room-list{padding:8px 16px 90px;}
-.rooms-group{display:none;flex-direction:column;gap:16px;}
-.rooms-group.active{display:flex;}
-
-.room-card{
-  padding:16px;
-  border-radius:18px;
-  cursor:pointer;
-  transition:.15s ease;
-}
-.room-card:active{transform:scale(.98);}
-
-.room-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-/* 状态 */
-.badge{
-  padding:4px 10px;
-  border-radius:12px;
-  font-size:11px;
-  font-weight:800;
-  color:#000;
-}
-.badge-green{
-  background:#22c55e;
-  animation:badgePulse 1.8s infinite;
-}
-@keyframes onlinePulse{
-  0%{box-shadow:0 0 0 0 rgba(34,197,94,.6);}
-  70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}
-  100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
-}
-
-/* 金额（去黄色） */
-.pool-label{font-size:11px;color:#9a9a9a;}
-.pool-amount{
-  font-size:26px;
-  font-weight:900;
-  color:#e5e7eb;
-  letter-spacing:.4px;
-}
-
-/* ===== 简易路纸 ===== */
-.mini-road{
-  display:flex;
-  gap:6px;
-  justify-content:center;
-  margin:8px 0 10px;
-}
-.road{
-  width:16px;
-  height:16px;
-  border-radius:4px;
-}
-.road.banker{background:#2563eb;}
-.road.player{background:#ef4444;}
-.road.tie{background:#22c55e;}
-
-/* ===== Enter Button ===== */
-.enter-btn{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  font-weight:900;
-  margin-top:6px;
-  cursor:pointer;
-
-  background:linear-gradient(
-    120deg,
-    #213260,
-    #3863b8,
-    #a9d3f0,
-    #f2eaff,
-    #3863b8,
-    #213260
-  );
-
-  color:#000;
-  transition: filter .2s ease, transform .1s ease;
-}
-
-.enter-btn:hover{
-  filter: brightness(1.08);
-}
-
-.enter-btn:active{
-  transform: scale(.97);
-}
-
-/* ===== Room Banner ===== */
-.room-banner{
-  position:relative;
-  width:100%;
-  height:95px;
-  margin-top:10px;
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid #2a2a2a;
-}
-.room-banner::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.5),transparent);
-}
-.room-banner img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
 /* ===== Slot Grid ===== */
 .slot-grid{
   display:grid;
@@ -323,98 +207,172 @@ body{
   border:none;
   color:#aaa;
 }
+  
+/* ===== 房间卡片 ===== */
+/* Card 外壳（深色渐变 + 高级阴影） */
+.room-card-pro{
+  position:relative;
+  border-radius:20px;
+  overflow:hidden;
+  padding:16px;
+  background:linear-gradient(180deg,#1a1c22 0%,#121418 100%);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 20px 50px rgba(0,0,0,.6);
+}
 
-/* ===== Room Extra Info ===== */
-.room-top{
+/* 顶部标题区 */
+.room-pro-header{
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:flex-start;
+  margin-bottom:14px;
 }
 
-.room-title{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:20px;
+.room-pro-title{
+  font-size:28px;
   font-weight:900;
+  letter-spacing:-.3px;
 }
 
-.vip-badge{
-  padding:4px 10px;
+.room-pro-vip{
+  padding:4px 12px;
   border-radius:999px;
-  font-size:13px;
-  font-weight:800;
-  background:linear-gradient(
-    120deg,
-    #a9d3f0,
-    #3863b8,
-    #213260,
-    #f2eaff
-  );
-  color:#000;
+  font-size:12px;
+  font-weight:900;
+  background:linear-gradient(135deg,#d4af37 0%,#f4e4ba 50%,#d4af37 100%);
+  color:#1a1a1a;
 }
 
-.room-status{
+/* 在线 + 状态 */
+.room-pro-meta{
   display:flex;
-  gap:8px;
-  align-items:center;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
 }
 
-.online-badge{
+.room-pro-online{
   display:flex;
   align-items:center;
   gap:6px;
+  font-size:12px;
+  color:#9ca3af;
+}
+
+.room-pro-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#22c55e;
+  animation:pulseGlow 1.5s infinite;
+}
+
+@keyframes pulseGlow{
+  0%{box-shadow:0 0 0 0 rgba(34,197,94,.6);}
+  70%{box-shadow:0 0 0 10px rgba(34,197,94,0);}
+  100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
+}
+
+.room-pro-status{
+  font-size:12px;
+  font-weight:700;
+  color:#22c55e;
   padding:4px 10px;
   border-radius:999px;
-  font-size:12px;
-  background:#0f172a;
-  color:#93c5fd;
+  background:rgba(34,197,94,.1);
+  border:1px solid rgba(34,197,94,.3);
+  animation:statusBreath 2s infinite;
 }
 
-.online-badge .dot{
-  width:6px;
-  height:6px;
-  background:#22c55e;
-  border-radius:50%;
-  animation:onlinePulse 1.4s infinite;
+@keyframes statusBreath{
+  0%,100%{opacity:1;}
+  50%{opacity:.6;}
 }
 
-@keyframes onlinePulse{
-  0%{opacity:.4;}
-  50%{opacity:1;}
-  100%{opacity:.4;}
+/* 信息框 */
+.room-pro-info{
+  background:linear-gradient(180deg,rgba(30,32,38,.95),rgba(22,24,28,.98));
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:14px;
 }
 
-/* 房间等级标签 */
-.room-tag{
-  padding:2px 8px;
-  border-radius:10px;
+/* 信息行 */
+.room-pro-row{
+  margin-bottom:10px;
+}
+
+.room-pro-label{
   font-size:11px;
+  color:#9ca3af;
+  margin-bottom:4px;
+}
+
+.room-pro-value{
+  font-size:16px;
   font-weight:800;
-  background: var(--brand-gradient);
-  color:#000;
+  color:#e5e7eb;
 }
 
-.room-info-box{
-  background:#111;
-  border:1px solid #2a2a2a;
-  border-radius:12px;
-  padding:10px 12px;
-  margin:10px 0;
-  font-size:13px;
-}
-
-.info-row{
+.room-pro-bankers{
   display:flex;
   justify-content:space-between;
+  align-items:center;
+  font-size:14px;
+  color:#d1d5db;
 }
 
-.info-row.muted{
-  color:#9aa0a6;
-  font-size:12px;
-  margin-top:4px;
+.room-pro-banker-count{
+  color:#facc15;
+  font-weight:800;
 }
 
+/* 路线图 */
+.room-pro-road{
+  display:flex;
+  gap:6px;
+  margin-top:8px;
+}
+
+.road-pro{
+  width:18px;
+  height:18px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:900;
+  color:#fff;
+}
+
+.road-pro.banker{background:linear-gradient(135deg,#2563eb,#1d4ed8);}
+.road-pro.player{background:linear-gradient(135deg,#dc2626,#b91c1c);}
+.road-pro.tie{background:linear-gradient(135deg,#16a34a,#15803d);}
+
+/* CTA 按钮（Canva 金色） */
+.room-pro-enter{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  font-size:15px;
+  font-weight:900;
+  cursor:pointer;
+  background:linear-gradient(135deg,#d4af37 0%,#f4e4ba 50%,#d4af37 100%);
+  color:#1a1a1a;
+  transition:.25s ease;
+}
+
+.room-pro-enter:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(212,175,55,.45);
+}
+
+.room-pro-enter:active{
+  transform:scale(.97);
+}
 </style>
 </head>
 
@@ -463,68 +421,118 @@ body{
 
   <!-- Baccarat -->
   <div id="rooms-baccarat" class="rooms-group active">
-    <div class="card room-card">
+    <div class="room-card-pro">
 
-      <div class="room-top">
-        <div class="room-title">
-          <span class="game-name">Baccarat</span>
-          <span class="vip-badge">VIP</span>
+      <!-- Header -->
+      <div class="room-pro-header">
+        <div>
+          <div class="room-pro-title">
+            Baccarat
+            <span class="room-pro-vip">VIP</span>
+          </div>
         </div>
 
-      <div class="room-status">
-        <div class="online-badge">
-          <span class="dot"></span>
-          128 在线
-        </div>
-
-        <div class="badge badge-green">下注中</div>
-      </div>
-    </div>
-
-      <div class="room-info-box">
-        <div class="info-row">
-          <span>最低 RM10</span>
-          <span>最高 RM5,000</span>
-        </div>
-
-        <div class="info-row muted">
-          庄家：Alex56 · Jason841 · Mei
+        <div class="room-pro-meta">
+          <div class="room-pro-online">
+            <span class="room-pro-dot"></span>
+            128 在线
+          </div>
+          <div class="room-pro-status">下注中</div>
         </div>
       </div>
 
-      <div style="text-align:center">
-        <div class="pool-label">庄家池金额</div>
-        <div class="pool-amount">RM 28,900</div>
+      <!-- Info Box -->
+      <div class="room-pro-info">
+
+        <div class="room-pro-row">
+          <div class="room-pro-label">投注限额 · 最低</div>
+          <div class="room-pro-value">RM10</div>
+        </div>
+
+        <div class="room-pro-row">
+          <div class="room-pro-label">当前庄家</div>
+          <div class="room-pro-bankers">
+            <span>Alex56 · Jason841 · Mei</span>
+            <span class="room-pro-banker-count">3人</span>
+          </div>
+        </div>
+
+        <div class="room-pro-row">
+          <div class="room-pro-label">庄家池金额</div>
+          <div class="room-pro-value">RM 28,900</div>
+        </div>
+
+        <div class="room-pro-row">
+          <div class="room-pro-label">最近路线</div>
+          <div class="room-pro-road">
+            <span class="road-pro banker">庄</span>
+            <span class="road-pro player">闲</span>
+            <span class="road-pro banker">庄</span>
+            <span class="road-pro banker">庄</span>
+            <span class="road-pro tie">和</span>
+            <span class="road-pro player">闲</span>
+          </div>
+        </div>
+
       </div>
 
-      <!-- ✅ 路纸在这里 -->
-      <div class="mini-road">
-        <span class="road banker"></span>
-        <span class="road player"></span>
-        <span class="road player"></span>
-        <span class="road banker"></span>
-        <span class="road tie"></span>
-      </div>
-
-      <button class="enter-btn">进入房间</button>
-      <div class="room-banner"><img src="assets/room/gold.jpg"></div>
+      <!-- CTA -->
+      <button class="room-pro-enter">进入房间</button>
 
     </div>
   </div>
 
   <!-- SicBo -->
   <div id="rooms-sicbo" class="rooms-group">
-    <div class="card room-card">
-      <div class="room-header">
-        <div>骰宝 · 黄金房</div>
-        <div class="badge badge-green">下注中</div>
+    <div class="room-card-pro">
+
+      <!-- Header -->
+      <div class="room-pro-header">
+        <div>
+          <div class="room-pro-title">
+            SicBo
+            <span class="room-pro-vip">VIP</span>
+          </div>
+        </div>
+
+        <div class="room-pro-meta">
+          <div class="room-pro-online">
+            <span class="room-pro-dot"></span>
+            64 在线
+          </div>
+          <div class="room-pro-status">下注中</div>
+        </div>
       </div>
-      <div style="text-align:center">
-        <div class="pool-label">奖池金额</div>
-        <div class="pool-amount">RM 9,400</div>
+
+      <!-- Info Box -->
+      <div class="room-pro-info">
+
+        <div class="room-pro-row">
+          <div class="room-pro-label">投注限额 · 最低</div>
+          <div class="room-pro-value">RM5</div>
+        </div>
+
+        <div class="room-pro-row">
+          <div class="room-pro-label">庄家池金额</div>
+          <div class="room-pro-value">RM 9,400</div>
+        </div>
+
+        <div class="room-pro-row">
+          <div class="room-pro-label">最近路线</div>
+          <div class="room-pro-road">
+            <span class="road-pro banker">大</span>
+            <span class="road-pro player">小</span>
+            <span class="road-pro banker">大</span>
+            <span class="road-pro tie">和</span>
+            <span class="road-pro player">小</span>
+          </div>
+        </div>
+
       </div>
-      <button class="enter-btn">进入房间</button>
-      <div class="room-banner"><img src="assets/room/sicbo.jpg"></div>
+
+      <!-- CTA -->
+      <button class="room-pro-enter">进入房间</button>
+
     </div>
   </div>
 
