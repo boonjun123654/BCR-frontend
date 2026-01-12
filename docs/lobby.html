@@ -226,8 +226,6 @@ body{
   border-radius:20px;
   overflow:hidden;
   padding:16px;
-  max-width:420px;
-  margin:0 auto;
   background:linear-gradient(180deg,#1a1c22 0%,#121418 100%);
   border:1px solid rgba(255,255,255,.08);
   box-shadow:0 20px 50px rgba(0,0,0,.6);
@@ -313,7 +311,14 @@ body{
 
 /* 信息行 */
 .room-pro-row{
+  padding-bottom:10px;
   margin-bottom:10px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.room-pro-row:last-child{
+  border-bottom:none;
+  margin-bottom:0;
+  padding-bottom:0;
 }
 
 .room-pro-label{
