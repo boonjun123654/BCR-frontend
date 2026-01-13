@@ -89,23 +89,110 @@ body{
   display:flex;
 }
 
-/* ===== Quick Actions ===== */
-.quick-actions{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+/* ===== Quick Actions Glass Area ===== */
+
+.quick-wrap{
   padding:10px 16px;
 }
-.qa-item{
-  background:#1a1a1a;
-  border:1px solid #2d2d2d;
+
+.quick-glass{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  border-radius:18px;
+  background:linear-gradient(
+    145deg,
+    rgba(32,32,38,.95),
+    rgba(18,18,22,.98)
+  );
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:
+    0 8px 30px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+/* 左侧按钮区 */
+.quick-actions-new{
+  display:flex;
+  gap:8px;
+  flex:1;
+}
+
+.quick-btn{
+  flex:1;
+  background:linear-gradient(
+    180deg,
+    rgba(45,45,52,.9),
+    rgba(28,28,34,.95)
+  );
+  border:1px solid rgba(255,255,255,.06);
   border-radius:14px;
-  padding:12px 6px;
+  padding:10px 6px;
   text-align:center;
   cursor:pointer;
+  transition:.25s;
 }
-.qa-title{font-size:13px;font-weight:900;}
-.qa-sub{font-size:11px;color:#9a9a9a;}
+
+.quick-btn:active{
+  transform:scale(.96);
+}
+
+/* 图标 */
+.quick-icon{
+  width:36px;
+  height:36px;
+  margin:0 auto 6px;
+  border-radius:10px;
+  background:rgba(212,195,150,.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+
+/* 文本 */
+.quick-title{
+  font-size:12px;
+  font-weight:700;
+}
+.quick-sub{
+  font-size:10px;
+  color:#9aa0a6;
+}
+
+/* 余额区 */
+.quick-balance{
+  min-width:110px;
+  padding:8px 10px;
+  border-left:1px solid rgba(212,195,150,.15);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.balance-label{
+  font-size:10px;
+  color:#9aa0a6;
+  margin-bottom:4px;
+}
+
+.balance-amount{
+  font-weight:900;
+  font-size:18px;
+  background:linear-gradient(
+    135deg,
+    #e8dcc4,
+    #d4c396,
+    #c4a86c
+  );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.currency{
+  font-size:11px;
+  margin-right:2px;
+}
 
 /* ===== Game Tabs ===== */
 .game-tabs{
@@ -427,11 +514,49 @@ body{
   </div>
 </div>
 
-<!-- Quick Actions -->
-<div class="quick-actions">
-  <div class="qa-item"><div class="qa-title">Deposit</div><div class="qa-sub">充值入款</div></div>
-  <div class="qa-item"><div class="qa-title">Withdraw</div><div class="qa-sub">申请提款</div></div>
-  <div class="qa-item"><div class="qa-title">History</div><div class="qa-sub">交易记录</div></div>
+<!-- Quick Actions + Balance -->
+<div class="quick-wrap">
+  <div class="quick-glass">
+
+    <!-- 左侧操作按钮 -->
+    <div class="quick-actions-new">
+
+      <div class="quick-btn">
+        <div class="quick-icon">💰</div>
+        <div class="quick-text">
+          <div class="quick-title">Deposit</div>
+          <div class="quick-sub">充值入款</div>
+        </div>
+      </div>
+
+      <div class="quick-btn">
+        <div class="quick-icon">🏧</div>
+        <div class="quick-text">
+          <div class="quick-title">Withdraw</div>
+          <div class="quick-sub">申请提款</div>
+        </div>
+      </div>
+
+      <div class="quick-btn">
+        <div class="quick-icon">📄</div>
+        <div class="quick-text">
+          <div class="quick-title">History</div>
+          <div class="quick-sub">交易记录</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 右侧余额 -->
+    <div class="quick-balance">
+      <div class="balance-label">当前余额</div>
+      <div class="balance-amount">
+        <span class="currency">RM</span>
+        <span class="amount">12,580.50</span>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- Promo Video -->
