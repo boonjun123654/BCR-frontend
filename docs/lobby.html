@@ -48,6 +48,35 @@ body{
 }
 .banner-dot.active{background:#fff;}
 
+
+/* ===== Video Section Title ===== */
+.video-title-wrap{
+  padding:10px 16px 4px;
+}
+
+.video-title{
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.5px;
+  color:#e5e7eb;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* 左侧小强调条（可选，但很推荐） */
+.video-title::before{
+  content:'';
+  width:4px;
+  height:14px;
+  border-radius:2px;
+  background:linear-gradient(
+    180deg,
+    #d4c396,
+    #a89a78
+  );
+}
+
 /* ===== Promo Video ===== */
 .video-wrap{padding:6px 16px 10px;}
 .video-box{
@@ -602,7 +631,12 @@ body{
   </div>
 
 </div>
-
+  
+<!-- Video Title -->
+<div class="video-title-wrap">
+  <div class="video-title">了解玩法机制</div>
+</div>
+  
 <!-- Promo Video -->
 <div class="video-wrap">
   <div class="video-box">
