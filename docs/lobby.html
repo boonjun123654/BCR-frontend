@@ -216,6 +216,34 @@ body{
   -webkit-text-fill-color:transparent;
 }
 
+/* ===== Game Section Title ===== */
+.game-title-wrap{
+  padding:10px 16px 4px;
+}
+
+.game-title{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:.5px;
+  color:#e5e7eb;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* 左侧小强调条（可选，但很推荐） */
+.game-title::before{
+  content:'';
+  width:4px;
+  height:20px;
+  border-radius:2px;
+  background:linear-gradient(
+    180deg,
+    #d4c396,
+    #a89a78
+  );
+}
+
 /* ===== Game Tabs ===== */
 .game-tabs{
   display:grid;
@@ -642,6 +670,11 @@ body{
   <div class="video-box">
     <video src="assets/promo.mp4" controls muted playsinline preload="metadata" poster="assets/videophoto.jpg"></video>
   </div>
+</div>
+
+<!-- game Title -->
+<div class="game-title-wrap">
+  <div class="game-title">热门游戏</div>
 </div>
 
 <!-- Game Tabs -->
