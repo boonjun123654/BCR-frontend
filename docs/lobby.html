@@ -48,6 +48,20 @@ body{
 }
 .banner-dot.active{background:#fff;}
 
+/* ===== Video Illustration ===== */
+.video-illustration{
+  padding:6px 16px 0;
+  display:flex;
+  justify-content:center;
+}
+
+.video-illustration img{
+  width:100%;
+  max-width:320px;     /* 关键：控制在手机上不会炸 */
+  height:auto;
+  display:block;
+  opacity:.95;         /* 轻微融入背景 */
+}
 
 /* ===== Video Section Title ===== */
 .video-title-wrap{
@@ -658,6 +672,11 @@ body{
     </div>
   </div>
 
+</div>
+
+<!-- Video Illustration -->
+<div class="video-illustration">
+  <img src="assets/illustration/guide.svg">
 </div>
   
 <!-- Video Title -->
