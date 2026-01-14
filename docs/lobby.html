@@ -165,15 +165,13 @@ body{
   gap:6px;
 }
 
-.icon-box{
-  width:40px;
-  height:40px;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,rgba(180,160,120,.15),rgba(140,120,80,.08));
-  border:1px solid rgba(180,160,120,.2);
+.quick-icon{
+  width:26px;
+  height:26px;
+  margin-bottom:6px;
+  fill:#d4c396;
+  flex-shrink:0;
+  filter: drop-shadow(0 0 6px rgba(212,195,150,.25));
 }
 
 .quick-title{
@@ -183,10 +181,6 @@ body{
   margin-top:2px;
 }
 
-.icon-box svg{
-  width:24px;
-  height:24px;
-}
 
 .quick-sub{
   font-size:10px;
@@ -585,80 +579,90 @@ body{
 
     <!-- Deposit -->
     <button class="quick-btn">
-      <div class="icon-box">
-        <!-- Deposit SVG -->
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-          <!-- Coin -->
-          <circle cx="12" cy="8.5" r="5.8" fill="#d4c396"/>
-          <circle cx="12" cy="8.5" r="4.5" fill="#0a0a0c" opacity="0.25"/>
-          <text x="12" y="11.8" text-anchor="middle"
-                font-size="7.5" font-weight="700"
-                fill="#0a0a0c">$</text>
+      <!-- Deposit SVG（直接放在按钮里，无边框） -->
+      <svg class="quick-icon" viewBox="0 0 24 24" fill="none">
+        <!-- Coin -->
+        <circle cx="12" cy="8.5" r="5.8" fill="#d4c396"/>
+        <circle cx="12" cy="8.5" r="4.5" fill="#0a0a0c" opacity="0.25"/>
+        <text x="12" y="11.8" text-anchor="middle"
+              font-size="7.5" font-weight="700"
+              fill="#0a0a0c">$</text>
 
-          <!-- Down arrow -->
-          <path d="M12 14.5l-1.6 2.2h3.2z" fill="#d4c396" opacity="0.6"/>
-          <circle cx="12" cy="17" r="0.6" fill="#d4c396" opacity="0.4"/>
+        <!-- Down arrow -->
+        <path d="M12 14.5l-1.6 2.2h3.2z" fill="#d4c396" opacity="0.6"/>
+        <circle cx="12" cy="17" r="0.6" fill="#d4c396" opacity="0.4"/>
 
-          <!-- Box -->
-          <rect x="5" y="18" width="14" height="4.5" rx="1.5" fill="#d4c396"/>
-          <rect x="8.5" y="17.5" width="7" height="1.2" rx="0.4" fill="#0a0a0c" opacity="0.35"/>
-        </svg>
-      </div>
+        <!-- Box -->
+        <rect x="5" y="18" width="14" height="4.5" rx="1.5" fill="#d4c396"/>
+        <rect x="8.5" y="17.5" width="7" height="1.2" rx="0.4"
+              fill="#0a0a0c" opacity="0.35"/>
+      </svg>
+
       <div class="quick-title">Deposit</div>
     </button>
 
     <!-- Withdraw -->
     <button class="quick-btn">
-      <div class="icon-box">
-        <!-- Withdraw SVG -->
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-          <!-- Coin -->
-          <circle cx="12" cy="6.5" r="5.8" fill="#d4c396"/>
-          <circle cx="12" cy="6.5" r="4.5" fill="#0a0a0c" opacity="0.25"/>
-          <text x="12" y="9.8" text-anchor="middle"
-                font-size="7.5" font-weight="700"
-                fill="#0a0a0c">$</text>
+      <!-- Withdraw SVG -->
+      <svg class="quick-icon" viewBox="0 0 24 24" fill="none">
+        <!-- Coin -->
+        <circle cx="12" cy="6.5" r="5.8" fill="#d4c396"/>
+        <circle cx="12" cy="6.5" r="4.5" fill="#0a0a0c" opacity="0.25"/>
+        <text x="12" y="9.8" text-anchor="middle"
+              font-size="7.5" font-weight="700"
+              fill="#0a0a0c">$</text>
 
-          <!-- Up arrow -->
-          <path d="M12 12.5l-1.6-2.2h3.2z" fill="#d4c396" opacity="0.6"/>
-          <circle cx="12" cy="14" r="0.6" fill="#d4c396" opacity="0.4"/>
+        <!-- Up arrow -->
+        <path d="M12 12.5l-1.6-2.2h3.2z" fill="#d4c396" opacity="0.6"/>
+        <circle cx="12" cy="14" r="0.6" fill="#d4c396" opacity="0.4"/>
 
-          <!-- Wallet -->
-          <path d="M5 16
-                   c0-1 0.8-1.8 1.8-1.8h10.4
-                   c1 0 1.8 0.8 1.8 1.8v4.8
-                   c0 1-0.8 1.8-1.8 1.8H6.8
-                   C5.8 22.6 5 21.8 5 20.8z"
-                fill="#d4c396"/>
-          <rect x="8" y="15.5" width="8" height="1" rx="0.3"
-                fill="#0a0a0c" opacity="0.35"/>
-        </svg>
-      </div>
+        <!-- Wallet -->
+        <path d="M5 16
+                 c0-1 0.8-1.8 1.8-1.8h10.4
+                 c1 0 1.8 0.8 1.8 1.8v4.8
+                 c0 1-0.8 1.8-1.8 1.8H6.8
+                 C5.8 22.6 5 21.8 5 20.8z"
+              fill="#d4c396"/>
+        <rect x="8" y="15.5" width="8" height="1" rx="0.3"
+              fill="#0a0a0c" opacity="0.35"/>
+      </svg>
+
       <div class="quick-title">Withdraw</div>
     </button>
 
     <!-- History -->
     <button class="quick-btn">
-      <div class="icon-box">
-        <!-- History SVG -->
-        <svg width="22" height="22" viewBox="0 0 24 24"
-             fill="none" stroke="#d4c396" stroke-width="1.8">
-          <path stroke-linecap="round" stroke-linejoin="round"
-                d="M9 12h6
-                   M9 16h6
-                   M9 20h6
-                   M15 3h3a2 2 0 012 2v16a2 2 0 01-2 2H6
-                   a2 2 0 01-2-2V5
-                   a2 2 0 012-2h3"/>
-          <circle cx="7.5" cy="12" r="0.8" fill="#d4c396"/>
-          <circle cx="7.5" cy="16" r="0.8" fill="#d4c396"/>
-          <circle cx="7.5" cy="20" r="0.8" fill="#d4c396"/>
-        </svg>
-      </div>
+      <!-- History SVG -->
+      <svg class="quick-icon" viewBox="0 0 24 24"
+           fill="none" stroke="#d4c396" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 12h6
+                 M9 16h6
+                 M9 20h6
+                 M15 3h3a2 2 0 012 2v16
+                 a2 2 0 01-2 2H6
+                 a2 2 0 01-2-2V5
+                 a2 2 0 012-2h3"/>
+        <circle cx="7.5" cy="12" r="0.8" fill="#d4c396"/>
+        <circle cx="7.5" cy="16" r="0.8" fill="#d4c396"/>
+        <circle cx="7.5" cy="20" r="0.8" fill="#d4c396"/>
+      </svg>
+
       <div class="quick-title">History</div>
     </button>
 
   </div>
+
+  <!-- Balance -->
+  <div class="quick-balance">
+    <div class="balance-label">当前余额</div>
+    <div class="balance-amount">
+      <span class="rm">RM</span>
+      <span class="num">12,580.50</span>
+    </div>
+  </div>
+
+</div>
 
   <!-- Balance -->
   <div class="quick-balance">
