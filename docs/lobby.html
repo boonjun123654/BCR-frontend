@@ -556,6 +556,20 @@ body{
 .room-pro-enter:active{
   transform:scale(.97);
 }
+
+.quick-divider{
+  width:1px;
+  height:28px;                 /* 短，不要贯穿 */
+  align-self:center;
+
+  background:linear-gradient(
+    180deg,
+    rgba(212,195,150,0),
+    rgba(212,195,150,.35),
+    rgba(212,195,150,0)
+  );
+}
+
 </style>
 </head>
 
@@ -605,7 +619,9 @@ body{
 
       <div class="quick-title">Deposit</div>
     </button>
-
+    
+    <span class="quick-divider"></span>
+    
     <!-- Withdraw -->
     <button class="quick-btn">
       <svg class="quick-icon" width="26" height="26" viewBox="0 0 24 24" fill="none">
@@ -633,7 +649,9 @@ body{
 
       <div class="quick-title">Withdraw</div>
     </button>
-
+    
+    <span class="quick-divider"></span>
+    
     <!-- History -->
     <button class="quick-btn">
       <svg class="quick-icon" width="22" height="22" viewBox="0 0 24 24"
