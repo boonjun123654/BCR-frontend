@@ -600,22 +600,73 @@ body{
 
     <!-- Deposit -->
     <button class="quick-btn">
-      <svg class="quick-icon" width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <!-- Coin -->
-        <circle cx="12" cy="8.5" r="5.8" fill="#d4c396"/>
-        <circle cx="12" cy="8.5" r="4.5" fill="#0a0a0c" opacity="0.25"/>
-        <text x="12" y="11.8" text-anchor="middle"
-              font-size="7.5" font-weight="700"
-              fill="#0a0a0c">$</text>
+      <svg
+        class="quick-icon"
+        width="26"
+        height="26"
+        viewBox="0 0 160 160"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- 存钱入口（平的） -->
+        <line
+          x1="55"
+          y1="95"
+          x2="105"
+          y2="95"
+          stroke="#d4c396"
+          stroke-width="10"
+          stroke-linecap="round"
+        />
 
-        <!-- Down arrow -->
-        <path d="M12 14.5l-1.6 2.2h3.2z" fill="#d4c396" opacity="0.6"/>
-        <circle cx="12" cy="17" r="0.6" fill="#d4c396" opacity="0.4"/>
+        <!-- 左侧短边 -->
+        <line
+          x1="55"
+          y1="95"
+          x2="55"
+          y2="105"
+          stroke="#d4c396"
+          stroke-width="10"
+          stroke-linecap="round"
+        />
 
-        <!-- Box -->
-        <rect x="5" y="18" width="14" height="4.5" rx="1.5" fill="#d4c396"/>
-        <rect x="8.5" y="17.5" width="7" height="1.2" rx="0.4"
-              fill="#0a0a0c" opacity="0.35"/>
+        <!-- 右侧短边 -->
+        <line
+          x1="105"
+          y1="95"
+          x2="105"
+          y2="105"
+          stroke="#d4c396"
+          stroke-width="10"
+          stroke-linecap="round"
+        />
+
+        <!-- 钞票主体 -->
+        <rect
+          x="65"
+          y="105"
+          width="30"
+          height="50"
+          rx="3"
+          fill="#d4c396"
+        />
+
+        <!-- 向上箭头（深色，对比） -->
+        <polyline
+          points="80,140 80,125"
+          stroke="#0a0a0c"
+          stroke-width="4"
+          fill="none"
+          stroke-linecap="round"
+        />
+
+        <polyline
+          points="75,130 80,125 85,130"
+          stroke="#0a0a0c"
+          stroke-width="4"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
 
       <div class="quick-title">Deposit</div>
