@@ -684,27 +684,81 @@ body{
     
     <!-- Withdraw -->
     <button class="quick-btn">
-      <svg class="quick-icon" width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <!-- Coin -->
-        <circle cx="12" cy="6.5" r="5.8" fill="#d4c396"/>
-        <circle cx="12" cy="6.5" r="4.5" fill="#0a0a0c" opacity="0.25"/>
-        <text x="12" y="9.8" text-anchor="middle"
-              font-size="7.5" font-weight="700"
-              fill="#0a0a0c">$</text>
+      <svg
+        class="quick-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- 提款入口（平的） -->
+        <line
+          x1="3"
+          y1="1"
+          x2="21"
+          y2="1"
+          stroke="#d4c396"
+          stroke-width="4"
+          stroke-linecap="round"
+        />
 
-        <!-- Up arrow -->
-        <path d="M12 12.5l-1.6-2.2h3.2z" fill="#d4c396" opacity="0.6"/>
-        <circle cx="12" cy="14" r="0.6" fill="#d4c396" opacity="0.4"/>
+        <!-- 左右短边 -->
+        <line
+          x1="3"
+          y1="2"
+          x2="3"
+          y2="5"
+          stroke="#d4c396"
+          stroke-width="4"
+          stroke-linecap="round"
+        />
+        <line
+          x1="21"
+          y1="2"
+          x2="21"
+          y2="5"
+          stroke="#d4c396"
+          stroke-width="4"
+          stroke-linecap="round"
+        />
 
-        <!-- Wallet -->
-        <path d="M5 16
-                 c0-1 0.8-1.8 1.8-1.8h10.4
-                 c1 0 1.8 0.8 1.8 1.8v4.8
-                 c0 1-0.8 1.8-1.8 1.8H6.8
-                 C5.8 22.6 5 21.8 5 20.8z"
-              fill="#d4c396"/>
-        <rect x="8" y="15.5" width="8" height="1" rx="0.3"
-              fill="#0a0a0c" opacity="0.35"/>
+        <!-- 钞票主体 -->
+        <rect
+          x="6"
+          y="5"
+          width="12"
+          height="17"
+          rx="1.5"
+          fill="#d4c396"
+        />
+        <!-- 中轴竖线 -->
+        <line
+          x1="12"
+          y1="7"
+          x2="12"
+          y2="20"
+          stroke="#0a0a0c"
+          stroke-width="1.6"
+          stroke-linecap="round"
+        />
+
+        <!-- S（钞票符号） -->
+        <path
+          d="
+            M15 7
+            C15 5.5 13.8 4.5 12 4.5
+            C10.2 4.5 9 5.5 9 7
+            C9 8.5 10.2 9.2 12 9.8
+            C13.8 10.4 15 11.5 15 13
+            C15 14.8 13.8 16 12 16
+            C10.2 16 9 14.8 9 13
+          "
+          transform="translate(0 3)"
+          fill="none"
+          stroke="#0a0a0c"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
 
       <div class="quick-title">Withdraw</div>
