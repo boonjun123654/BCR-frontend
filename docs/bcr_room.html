@@ -281,6 +281,73 @@
     <div class="px-4 py-2">
      <div class="flex items-center justify-between text-sm"><span class="text-gray-400">本局下注</span> <span id="total-bet" class="gold-text font-medium">RM 0</span>
      </div>
+    </div><!-- Current Banker Info -->
+    <div class="px-4 py-3">
+     <div class="rounded-lg px-4 py-3" style="background: linear-gradient(135deg, rgba(212, 195, 150, 0.1) 0%, rgba(212, 195, 150, 0.05) 100%); border: 1px solid rgba(212, 195, 150, 0.2);">
+      <div class="flex items-center gap-2 mb-3">
+       <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="#d4c396" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+       </svg><span class="text-xs text-gray-400">当前庄家</span>
+      </div><!-- Banker List -->
+      <div class="flex items-center gap-2 mb-3"><!-- Banker 1 -->
+       <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #d4c396 0%, #b8a67a 100%); color: #0f0f0f;">
+        龙
+       </div><!-- Banker 2 -->
+       <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #d4c396 0%, #b8a67a 100%); color: #0f0f0f;">
+        虎
+       </div><!-- Banker 3 -->
+       <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #d4c396 0%, #b8a67a 100%); color: #0f0f0f;">
+        豹
+       </div><span class="text-xs text-gray-400 ml-2">龙哥888、虎王666、金豹999</span>
+      </div><!-- Total Banker Balance -->
+      <div class="flex items-center justify-between"><span class="text-sm text-gray-400">庄上总金额</span> <span class="text-lg font-bold gold-text">RM 196,800</span>
+      </div>
+     </div>
+    </div><!-- Chat Area -->
+    <div class="px-4 py-3 mb-4">
+     <div class="rounded-xl overflow-hidden" style="background: linear-gradient(180deg, rgba(20,20,25,0.6) 0%, rgba(15,15,18,0.8) 100%); border: 1px solid rgba(212, 195, 150, 0.2);"><!-- Chat Header -->
+      <div class="px-4 py-2 flex items-center justify-between" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+       <div class="flex items-center gap-2">
+        <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="#d4c396" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg><span class="text-sm font-medium gold-text">聊天室</span>
+       </div><span class="text-xs text-gray-500">28 在线</span>
+      </div><!-- Chat Messages -->
+      <div id="chat-messages" class="px-4 py-3 space-y-2.5 overflow-y-auto" style="height: 150px; scrollbar-width: thin; scrollbar-color: rgba(212, 195, 150, 0.3) transparent;">
+       <div class="flex items-start gap-2">
+        <div class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #d4c396 0%, #b8a67a 100%); color: #0f0f0f;">
+         L
+        </div>
+        <div class="flex-1 min-w-0">
+         <div class="flex items-baseline gap-2"><span class="text-xs font-medium text-gray-300">LuckyStar</span> <span class="text-xs text-gray-600">13:45</span>
+         </div>
+         <p class="text-xs text-gray-400 mt-0.5">庄家连赢三局了！</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-2">
+        <div class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white;">
+         W
+        </div>
+        <div class="flex-1 min-w-0">
+         <div class="flex items-baseline gap-2"><span class="text-xs font-medium text-gray-300">WinnerKing</span> <span class="text-xs text-gray-600">13:46</span>
+         </div>
+         <p class="text-xs text-gray-400 mt-0.5">下一局压闲！</p>
+        </div>
+       </div>
+       <div class="flex items-start gap-2">
+        <div class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white;">
+         V
+        </div>
+        <div class="flex-1 min-w-0">
+         <div class="flex items-baseline gap-2"><span class="text-xs font-medium text-gray-300">VIP888</span> <span class="text-xs text-gray-600">13:46</span>
+         </div>
+         <p class="text-xs text-gray-400 mt-0.5">大家好运 🎰</p>
+        </div>
+       </div>
+      </div><!-- Chat Input -->
+      <div class="px-3 py-2.5" style="border-top: 1px solid rgba(255,255,255,0.05);">
+       <form onsubmit="sendMessage(event)" class="flex items-center gap-2"><input type="text" id="chat-input" placeholder="输入消息..." class="flex-1 px-3 py-2 rounded-lg text-xs text-white placeholder-gray-500 focus:outline-none" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"> <button type="submit" class="px-4 py-2 rounded-lg text-xs font-medium" style="background: linear-gradient(135deg, #d4c396 0%, #a89060 100%); color: #0f0f0f;"> 发送 </button>
+       </form>
+      </div>
+     </div>
     </div>
    </main><!-- Bottom Action Bar -->
    <footer class="fixed bottom-0 left-0 right-0 bottom-bar px-4 py-3 flex items-center justify-between z-50" style="max-width: 414px; margin: 0 auto;">
@@ -396,6 +463,40 @@
     }
 
     startCountdown();
+
+    // Chat functionality
+    function sendMessage(event) {
+      event.preventDefault();
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      
+      if (message === '') return;
+      
+      // Get current time
+      const now = new Date();
+      const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+      
+      // Create message element
+      const messagesContainer = document.getElementById('chat-messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'flex items-start gap-2';
+      messageDiv.innerHTML = `
+        <div class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">我</div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-baseline gap-2">
+            <span class="text-xs font-medium text-gray-300">我</span>
+            <span class="text-xs text-gray-600">${time}</span>
+          </div>
+          <p class="text-xs text-gray-400 mt-0.5">${message}</p>
+        </div>
+      `;
+      
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      
+      // Clear input
+      input.value = '';
+    }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bfdf8a270629a6e',t:'MTc2ODczODAzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bfe279e06da7a7f',t:'MTc2ODczOTk2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
