@@ -151,66 +151,72 @@
    <main class="flex-1 pt-16 pb-20 overflow-y-auto"><!-- Video / Table Area -->
     <div class="px-3 pt-3">
      <div class="video-container rounded-xl overflow-hidden" style="aspect-ratio: 16/9;"><!-- Simulated Table Felt -->
-      <div class="table-felt w-full h-full relative"><!-- Table markings -->
-       <svg class="absolute inset-0 w-full h-full opacity-30" viewbox="0 0 320 180"><ellipse cx="160" cy="140" rx="140" ry="50" fill="none" stroke="#d4c396" stroke-width="0.5" /> <line x1="160" y1="90" x2="160" y2="180" stroke="#d4c396" stroke-width="0.3" /> <text x="80" y="135" fill="#d4c396" font-size="8" text-anchor="middle" opacity="0.6">
-         PLAYER
-        </text> <text x="240" y="135" fill="#d4c396" font-size="8" text-anchor="middle" opacity="0.6">
-         BANKER
-        </text>
-       </svg><!-- Cards Display Area -->
-       <div class="absolute inset-0 flex items-center justify-center gap-16"><!-- Player Cards -->
-        <div class="flex gap-1">
-         <div class="w-8 h-11 rounded bg-white shadow-lg flex items-center justify-center text-black font-bold text-xs">
-          A♠
-         </div>
-         <div class="w-8 h-11 rounded bg-white shadow-lg flex items-center justify-center text-red-600 font-bold text-xs">
-          K♥
-         </div>
-        </div><!-- Banker Cards -->
-        <div class="flex gap-1">
-         <div class="w-8 h-11 rounded bg-white shadow-lg flex items-center justify-center text-black font-bold text-xs">
-          7♣
-         </div>
-         <div class="w-8 h-11 rounded bg-white shadow-lg flex items-center justify-center text-red-600 font-bold text-xs">
-          2♦
-         </div>
-        </div>
-       </div><!-- Video Overlay -->
-       <div class="video-overlay absolute inset-0"></div><!-- Round Info - Top Left -->
-       <div class="absolute top-3 left-3">
+      <div class="table-felt w-full h-full relative"><!-- Round Info - Top Left -->
+       <div class="absolute top-3 left-3 z-10">
         <div class="text-xs text-gray-400">
          第 <span class="gold-text font-medium">2847</span> 局
         </div>
        </div><!-- Countdown Timer - Top Right -->
-       <div class="absolute top-2 right-3 flex items-center gap-2">
+       <div class="absolute top-2 right-3 flex items-center gap-2 z-10">
         <div class="relative w-11 h-11">
          <svg class="w-full h-full -rotate-90" viewbox="0 0 88 88"><circle cx="44" cy="44" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3" /> <circle cx="44" cy="44" r="40" fill="none" stroke="#d4c396" stroke-width="3" class="countdown-ring" />
          </svg>
          <div class="absolute inset-0 flex items-center justify-center"><span id="countdown" class="text-lg font-semibold gold-text">12</span>
          </div>
         </div>
-       </div><!-- Score Display - Bottom -->
-       <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-6">
-        <div class="text-center">
-         <div class="text-xs text-blue-400 mb-0.5">
-          闲
-         </div>
-         <div class="text-xl font-bold text-white">
-          1
+       </div><!-- Cards Display Area - Cleaner Layout -->
+       <div class="absolute inset-0 flex items-center justify-center">
+        <div class="flex items-center gap-8"><!-- Player Side -->
+         <div class="flex flex-col items-center gap-3">
+          <div class="text-xs font-medium" style="color: rgba(255, 255, 255, 0.5); letter-spacing: 0.5px;">
+           PLAYER
+          </div>
+          <div class="flex gap-1.5">
+           <div class="w-9 h-12 rounded bg-white shadow-xl flex items-center justify-center text-black font-bold text-sm border border-gray-200">
+            A♠
+           </div>
+           <div class="w-9 h-12 rounded bg-white shadow-xl flex items-center justify-center text-red-600 font-bold text-sm border border-gray-200">
+            K♥
+           </div>
+           <div class="w-9 h-12 rounded flex items-center justify-center border-2 border-dashed border-gray-600 opacity-30"></div>
+          </div>
+          <div class="px-3 py-1 rounded-full text-xs font-bold" style="background: rgba(107, 158, 255, 0.2); color: #6b9eff;">
+           点数: 0
+          </div>
+         </div><!-- VS Divider -->
+         <div class="flex flex-col items-center gap-1">
+          <div class="w-px h-12" style="background: linear-gradient(180deg, transparent, rgba(212, 195, 150, 0.3), transparent);"></div>
+          <div class="text-xs font-cinzel gold-text opacity-50">
+           VS
+          </div>
+          <div class="w-px h-12" style="background: linear-gradient(180deg, transparent, rgba(212, 195, 150, 0.3), transparent);"></div>
+         </div><!-- Banker Side -->
+         <div class="flex flex-col items-center gap-3">
+          <div class="text-xs font-medium" style="color: rgba(255, 255, 255, 0.5); letter-spacing: 0.5px;">
+           BANKER
+          </div>
+          <div class="flex gap-1.5">
+           <div class="w-9 h-12 rounded bg-white shadow-xl flex items-center justify-center text-black font-bold text-sm border border-gray-200">
+            7♣
+           </div>
+           <div class="w-9 h-12 rounded bg-white shadow-xl flex items-center justify-center text-red-600 font-bold text-sm border border-gray-200">
+            2♦
+           </div>
+           <div class="w-9 h-12 rounded flex items-center justify-center border-2 border-dashed border-gray-600 opacity-30"></div>
+          </div>
+          <div class="px-3 py-1 rounded-full text-xs font-bold" style="background: rgba(255, 107, 107, 0.2); color: #ff6b6b;">
+           点数: 9
+          </div>
          </div>
         </div>
-        <div class="text-xs text-gray-500">
-         VS
-        </div>
-        <div class="text-center">
-         <div class="text-xs text-red-400 mb-0.5">
-          庄
-         </div>
-         <div class="text-xl font-bold text-white">
-          9
-         </div>
-        </div>
-       </div>
+       </div><!-- Subtle Background Pattern -->
+       <div class="absolute inset-0 opacity-10">
+        <svg class="w-full h-full" viewbox="0 0 320 180"><pattern id="felt-pattern" x="0" y="0" width="20" height="20" patternunits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="0.5" fill="#d4c396" />
+         </pattern> <rect width="320" height="180" fill="url(#felt-pattern)" />
+        </svg>
+       </div><!-- Video Overlay -->
+       <div class="video-overlay absolute inset-0 pointer-events-none"></div>
       </div>
      </div>
     </div><!-- Betting Status & Odds -->
@@ -286,7 +292,7 @@
      <div class="rounded-lg px-4 py-3" style="background: linear-gradient(135deg, rgba(212, 195, 150, 0.1) 0%, rgba(212, 195, 150, 0.05) 100%); border: 1px solid rgba(212, 195, 150, 0.2);">
       <div class="flex items-center gap-2 mb-3">
        <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="#d4c396" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-       </svg><span class="text-xs text-gray-400">当前庄家</span>
+       </svg><span class="text-xs text-gray-400">当���庄家</span>
       </div><!-- Banker List -->
       <div class="flex items-center gap-2 mb-3"><!-- Banker 1 -->
        <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold" style="background: linear-gradient(135deg, #d4c396 0%, #b8a67a 100%); color: #0f0f0f;">
@@ -339,7 +345,7 @@
         <div class="flex-1 min-w-0">
          <div class="flex items-baseline gap-2"><span class="text-xs font-medium text-gray-300">VIP888</span> <span class="text-xs text-gray-600">13:46</span>
          </div>
-         <p class="text-xs text-gray-400 mt-0.5">大家好运 🎰</p>
+         <p class="text-xs text-gray-400 mt-0.5">大��好运 🎰</p>
         </div>
        </div>
       </div><!-- Chat Input -->
@@ -498,5 +504,5 @@
       input.value = '';
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bfe279e06da7a7f',t:'MTc2ODczOTk2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bfe47cf5789a319',t:'MTc2ODc0MTI4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
