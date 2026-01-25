@@ -208,187 +208,6 @@ body{
   background:#2a2a2a;
 }
 
-/* ===== Contact US区域 ===== */
-.contact-card{
-  background:#22282a;
-  border:1px solid #2f3538;
-  border-radius:14px;
-  padding:14px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:16px;
-}
-
-.contact-title{
-  font-size:14px;
-  font-weight:600;
-}
-
-.contact-desc{
-  font-size:12px;
-  color:#9aa0a6;
-  margin-top:2px;
-}
-
-.contact-btn{
-  padding:8px 14px;
-  font-size:13px;
-  font-weight:600;
-  border-radius:10px;
-  background:#3863b8;
-  color:#fff;
-  cursor:pointer;
-}
-.sidebar-unread{
-  position:absolute;
-  top:-6px;
-  right:-6px;
-  background:#ff4d4f;
-  color:#fff;
-  font-size:11px;
-  padding:2px 6px;
-  border-radius:10px;
-  display:none;
-}
-
-.contact-btn:hover{
-  background:#4a74c9;
-}
-
-.chat-box{
-  position:fixed;
-  bottom:70px;
-  left:16px;
-  width:350px;
-  height:500px;
-  background:#1f2426;
-  border:1px solid #2f3538;
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 20px 40px rgba(0,0,0,.4);
-  transform:translateY(20px);
-  opacity:0;
-  pointer-events:none;
-  transition:.25s ease;
-  z-index:300;
-}
-
-.chat-box.active{
-  transform:translateY(0);
-  opacity:1;
-  pointer-events:auto;
-}
-
-.chat-header{
-  padding:10px 12px;
-  font-size:14px;
-  font-weight:600;
-  background:#22282a;
-  display:flex;
-  justify-content:space-between;
-  border-bottom:1px solid #2f3538;
-}
-
-.chat-body{
-  padding:12px;
-  display:flex;
-  flex-direction:column;
-  overflow-y:auto;
-  height:calc(100% - 96px);
-}
-
-/* 未读红点 */
-.chat-unread-dot{
-  width:8px;
-  height:8px;
-  background:#ff4d4f;
-  border-radius:50%;
-  margin-left:6px;
-  display:none;
-}
-
-/* 消息通用 */
-.chat-msg{
-  max-width:75%;
-  padding:8px 10px;
-  border-radius:12px;
-  margin-bottom:8px;
-  font-size:13px;
-  line-height:1.4;
-  word-break:break-word;
-}
-
-.chat-msg.bot{
-  background:#2a3033;
-  color:#e6e6e6;
-  align-self:flex-start;
-}
-/* 玩家（右） */
-.chat-msg.user{
-  background:#3863b8;
-  color:#fff;
-  align-self:flex-end;
-  margin-left:auto;
-}
-
-/* 输入区 */
-.chat-input-bar{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:10px;
-  background:#1c2123;
-  border-top:1px solid #2f3538;
-}
-.chat-attach{
-  font-size:18px;
-  cursor:pointer;
-  opacity:.7;
-}
-
-.chat-attach:hover{opacity:1;}
-
-.chat-input{
-  flex:1;
-  height:36px;
-  padding:0 12px;
-  border-radius:18px;
-  border:none;
-  outline:none;
-  background:#2a3033;
-  color:#fff;
-  font-size:13px;
-}
-.chat-input::placeholder{
-  color:#8b8f92;
-}
-
-.chat-send-btn{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  border:none;
-  background:#3863b8;
-  color:#fff;
-  cursor:pointer;
-}
-
-.chat-send-btn:hover{
-  background:#4a74c9;
-}
-
-.chat-time{
-  font-size:11px;
-  color:#9aa0a6;
-  margin-top:4px;
-  text-align:right;
-}
-
-.chat-msg.bot .chat-time{
-  text-align:left;
-}
-
 /* ===== 语言切换区域 ===== */
 .lang-switch{
   display:flex;
@@ -440,42 +259,6 @@ body{
 </style>
 </head>
 <body>
-
-<div id="imgPreview" class="img-preview" onclick="closePreview()">
-  <img id="previewImg">
-</div>
-
-  
-<!-- Chat Box -->
-<div id="chatBox" class="chat-box">
-  <div class="chat-header">
-    客服中心
-    <span onclick="closeChat()">✕</span>
-    <span id="chatUnread" class="chat-unread-dot"></span>
-  </div>
-
-  <div id="chatBody" class="chat-body">
-    <div class="chat-msg bot">您好，请问有什么可以帮您？</div>
-  </div>
-
-  <!-- 输入区 -->
-  <div class="chat-input-bar">
-    <label class="chat-attach">
-      📎
-      <input type="file" accept="image/*" hidden onchange="sendImage(this)">
-    </label>
-
-    <input
-      id="chatInput"
-      type="text"
-      placeholder="输入内容…"
-      class="chat-input"
-      onkeydown="handleEnter(event)"
-    >
-
-    <button class="chat-send-btn" onclick="sendMessage()">➤</button>
-  </div>
-</div>
   
 <!-- Top Bar -->
 <div class="top-bar">
@@ -542,40 +325,41 @@ body{
     <div class="sidebar-item active" onclick="navigate('lobby.html')">
       <div class="left">
         <span class="icon">♠️</span>
-        <span>Lobby</span>
+        <span>大厅</span>
       </div>
       <span class="arrow">›</span>
     </div>
 
-    <div class="sidebar-item" onclick="navigate('stats.html')">
+    <div class="sidebar-item" onclick="navigate('promo.html')">
       <div class="left">
-        <span class="icon">♥️</span>
-        <span>战绩</span>
+        <span class="icon">🎁</span>
+        <span>优惠</span>
+      </div>
+      <span class="arrow">›</span>
+    </div>
+
+    <div class="sidebar-item" onclick="navigate('contact.html')">
+      <div class="left">
+        <span class="icon">💬</span>
+        <span>客服</span>
       </div>
       <span class="arrow">›</span>
     </div>
 
     <div class="sidebar-item" onclick="navigate('wallet.html')">
       <div class="left">
-        <span class="icon">♣️</span>
-        <span>Wallet</span>
+        <span class="icon">💰</span>
+        <span>钱包</span>
       </div>
       <span class="arrow">›</span>
     </div>
 
-    <!-- CONTACT US -->
-    <div class="sidebar-section">CONTACT US</div>
-
-    <div class="contact-card">
-      <div>
-        <div class="contact-title">在线客服</div>
-        <div class="contact-desc">24 / 7 Live Support</div>
+    <div class="sidebar-item" onclick="navigate('about.html')">
+      <div class="left">
+        <span class="icon">ℹ️</span>
+        <span>关于我们</span>
       </div>
-      <button class="contact-btn" onclick="openChat()">
-        客服
-        <span id="sidebarUnread" class="sidebar-unread">1</span>
-      </button>
-
+      <span class="arrow">›</span>
     </div>
 
     <!-- LANGUAGE -->
@@ -596,111 +380,21 @@ body{
 <!-- Bottom Nav -->
 <div class="bottom-nav">
   <div id="nav-lobby" class="nav-item active" onclick="navigate('lobby.html')"><br>大厅</div>
-  <div id="nav-stats" class="nav-item" onclick="navigate('stats.html')"><br>战绩</div>
+  <div id="nav-promo" class="nav-item" onclick="navigate('promo.html')"><br>优惠</div>
+  <div id="nav-contact" class="nav-item" onclick="navigate('contact.html')"><br>客服</div>
   <div id="nav-wallet" class="nav-item" onclick="navigate('wallet.html')"><br>钱包</div>
+  <div id="nav-about" class="nav-item" onclick="navigate('about.html')"><br>关于我们</div>
 </div>
 
 <script>
 const sidebar = document.getElementById("sidebar");
 const content = document.getElementById("content");
 
-const nav_lobby  = document.getElementById("nav-lobby");
-const nav_wallet = document.getElementById("nav-wallet");
-const nav_stats  = document.getElementById("nav-stats");
-
-const chatBody = document.getElementById("chatBody");
-const chatInput = document.getElementById("chatInput");
-const unreadDot = document.getElementById("chatUnread");
-
-/* 发送文字 */
-function sendMessage(){
-  const text = chatInput.value.trim();
-  if(!text) return;
-
-  addMessage(text, "user");
-  chatInput.value = "";
-
-  // 模拟客服回复
-  setTimeout(()=>{
-    addMessage("客服已收到您的消息", "bot");
-    showUnread();
-  }, 800);
-}
-
-/* 回车发送 */
-function handleEnter(e){
-  if(e.key === "Enter"){
-    e.preventDefault();
-    sendMessage();
-  }
-}
-
-/* 添加消息 */
-function addMessage(text, type){
-  const msg = document.createElement("div");
-  msg.className = `chat-msg ${type}`;
-
-  const content = document.createElement("div");
-  content.innerText = text;
-
-  const time = document.createElement("div");
-  const now = new Date();
-  time.className = "chat-time";
-  time.innerText = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-
-  msg.appendChild(content);
-  msg.appendChild(time);
-
-  chatBody.appendChild(msg);
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-/* 图片发送（UI 版） */
-function sendImage(input){
-  const file = input.files[0];
-  if(!file) return;
-
-  const img = document.createElement("img");
-  img.src = URL.createObjectURL(file);
-  img.style.maxWidth = "160px";
-  img.style.borderRadius = "10px";
-  img.onclick = () => openPreview(img.src);
-
-  const wrap = document.createElement("div");
-  wrap.className = "chat-msg user";
-  wrap.appendChild(img);
-
-  chatBody.appendChild(wrap);
-  chatBody.scrollTop = chatBody.scrollHeight;
-
-  input.value = "";
-}
-
-function openPreview(src){
-  document.getElementById("previewImg").src = src;
-  document.getElementById("imgPreview").style.display = "flex";
-}
-
-function closePreview(){
-  document.getElementById("imgPreview").style.display = "none";
-}
-
-/* 未读红点 */
-function showUnread(){
-  if(!document.getElementById("chatBox").classList.contains("active")){
-    unreadDot.style.display = "inline-block";
-  }
-}
-
-function openChat(){
-  document.getElementById("chatBox").classList.add("active");
-  unreadDot.style.display = "none";
-}
-
-function closeChat(){
-  document.getElementById("chatBox").classList.remove("active");
-}
-
+const nav_lobby   = document.getElementById("nav-lobby");
+const nav_promo   = document.getElementById("nav-promo");
+const nav_contact = document.getElementById("nav-contact");
+const nav_wallet  = document.getElementById("nav-wallet");
+const nav_about   = document.getElementById("nav-about");
 
 function openSidebar(){ sidebar.classList.add("open"); }
 function closeSidebar(e){ if(e.target.id==="sidebar") sidebar.classList.remove("open"); }
@@ -795,8 +489,10 @@ function navigate(page){
   clearInterval(bannerTimer);
   document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
   if(page.includes("lobby")) nav_lobby.classList.add("active");
+  if(page.includes("promo")) nav_promo.classList.add("active");
+  if(page.includes("contact")) nav_contact.classList.add("active");
   if(page.includes("wallet")) nav_wallet.classList.add("active");
-  if(page.includes("stats")) nav_stats.classList.add("active");
+  if(page.includes("about")) nav_about.classList.add("active");
 
   fetch(page)
     .then(r => r.text())
@@ -834,19 +530,6 @@ function openChat(){
 
 /* 默认加载 Lobby */
 navigate("lobby.html");
-
-if (window.visualViewport) {
-  visualViewport.addEventListener("resize", () => {
-    const chatBox = document.getElementById("chatBox");
-    const keyboardHeight = window.innerHeight - visualViewport.height;
-
-    if (keyboardHeight > 100) {
-      chatBox.style.bottom = keyboardHeight + 20 + "px";
-    } else {
-      chatBox.style.bottom = "70px";
-    }
-  });
-}
   
 </script>
 
