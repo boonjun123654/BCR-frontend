@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="zh-CN" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>优惠中心</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    .gold-gradient {
+      background: linear-gradient(135deg, #d4c396 0%, #a89060 100%);
+    }
+    
+    .gold-border {
+      border: 1px solid rgba(212, 195, 150, 0.3);
+    }
+    
+    .gold-text {
+      color: #d4c396;
+    }
+    
+    .glass-effect {
+      background: rgba(18, 18, 18, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    
+    .card-gradient {
+      background: linear-gradient(145deg, rgba(30, 30, 30, 0.9) 0%, rgba(20, 20, 20, 0.95) 100%);
+    }
+    
+    .btn-press {
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    
+    .btn-press:active {
+      transform: scale(0.97);
+    }
+    
+    .tab-active {
+      background: linear-gradient(135deg, rgba(212, 195, 150, 0.15) 0%, rgba(168, 144, 96, 0.1) 100%);
+      border: 1px solid #d4c396;
+      color: #fff;
+    }
+    
+    .tab-inactive {
+      background: rgba(40, 40, 40, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #888;
+    }
+    
+    .carousel-container {
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    
+    .carousel-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+    }
+    
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .dot.active {
+      background: #d4c396;
+      width: 24px;
+      border-radius: 4px;
+    }
+    
+    .badge {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .badge-hot {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+      color: white;
+    }
+    
+    .badge-new {
+      background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+      color: white;
+    }
+    
+    .badge-vip {
+      background: linear-gradient(135deg, #d4c396 0%, #a89060 100%);
+      color: #1a1a1a;
+    }
+    
+    .bottom-sheet {
+      transform: translateY(100%);
+      transition: transform 0.3s ease-out;
+    }
+    
+    .bottom-sheet.open {
+      transform: translateY(0);
+    }
+    
+    .overlay {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(212, 195, 150, 0.3);
+      border-radius: 2px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-[#0f0f0f] text-white">
+  <div id="app" class="h-full flex flex-col overflow-hidden"><!-- Header -->
+   <header class="glass-effect fixed top-0 left-0 right-0 z-50 border-b border-white/10">
+    <div class="flex items-center justify-center px-4 py-3">
+     <h1 id="page-title" class="text-lg font-semibold gold-text">优惠中心</h1>
+    </div>
+   </header><!-- Main Content -->
+   <main class="flex-1 overflow-y-auto pt-14 pb-6"><!-- Tabs -->
+    <div class="px-4 mt-6">
+     <div class="flex gap-2 overflow-x-auto pb-2" id="tabs"><button class="tab-active btn-press px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all" data-tab="all"> 全部 </button> <button class="tab-inactive btn-press px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all" data-tab="new"> 新会员 </button> <button class="tab-inactive btn-press px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all" data-tab="daily"> 每日优惠 </button> <button class="tab-inactive btn-press px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all" data-tab="vip"> VIP 专属 </button>
+     </div>
+    </div><!-- Promo Cards -->
+    <div class="px-4 mt-4 space-y-4" id="promo-list"><!-- Card 1: Welcome Bonus -->
+     <div class="card-gradient rounded-2xl gold-border p-4 btn-press cursor-pointer promo-card" data-category="new" data-promo="welcome-bonus">
+      <div class="flex gap-4">
+       <div class="w-16 h-16 rounded-xl gold-gradient flex items-center justify-center flex-shrink-0">
+        <svg width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2"><circle cx="12" cy="12" r="10" /> <path d="M12 6v6l4 2" />
+        </svg>
+       </div>
+       <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 mb-1"><span class="badge badge-hot">HOT</span> <span class="badge badge-new">NEW</span>
+        </div>
+        <h3 class="text-base font-semibold text-white mb-1">欢迎奖金 38/68/88</h3>
+        <p class="text-sm text-gray-400 mb-2">转盘抽奖金 · 余额低于RM1可领</p>
+        <p class="text-xs text-gray-500">流水要求：Winover X 10</p>
+       </div>
+      </div>
+      <div class="flex gap-2 mt-4"><button class="flex-1 py-2.5 rounded-xl gold-gradient text-black font-semibold text-sm btn-press spin-btn"> 抽奖 </button> <button class="px-4 py-2.5 rounded-xl gold-border gold-text text-sm font-medium btn-press detail-btn"> 详情 </button>
+      </div>
+     </div><!-- Card 2: First Deposit Bonus -->
+     <div class="card-gradient rounded-2xl gold-border p-4 btn-press cursor-pointer promo-card" data-category="new" data-promo="first-deposit">
+      <div class="flex gap-4">
+       <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center flex-shrink-0">
+        <svg width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" /> <path d="M12 12a3 3 0 100-6 3 3 0 000 6z" /> <path d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2" />
+        </svg>
+       </div>
+       <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 mb-1"><span class="badge badge-new">NEW</span>
+        </div>
+        <h3 class="text-base font-semibold text-white mb-1">首充 50% ��金</h3>
+        <p class="text-sm text-gray-400 mb-2">Live Game/Slot Game 不同流水</p>
+        <p class="text-xs text-gray-500">Live: X7 | Slot: X3</p>
+       </div>
+      </div>
+      <div class="flex gap-2 mt-4"><button class="flex-1 py-2.5 rounded-xl gold-gradient text-black font-semibold text-sm btn-press claim-btn"> 立即���取 </button> <button class="px-4 py-2.5 rounded-xl gold-border gold-text text-sm font-medium btn-press detail-btn"> 详情 </button>
+      </div>
+     </div><!-- Card 3: Daily Deposit Bonus -->
+     <div class="card-gradient rounded-2xl gold-border p-4 btn-press cursor-pointer promo-card" data-category="daily" data-promo="daily-deposit">
+      <div class="flex gap-4">
+       <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-purple-800 flex items-center justify-center flex-shrink-0">
+        <svg width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+        </svg>
+       </div>
+       <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 mb-1"><span class="badge badge-hot">HOT</span>
+        </div>
+        <h3 class="text-base font-semibold text-white mb-1">每日存款奖励</h3>
+        <p class="text-sm text-gray-400 mb-2">1/2/3/18/28/88 转盘抽奖</p>
+        <p class="text-xs text-gray-500">存款后余额低于RM1可领</p>
+       </div>
+      </div>
+      <div class="flex gap-2 mt-4"><button class="flex-1 py-2.5 rounded-xl gold-gradient text-black font-semibold text-sm btn-press spin-btn"> 抽奖 </button> <button class="px-4 py-2.5 rounded-xl gold-border gold-text text-sm font-medium btn-press detail-btn"> 详情 </button>
+      </div>
+     </div><!-- Card 4: iPhone Raffle -->
+     <div class="card-gradient rounded-2xl gold-border p-4 btn-press cursor-pointer promo-card" data-category="vip" data-promo="iphone-raffle">
+      <div class="flex gap-4">
+       <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center flex-shrink-0">
+        <svg width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" /> <path d="M12 18h.01" />
+        </svg>
+       </div>
+       <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 mb-1"><span class="badge badge-vip">VIP</span>
+        </div>
+        <h3 class="text-base font-semibold text-white mb-1">iPhone 手机抽奖</h3>
+        <p class="text-sm text-gray-400 mb-2">存款超RM1000自动获得资格</p>
+        <p class="text-xs text-gray-500">指定日期内有效</p>
+       </div>
+      </div>
+      <div class="flex gap-2 mt-4"><button class="flex-1 py-2.5 rounded-xl gold-gradient text-black font-semibold text-sm btn-press claim-btn"> 查看详情 </button> <button class="px-4 py-2.5 rounded-xl gold-border gold-text text-sm font-medium btn-press detail-btn"> 详情 </button>
+      </div>
+     </div>
+    </div><!-- Notice Section -->
+    <div class="px-4 mt-6 mb-4">
+     <div class="bg-white/5 rounded-2xl p-4 border border-white/5">
+      <h4 id="notice-title" class="text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
+       <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="#d4c396" stroke-width="2"><circle cx="12" cy="12" r="10" /> <path d="M12 16v-4m0-4h.01" />
+       </svg> 温馨提示</h4>
+      <p id="notice-content" class="text-xs text-gray-500 leading-relaxed">优惠不可与其他活动叠加，违规将取消资格。所有优��活动最终解释权归平台所有。</p>
+     </div>
+    </div>
+   </main><!-- Bottom Sheet Overlay -->
+   <div id="overlay" class="overlay fixed inset-0 bg-black/60 z-50"></div><!-- Spin Wheel Modal -->
+   <div id="spin-modal" class="overlay fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a1a1a] rounded-3xl p-6 max-w-sm w-full">
+     <div class="flex items-center justify-between mb-6">
+      <h3 class="text-xl font-bold gold-text">转盘抽奖</h3><button id="close-spin" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center btn-press">
+       <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12" />
+       </svg></button>
+     </div><!-- Wheel Container -->
+     <div class="relative w-64 h-64 mx-auto mb-6">
+      <svg id="wheel" class="w-full h-full" viewbox="0 0 200 200"><!-- Wheel segments will be drawn here -->
+      </svg><!-- Center button --> <button id="spin-button" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full gold-gradient flex items-center justify-center btn-press shadow-lg z-10"> <span class="text-black font-bold text-sm">开始</span> </button> <!-- Pointer -->
+      <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
+       <svg width="24" height="32" viewbox="0 0 24 32" fill="#d4c396"><path d="M12 0L0 12L12 32L24 12Z" />
+       </svg>
+      </div>
+     </div>
+     <div id="spin-result" class="text-center mb-4 h-8"><!-- Result will appear here -->
+     </div><button id="claim-prize" class="w-full py-3 rounded-xl gold-gradient text-black font-semibold btn-press hidden"> 领取奖金 </button>
+    </div>
+   </div><!-- Bottom Sheet -->
+   <div id="bottom-sheet" class="bottom-sheet fixed bottom-0 left-0 right-0 z-50 bg-[#1a1a1a] rounded-t-3xl max-h-[80%] overflow-hidden">
+    <div class="p-4">
+     <div class="w-12 h-1 bg-gray-600 rounded-full mx-auto mb-4"></div>
+     <div class="flex items-center justify-between mb-4">
+      <h3 id="sheet-title" class="text-lg font-semibold gold-text">活动详情</h3><button id="close-sheet" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center btn-press">
+       <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12" />
+       </svg></button>
+     </div>
+     <div id="sheet-content" class="text-sm text-gray-300 space-y-3 max-h-60 overflow-y-auto pr-2"><!-- Content will be populated dynamically -->
+     </div><button id="sheet-claim-btn" class="w-full mt-6 py-3 rounded-xl gold-gradient text-black font-semibold btn-press"> 立即领取 </button>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      page_title: '优惠中心',
+      banner_text_1: '新会员首存送彩金',
+      banner_text_2: '每日返水 · 自动发放',
+      banner_text_3: '周礼金 · VIP 专属',
+      notice_title: '温馨提示',
+      notice_content: '优惠不可与其他活动叠加，违规将取消资格。所有优惠活动最终解释权归平台所有。',
+      primary_color: '#d4c396',
+      background_color: '#0f0f0f',
+      surface_color: '#1a1a1a',
+      text_color: '#ffffff',
+      accent_color: '#a89060'
+    };
+
+    // Mock user data for eligibility check
+    const userData = {
+      balance: 0.5,  // Current balance in RM
+      isNewMember: true,  // Is new member
+      hasFirstDeposit: false,  // Has made first deposit
+      depositToday: false,  // Has deposited today
+      totalDeposit: 500,  // Total deposit amount
+      vipLevel: 0  // VIP level (0-8)
+    };
+
+    const promoDetails = {
+      'first-deposit': {
+        title: '首存 100% Bonus',
+        rules: [
+          '• 新会员首��存款可获得 100% 奖金',
+          '• 最高奖金 RM 1,000',
+          '• 流水���求：(本金+奖金) x 15',
+          '• 有效投注仅限老虎机游戏',
+          '• 每位会员仅限领取�����次',
+          '• 奖金将在存款后自动发放'
+        ]
+      },
+      'daily-rebate': {
+        title: '每日返水 0.8%',
+        rules: [
+          '• 所有游戏均可获得返水',
+          '• 返水比例：0.8% 无上限',
+          '• 每日凌晨自动结算并发放',
+          '• 无需申请，自动到账',
+          '• 返水无流水要求',
+          '• 可与其他优惠叠加'
+        ]
+      },
+      'weekly-bonus': {
+        title: '周礼金 VIP 专属',
+        rules: [
+          '• VIP3 及以上等级专属',
+          '• VIP3: RM 188 / VIP4: RM 388',
+          '• VIP5: RM 888 / VIP6: RM 1,888',
+          '• VIP7: RM 3,888 / VIP8+: RM 8,888',
+          '• 每周一自动发放',
+          '• 流水要求：1 倍'
+        ]
+      },
+      'rescue-bonus': {
+        title: '救援金 10%',
+        rules: [
+          '• 日亏损达 RM 500 可申请',
+          '• 救援比例：亏损金额的 10%',
+          '• 最高救援金 RM 2,000',
+          '• 流水要求：3 倍',
+          '• 每日仅限申请一次',
+          '• 需在次日 12:00 前申请'
+        ]
+      },
+      'second-deposit': {
+        title: '二存 50% Bonus',
+        rules: [
+          '• 首存后第二次存款可获得 50% 奖金',
+          '• 最高奖金 RM 500',
+          '• 流水要求：(本金+奖金) x 12',
+          '• 有效投注仅限老虎机游戏',
+          '• 每位会员仅限领取一次',
+          '• 奖金将在存款后自动发放'
+        ]
+      }
+    };
+
+    let currentSlide = 0;
+    let currentTab = 'all';
+    let config = { ...defaultConfig };
+    let isSpinning = false;
+    let currentPromo = null;
+
+    // Check eligibility for each promo
+    function checkEligibility(promoId) {
+      switch(promoId) {
+        case 'welcome-bonus':
+          return userData.isNewMember && userData.balance < 1;
+        case 'first-deposit':
+          return userData.isNewMember && !userData.hasFirstDeposit;
+        case 'daily-deposit':
+          return userData.depositToday && userData.balance < 1;
+        case 'iphone-raffle':
+          return userData.totalDeposit >= 1000;
+        default:
+          return false;
+      }
+    }
+
+    // Update button states based on eligibility
+    function updateButtonStates() {
+      const cards = document.querySelectorAll('.promo-card');
+      cards.forEach(card => {
+        const promoId = card.dataset.promo;
+        const isEligible = checkEligibility(promoId);
+        const spinBtn = card.querySelector('.spin-btn');
+        const claimBtn = card.querySelector('.claim-btn');
+        const actionBtn = spinBtn || claimBtn;
+
+        if (actionBtn) {
+          if (isEligible) {
+            actionBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+            actionBtn.disabled = false;
+          } else {
+            actionBtn.classList.add('opacity-40', 'cursor-not-allowed');
+            actionBtn.disabled = true;
+          }
+        }
+      });
+    }
+
+    // Spin Wheel
+    function initSpinWheel() {
+      const spinModal = document.getElementById('spin-modal');
+      const closeSpin = document.getElementById('close-spin');
+      const spinButton = document.getElementById('spin-button');
+      const claimPrize = document.getElementById('claim-prize');
+      const spinBtns = document.querySelectorAll('.spin-btn');
+      
+      spinBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (btn.disabled) {
+            showToast('不符合活动资格');
+            return;
+          }
+          const card = btn.closest('.promo-card');
+          currentPromo = card.dataset.promo;
+          openSpinModal();
+        });
+      });
+      
+      closeSpin.addEventListener('click', closeSpinModal);
+      spinButton.addEventListener('click', spinWheel);
+      claimPrize.addEventListener('click', () => {
+        showToast('奖金已发放到账户！');
+        closeSpinModal();
+      });
+    }
+
+    function openSpinModal() {
+      const modal = document.getElementById('spin-modal');
+      const promo = promoDetails[currentPromo];
+      if (promo && promo.prizes) {
+        drawWheel(promo.prizes);
+        document.getElementById('spin-result').innerHTML = '';
+        document.getElementById('claim-prize').classList.add('hidden');
+        document.getElementById('spin-button').disabled = false;
+        modal.classList.add('open');
+      }
+    }
+
+    function closeSpinModal() {
+      const modal = document.getElementById('spin-modal');
+      modal.classList.remove('open');
+      isSpinning = false;
+    }
+
+    function drawWheel(prizes) {
+      const wheel = document.getElementById('wheel');
+      wheel.innerHTML = '';
+      
+      const numSegments = prizes.length;
+      const anglePerSegment = 360 / numSegments;
+      const colors = ['#d4c396', '#a89060', '#c4b086', '#b8a070', '#cdb896', '#9c8050'];
+      
+      for (let i = 0; i < numSegments; i++) {
+        const startAngle = i * anglePerSegment - 90;
+        const endAngle = (i + 1) * anglePerSegment - 90;
+        const largeArc = anglePerSegment > 180 ? 1 : 0;
+        
+        const x1 = 100 + 90 * Math.cos(startAngle * Math.PI / 180);
+        const y1 = 100 + 90 * Math.sin(startAngle * Math.PI / 180);
+        const x2 = 100 + 90 * Math.cos(endAngle * Math.PI / 180);
+        const y2 = 100 + 90 * Math.sin(endAngle * Math.PI / 180);
+        
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M 100 100 L ${x1} ${y1} A 90 90 0 ${largeArc} 1 ${x2} ${y2} Z`);
+        path.setAttribute('fill', colors[i % colors.length]);
+        path.setAttribute('stroke', '#1a1a1a');
+        path.setAttribute('stroke-width', '2');
+        wheel.appendChild(path);
+        
+        const textAngle = startAngle + anglePerSegment / 2;
+        const textX = 100 + 60 * Math.cos(textAngle * Math.PI / 180);
+        const textY = 100 + 60 * Math.sin(textAngle * Math.PI / 180);
+        
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', textX);
+        text.setAttribute('y', textY);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'middle');
+        text.setAttribute('fill', '#1a1a1a');
+        text.setAttribute('font-size', '16');
+        text.setAttribute('font-weight', 'bold');
+        text.textContent = prizes[i];
+        wheel.appendChild(text);
+      }
+    }
+
+    function spinWheel() {
+      if (isSpinning) return;
+      isSpinning = true;
+      
+      const wheel = document.getElementById('wheel');
+      const spinButton = document.getElementById('spin-button');
+      const resultDiv = document.getElementById('spin-result');
+      const claimBtn = document.getElementById('claim-prize');
+      
+      spinButton.disabled = true;
+      resultDiv.innerHTML = '';
+      claimBtn.classList.add('hidden');
+      
+      const promo = promoDetails[currentPromo];
+      const prizes = promo.prizes;
+      const winIndex = Math.floor(Math.random() * prizes.length);
+      const anglePerSegment = 360 / prizes.length;
+      const winAngle = winIndex * anglePerSegment;
+      const totalRotation = 1800 + (360 - winAngle);
+      
+      wheel.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+      wheel.style.transform = `rotate(${totalRotation}deg)`;
+      
+      setTimeout(() => {
+        isSpinning = false;
+        const prize = prizes[winIndex];
+        resultDiv.innerHTML = `<p class="text-2xl font-bold gold-text">恭喜获得 RM ${prize}!</p>`;
+        claimBtn.classList.remove('hidden');
+        wheel.style.transition = 'none';
+        wheel.style.transform = `rotate(${totalRotation % 360}deg)`;
+      }, 4000);
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-xl shadow-lg z-50';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+
+    // Tabs
+    function initTabs() {
+      const tabs = document.querySelectorAll('#tabs button');
+      
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          currentTab = tab.dataset.tab;
+          updateTabs();
+          filterCards();
+        });
+      });
+    }
+
+    function updateTabs() {
+      const tabs = document.querySelectorAll('#tabs button');
+      tabs.forEach(tab => {
+        if (tab.dataset.tab === currentTab) {
+          tab.classList.remove('tab-inactive');
+          tab.classList.add('tab-active');
+        } else {
+          tab.classList.remove('tab-active');
+          tab.classList.add('tab-inactive');
+        }
+      });
+    }
+
+    function filterCards() {
+      const cards = document.querySelectorAll('.promo-card');
+      cards.forEach(card => {
+        const category = card.dataset.category;
+        if (currentTab === 'all' || category === currentTab) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Bottom Sheet
+    function initBottomSheet() {
+      const overlay = document.getElementById('overlay');
+      const sheet = document.getElementById('bottom-sheet');
+      const closeBtn = document.getElementById('close-sheet');
+      const detailBtns = document.querySelectorAll('.detail-btn');
+      
+      detailBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const card = btn.closest('.promo-card');
+          const promoId = card.dataset.promo;
+          openSheet(promoId);
+        });
+      });
+      
+      closeBtn.addEventListener('click', closeSheet);
+      overlay.addEventListener('click', closeSheet);
+
+      // Claim buttons
+      const claimBtns = document.querySelectorAll('.claim-btn');
+      claimBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (btn.disabled) {
+            showToast('不符合活动资格');
+            return;
+          }
+          showClaimSuccess(btn);
+        });
+      });
+
+      document.getElementById('sheet-claim-btn').addEventListener('click', () => {
+        const promoId = document.getElementById('sheet-title').dataset.promoId;
+        if (promoId && !checkEligibility(promoId)) {
+          showToast('不符合活动资格');
+          return;
+        }
+        showClaimSuccess(document.getElementById('sheet-claim-btn'));
+        setTimeout(closeSheet, 1000);
+      });
+    }
+
+    function openSheet(promoId) {
+      const overlay = document.getElementById('overlay');
+      const sheet = document.getElementById('bottom-sheet');
+      const title = document.getElementById('sheet-title');
+      const content = document.getElementById('sheet-content');
+      
+      const promo = promoDetails[promoId];
+      if (promo) {
+        title.textContent = promo.title;
+        title.dataset.promoId = promoId;
+        content.innerHTML = promo.rules.map(rule => `<p>${rule}</p>`).join('');
+      }
+      
+      overlay.classList.add('open');
+      sheet.classList.add('open');
+    }
+
+    function closeSheet() {
+      const overlay = document.getElementById('overlay');
+      const sheet = document.getElementById('bottom-sheet');
+      overlay.classList.remove('open');
+      sheet.classList.remove('open');
+    }
+
+    function showClaimSuccess(btn) {
+      const originalText = btn.textContent;
+      btn.textContent = '✓ 已领取';
+      btn.style.background = '#22c55e';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '';
+      }, 2000);
+    }
+
+    // Config Change Handler
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      document.getElementById('page-title').textContent = config.page_title || defaultConfig.page_title;
+      document.getElementById('banner-1').textContent = config.banner_text_1 || defaultConfig.banner_text_1;
+      document.getElementById('banner-2').textContent = config.banner_text_2 || defaultConfig.banner_text_2;
+      document.getElementById('banner-3').textContent = config.banner_text_3 || defaultConfig.banner_text_3;
+      document.getElementById('notice-title').innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${config.primary_color || defaultConfig.primary_color}" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4m0-4h.01"/>
+        </svg>
+        ${config.notice_title || defaultConfig.notice_title}
+      `;
+      document.getElementById('notice-content').textContent = config.notice_content || defaultConfig.notice_content;
+
+      // Apply colors
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+
+      document.body.style.backgroundColor = bgColor;
+      document.body.style.color = textColor;
+
+      document.documentElement.style.setProperty('--primary', primaryColor);
+      document.documentElement.style.setProperty('--accent', accentColor);
+
+      document.querySelectorAll('.gold-text').forEach(el => {
+        el.style.color = primaryColor;
+      });
+
+      document.querySelectorAll('.gold-border').forEach(el => {
+        el.style.borderColor = `${primaryColor}33`;
+      });
+
+      document.querySelectorAll('.gold-gradient').forEach(el => {
+        el.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${accentColor} 100%)`;
+      });
+
+      document.querySelectorAll('.card-gradient').forEach(el => {
+        el.style.background = `linear-gradient(145deg, ${surfaceColor}e6 0%, ${surfaceColor}f2 100%)`;
+      });
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              config.surface_color = value;
+              window.elementSdk.setConfig({ surface_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['page_title', config.page_title || defaultConfig.page_title],
+        ['banner_text_1', config.banner_text_1 || defaultConfig.banner_text_1],
+        ['banner_text_2', config.banner_text_2 || defaultConfig.banner_text_2],
+        ['banner_text_3', config.banner_text_3 || defaultConfig.banner_text_3],
+        ['notice_title', config.notice_title || defaultConfig.notice_title],
+        ['notice_content', config.notice_content || defaultConfig.notice_content]
+      ]);
+    }
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    initSpinWheel();
+    initTabs();
+    initBottomSheet();
+    updateButtonStates();
+    onConfigChange(defaultConfig);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c38c799f7a6068e',t:'MTc2OTM1NDY4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
