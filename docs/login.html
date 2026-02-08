@@ -185,6 +185,8 @@ body{
 </div>
 
 <script>
+const API_BASE = "https://bcr-backend-kov7.onrender.com";
+  
 function toggle(){
   const p = document.getElementById("pwd");
   p.type = p.type === "password" ? "text" : "password";
@@ -200,7 +202,7 @@ async function login(){
   }
 
   try{
-    const res = await fetch("http://localhost:3000/api/login",{
+    const res = await fetch(`${API_BASE}/api/login`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
@@ -233,5 +235,6 @@ async function login(){
 
 </body>
 </html>
+
 
 
