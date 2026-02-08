@@ -160,27 +160,27 @@ body{
   </div>
 
   <!-- Username -->
-  <input class="input" placeholder="Username">
+  <input id="username" class="input" placeholder="Username">
 
   <!-- Email / Phone -->
-  <input class="input" placeholder="Email or Phone">
+  <input id="contact" class="input" placeholder="Phone Number">
 
   <!-- Password -->
   <div class="password-wrap">
-    <input id="pwd" class="input" type="password" placeholder="Password">
-    <span class="show" onclick="toggle('pwd')">Show</span>
+    <input id="password" class="input" type="password" placeholder="Password">
+    <span class="show" onclick="toggle('password')">Show</span>
   </div>
 
   <!-- Confirm Password -->
   <div class="password-wrap">
-    <input id="pwd2" class="input" type="password" placeholder="Confirm Password">
-    <span class="show" onclick="toggle('pwd2')">Show</span>
+    <input id="password2" class="input" type="password" placeholder="Confirm Password">
+    <span class="show" onclick="toggle('password2')">Show</span>
   </div>
 
   <!-- Optional Referral -->
-  <input class="input" placeholder="Referral Code (Optional)">
+  <input id="referral" class="input" placeholder="Referral Code (Optional)">
 
-  <button class="register-btn">Create account</button>
+  <button class="register-btn" onclick="register()">Create account</button>
 
   <div class="login">
     Already have an account? <span onclick="location.href='login.html'">Login</span>
@@ -189,6 +189,53 @@ body{
 </div>
 
 <script>
+function toggle(id){
+  const p=document.getElementById(id);
+  p.type = p.type === "password" ? "text" : "password";
+}
+
+async function register(){
+  const username  = document.getElementById("username").value.trim();
+  const password  = document.getElementById("password").value;
+  const password2 = document.getElementById("password2").value;
+
+  if(!username || !password){
+    alert("Username and password required");
+    return;
+  }
+
+  if(password !== password2){
+    alert("Passwords do not match");
+    return;
+  }
+
+  try{
+    const res = await fetch("http://localhost:3000/api/register",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        username,
+        password
+      })
+    });
+
+    const data = await res.json();
+
+    if(!res.ok){
+      alert(data.msg || "Register failed");
+      return;
+    }
+
+    alert("Register success");
+    location.href = "login.html";
+
+  }catch(err){
+    alert("Network error");
+  }
+}
+
 function toggle(id){
   const p=document.getElementById(id);
   p.type = p.type === "password" ? "text" : "password";
