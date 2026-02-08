@@ -158,6 +158,8 @@ body{
 </div>
 
 <script>
+const API_BASE = "https://bcr-backend-kov7.onrender.com";
+  
 /* ===== Login Guard ===== */
 const token = localStorage.getItem("token");
 if(!token){
@@ -165,7 +167,7 @@ if(!token){
 }
 
 /* ===== Load User From API ===== */
-fetch("http://localhost:3000/api/me", {
+fetch(`${API_BASE}/api/me`, {
   headers: {
     Authorization: "Bearer " + token
   }
