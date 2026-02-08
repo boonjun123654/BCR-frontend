@@ -287,7 +287,7 @@ body{
   </div>
 
   <img src="assets/logo.png" class="logo">
-  <div class="menu-btn" onclick="location.href='login.html'">
+  <div class="menu-btn" id="userBtn">
     <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
       <path
         d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5Z"
@@ -387,6 +387,15 @@ body{
 </div>
 
 <script>
+
+/* ===== User Icon Logic ===== */
+const userBtn = document.getElementById("userBtn");
+
+userBtn.onclick = () => {
+  const isLogin = !!localStorage.getItem("token");
+  location.href = isLogin ? "user.html" : "login.html";
+};
+
 const sidebar = document.getElementById("sidebar");
 const content = document.getElementById("content");
 
