@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+
+<style>
+*,*::before,*::after{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:linear-gradient(180deg,#1a1a1a,#0f0f0f);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  color:#fff;
+  min-height:100vh;
+}
+
+/* ===== Header ===== */
+.header{
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  border-bottom:2px solid #242424;
+}
+.header::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-2px;
+  height:2px;
+  background:linear-gradient(90deg,#9a7bff,#ffaf7b);
+  opacity:.35;
+}
+.header-title{
+  font-size:20px;
+  font-weight:700;
+}
+
+/* Back button */
+.back-btn{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+.back-btn svg{
+  width:18px;
+  height:18px;
+  stroke:#fff;
+  stroke-width:2.4;
+}
+
+/* ===== Content ===== */
+.container{
+  max-width:420px;
+  margin:0 auto;
+  padding:28px 18px;
+}
+
+/* ===== Logo ===== */
+.logo-wrap{
+  display:flex;
+  justify-content:center;
+  margin:26px 0 30px;
+}
+.logo-wrap img{
+  height:56px;
+}
+
+/* ===== Inputs ===== */
+.input{
+  width:100%;
+  height:52px;
+  padding:0 18px;
+  border-radius:26px;
+  border:none;
+  background:#3f3f3f;
+  color:#fff;
+  font-size:14px;
+  margin-bottom:14px;
+}
+.input::placeholder{color:#bdbdbd}
+
+/* Password + Show */
+.password-wrap{
+  position:relative;
+}
+.password-wrap .input{
+  padding-right:70px;
+}
+.show{
+  position:absolute;
+  right:18px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:13px;
+  line-height:1;
+  color:#34d399;
+  cursor:pointer;
+  user-select:none;
+}
+
+/* ===== Button ===== */
+.register-btn{
+  width:100%;
+  height:52px;
+  border-radius:26px;
+  border:none;
+  background:#34d399;
+  color:#000;
+  font-weight:700;
+  font-size:15px;
+  margin-top:10px;
+}
+.register-btn:active{
+  transform:scale(.98);
+}
+
+/* Login link */
+.login{
+  text-align:center;
+  margin-top:16px;
+  font-size:13px;
+  color:#cfcfcf;
+}
+.login span{
+  color:#34d399;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="back-btn" onclick="location.href='login.html'">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+  </div>
+  <div class="header-title">Register</div>
+</div>
+
+<div class="container">
+
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <img src="assets/logo.png" alt="Logo">
+  </div>
+
+  <!-- Username -->
+  <input class="input" placeholder="Username">
+
+  <!-- Email / Phone -->
+  <input class="input" placeholder="Email or Phone">
+
+  <!-- Password -->
+  <div class="password-wrap">
+    <input id="pwd" class="input" type="password" placeholder="Password">
+    <span class="show" onclick="toggle('pwd')">Show</span>
+  </div>
+
+  <!-- Confirm Password -->
+  <div class="password-wrap">
+    <input id="pwd2" class="input" type="password" placeholder="Confirm Password">
+    <span class="show" onclick="toggle('pwd2')">Show</span>
+  </div>
+
+  <!-- Optional Referral -->
+  <input class="input" placeholder="Referral Code (Optional)">
+
+  <button class="register-btn">Create account</button>
+
+  <div class="login">
+    Already have an account? <span onclick="location.href='login.html'">Login</span>
+  </div>
+
+</div>
+
+<script>
+function toggle(id){
+  const p=document.getElementById(id);
+  p.type = p.type === "password" ? "text" : "password";
+}
+</script>
+
+</body>
+</html>
