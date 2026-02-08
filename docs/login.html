@@ -165,7 +165,7 @@ body{
   </div>
 
   <!-- Username -->
-  <input class="input" placeholder="Username">
+  <input id="username" class="input" placeholder="Username">
 
   <!-- Password -->
   <div class="password-wrap">
@@ -175,7 +175,7 @@ body{
 
   <div class="forgot">Forgot password?</div>
 
-  <button class="login-btn">Sign in</button>
+  <button class="login-btn" onclick="login()">Sign in</button>
 
   <div class="register">
     Do not have an account?
@@ -186,11 +186,52 @@ body{
 
 <script>
 function toggle(){
-  const p=document.getElementById("pwd");
+  const p = document.getElementById("pwd");
   p.type = p.type === "password" ? "text" : "password";
+}
+
+async function login(){
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("pwd").value;
+
+  if(!username || !password){
+    alert("Username and password required");
+    return;
+  }
+
+  try{
+    const res = await fetch("http://localhost:3000/api/login",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        username,
+        password
+      })
+    });
+
+    const data = await res.json();
+
+    if(!res.ok){
+      alert(data.msg || "Login failed");
+      return;
+    }
+
+    // ✅ 保存登录态
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("username", data.username);
+
+    // ✅ 登录成功回首页
+    location.replace("index.html");
+
+  }catch(err){
+    alert("Network error");
+  }
 }
 </script>
 
 </body>
 </html>
+
 
