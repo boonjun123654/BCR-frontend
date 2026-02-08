@@ -159,30 +159,47 @@ body{
 
 <script>
 /* ===== Login Guard ===== */
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 if(!token){
-  location.replace('login.html');
+  location.replace("login.html");
 }
 
-/* ===== Mock user data (replace with API) ===== */
-const user = {
-  username: localStorage.getItem('username') || 'Player123'
-};
-document.getElementById('username').innerText = user.username;
+/* ===== Load User From API ===== */
+fetch("http://localhost:3000/api/me", {
+  headers: {
+    Authorization: "Bearer " + token
+  }
+})
+.then(res => {
+  if(res.status === 401){
+    // token 失效
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    location.replace("login.html");
+    throw new Error("Unauthorized");
+  }
+  return res.json();
+})
+.then(user => {
+  document.getElementById("username").innerText = user.username;
+})
+.catch(err => {
+  console.error(err);
+});
 
 /* ===== Actions ===== */
 function logout(){
-  localStorage.removeItem('token');
-  localStorage.removeItem('username');
-  location.replace('index.html');
+  localStorage.removeItem("token");
+  localStorage.removeItem("username");
+  location.replace("index.html");
 }
 
 function goChangePwd(){
-  alert('Go to change password page');
+  alert("Go to change password page");
 }
 
 function goSecurity(){
-  alert('Go to security settings');
+  alert("Go to security settings");
 }
 </script>
 
